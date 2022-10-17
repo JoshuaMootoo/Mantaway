@@ -9,6 +9,16 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody2D rb;
 
+    public enum PlayerState
+    {
+        turningLeft,
+        turningRight,
+        slowingDown,
+        speedingUp
+    }
+
+    public PlayerState currentPlayerState;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,13 +28,39 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.UpArrow))
+
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            Vector3 touchPosition = Camera.main.ScreenToViewportPoint(touch.position);
+            Debug.Log(touchPosition);
+            if(Input.touchCount < 2)
+            {
+                if (touchPosition.x < .5)
+                {
+                    transform.Rotate(0, 0, 150f * Time.deltaTime);
+                    currentPlayerState = PlayerState.turningLeft;
+                }
+                if (touchPosition.x >= .5)
+                {
+                    transform.Rotate(0, 0, -150f * Time.deltaTime);
+                    currentPlayerState = PlayerState.turningLeft;
+                }
+            }
+            if(Input.touchCount == 2)
+            {
+                transform.Translate(Vector3.up * -2.5f * Time.deltaTime, Space.Self);
+            }
+       
+
+        }
+       // if (Input.GetKey(KeyCode.UpArrow))
         {
              transform.Translate(Vector3.up * 5f * Time.deltaTime, Space.Self);
             //rb.AddForce(forward * 10f);
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) )
         {
             transform.Rotate(0, 0, 150f * Time.deltaTime);
         }
@@ -35,6 +71,8 @@ public class PlayerController : MonoBehaviour
 
             transform.Rotate(0, 0, -150f * Time.deltaTime);
         }
+
+        touchDebug();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -54,4 +92,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
+    void touchDebug()
+    {
+        for (int i = 0; i < Input.touchCount; i++)
+        {
+            Vector3 debugTouchPosition = Camera.main.ScreenToWorldPoint(Input.touches[i].position);
+            Debug.DrawLine(transform.position, debugTouchPosition, Color.red);
+
+           
+        }
+    }
 }
