@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     Vector2 forward = new Vector2(0, 1);
     public int foundFish;
 
+    public Transform[] pastPosition;
+
     Rigidbody2D rb;
 
     public enum PlayerState
@@ -44,14 +46,16 @@ public class PlayerController : MonoBehaviour
                 if (touchPosition.x >= .5)
                 {
                     transform.Rotate(0, 0, -150f * Time.deltaTime);
-                    currentPlayerState = PlayerState.turningLeft;
+                    currentPlayerState = PlayerState.turningRight;
                 }
             }
-            if(Input.touchCount == 2)
+            if(Input.touchCount >= 2)
             {
                 transform.Translate(Vector3.up * -2.5f * Time.deltaTime, Space.Self);
+                currentPlayerState = PlayerState.slowingDown;
+
             }
-       
+
 
         }
        // if (Input.GetKey(KeyCode.UpArrow))
