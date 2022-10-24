@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class FishController : MonoBehaviour
 {
-    public bool following;
-    Transform player;
+    public bool following = false;
+    //public bool found = false;
+    public Transform player;
 
     // Start is called before the first frame update
     void Start()
@@ -22,12 +23,5 @@ public class FishController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            player = collision.transform;
-            following = true;
-        }
-    }
+   
 }
