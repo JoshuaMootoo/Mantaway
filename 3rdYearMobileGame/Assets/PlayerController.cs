@@ -9,7 +9,8 @@ public class PlayerController : MonoBehaviour
 
     public Transform[] pastPosition;
 
-    Rigidbody2D rb;
+    Rigidbody rb;
+    CharacterController controller;
 
     public enum PlayerState
     {
@@ -24,7 +25,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
+        controller = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
@@ -40,18 +42,18 @@ public class PlayerController : MonoBehaviour
             {
                 if (touchPosition.x < .5)
                 {
-                    transform.Rotate(0, 0, 150f * Time.deltaTime);
+                    transform.Rotate(0, 150f,0  * Time.deltaTime);
                     currentPlayerState = PlayerState.turningLeft;
                 }
                 if (touchPosition.x >= .5)
                 {
-                    transform.Rotate(0, 0, -150f * Time.deltaTime);
+                    transform.Rotate(0, -150f, 0 * Time.deltaTime);
                     currentPlayerState = PlayerState.turningRight;
                 }
             }
             if(Input.touchCount >= 2)
             {
-                transform.Translate(Vector3.up * -2.5f * Time.deltaTime, Space.Self);
+                transform.Translate(Vector3.forward * -2.5f * Time.deltaTime, Space.Self);
                 currentPlayerState = PlayerState.slowingDown;
 
             }
@@ -60,26 +62,27 @@ public class PlayerController : MonoBehaviour
         }
        // if (Input.GetKey(KeyCode.UpArrow))
         {
-             transform.Translate(Vector3.up * 5f * Time.deltaTime, Space.Self);
+            // transform.Translate(Vector3.forward * 5f * Time.deltaTime, Space.Self);
+            controller.Move(transform.forward * 5f * Time.deltaTime);
             //rb.AddForce(forward * 10f);
         }
 
         if (Input.GetKey(KeyCode.LeftArrow) )
         {
-            transform.Rotate(0, 0, 150f * Time.deltaTime);
+            transform.Rotate(0, -0.5f, 0 * Time.deltaTime);
         }
 
         if (Input.GetKey(KeyCode.RightArrow))
         {
 
 
-            transform.Rotate(0, 0, -150f * Time.deltaTime);
+            transform.Rotate(0, 0.5f, 0 * Time.deltaTime);
         }
 
         touchDebug();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Fish"))
         {
