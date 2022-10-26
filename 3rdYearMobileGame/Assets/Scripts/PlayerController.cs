@@ -24,6 +24,18 @@ public class PlayerController : MonoBehaviour
     public TrailRenderer rightWing;
     public TrailRenderer leftWing;
 
+    // Animator
+    private bool hasAnimator;
+    private Animator animator;
+
+    // Animation IDs
+    private int animIDSpeed;
+    private int animIDBoost;
+    private int animIDCharging;
+    private int animIDTLeft;
+    private int animIDTRight;
+
+
     public enum PlayerState
     {
         turningLeft,
@@ -40,6 +52,10 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         controller = GetComponent<CharacterController>();
 
+        // find and set animator IDs
+        hasAnimator = TryGetComponent(out animator);
+        AssignAnimationIDs();
+
         rightWing.emitting = false;
         leftWing.emitting = false;
     }
@@ -47,6 +63,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        hasAnimator = TryGetComponent(out animator);
+
+
         Vector3 turnRight = new Vector3(0, 1, 0);
         Vector3 turnLeft = new Vector3(0, -1, 0);
 
@@ -54,6 +73,10 @@ public class PlayerController : MonoBehaviour
 
         rightWing.emitting = false;
         leftWing.emitting = false;
+        animator.SetBool(animIDTLeft, false);
+        animator.SetBool(animIDTRight, false);
+        animator.SetBool(animIDCharging, false);
+        animator.SetBool(animIDBoost, false);
 
 
         if (Input.touchCount > 0)
@@ -67,11 +90,13 @@ public class PlayerController : MonoBehaviour
                 {
                     transform.Rotate(new Vector3(0, 1,0) * turnRate  * Time.deltaTime);
                     currentPlayerState = PlayerState.turningLeft;
+                    animator.SetBool(animIDTLeft, true);
                 }
                 if (touchPosition.x >= .5)
                 {
                     transform.Rotate(new Vector3(0, -1, 0)* turnRate * Time.deltaTime);
                     currentPlayerState = PlayerState.turningRight;
+                    animator.SetBool(animIDTRight, true);
                 }
             }
             if(Input.touchCount >= 2)
@@ -90,6 +115,7 @@ public class PlayerController : MonoBehaviour
             boostCharge = 0;
             rightWing.emitting = true;
             leftWing.emitting = false;
+            animator.SetBool(animIDTLeft, true);
         }
 
         else if (Input.GetKey(KeyCode.RightArrow) & !Input.GetKey(KeyCode.LeftArrow))
@@ -99,6 +125,7 @@ public class PlayerController : MonoBehaviour
             boostCharge = 0;
             rightWing.emitting = false;
             leftWing.emitting = true;
+            animator.SetBool(animIDTRight, true);
         }
 
         else if (Input.GetKey(KeyCode.LeftArrow) & Input.GetKey(KeyCode.RightArrow))
@@ -108,6 +135,7 @@ public class PlayerController : MonoBehaviour
             playerSpeed = playerSlowSpeed;
             boostCharge = boostCharge + (75 * Time.deltaTime);
             Debug.Log("boostCharge = " + boostCharge);
+            animator.SetBool(animIDCharging, true);
         }
 
          if (boostCharge > 100 & boosting == false)
@@ -125,6 +153,7 @@ public class PlayerController : MonoBehaviour
             boostTime = boostTime - (1 * Time.deltaTime);
             Debug.Log("BoostTime = " + boostTime);
             if (boostTime <= 0) boosting = false;
+            animator.SetBool(animIDBoost, true);
         }
 
 
@@ -158,7 +187,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
+    private void AssignAnimationIDs()
+    {
+        animIDSpeed = Animator.StringToHash("Speed");
+        animIDBoost = Animator.StringToHash("Boosting");
+        animIDCharging = Animator.StringToHash("Charging");
+        animIDTLeft = Animator.StringToHash("TurnLeft");
+        animIDTRight = Animator.StringToHash("TurnRight");
+    }
     
 
     void touchDebug()
