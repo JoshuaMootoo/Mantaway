@@ -4,16 +4,26 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    //Health variables
     public float health;
     public float maxHealth = 3;
+    public float healingTimer = 0;
+    public float healingTimerMax = 2;
+    public float healingRate = 0.5f;
+    public bool healing;
+
+   
     public int foundFish;
+    
+    //Player speed variables
     public float playerSpeed = 5f;
     public float playerDefaultSpeed = 5f;
     public float playerSlowSpeed = 2.5f;
     public float playerBoostSpeed = 10f;
+
+    //Boost variables
     public float boostCharge;
     public float boostTime = 3f;
-
     public bool boosting = false;
     public bool charging = false;
 
@@ -23,9 +33,12 @@ public class PlayerController : MonoBehaviour
     Rigidbody rb;
     CharacterController controller;
 
+    //Hud objects
     public FishCount fishCount;
     public HealthBar healthBar;
     public BoostBar boostBar;
+
+    //Trail Renderers
     public TrailRenderer rightWing;
     public TrailRenderer leftWing;
 
@@ -60,7 +73,6 @@ public class PlayerController : MonoBehaviour
         hasAnimator = TryGetComponent(out animator);
         AssignAnimationIDs();
 
-        Debug.Log(animator.avatar);
 
         rightWing.emitting = false;
         leftWing.emitting = false;
@@ -79,6 +91,22 @@ public class PlayerController : MonoBehaviour
         healthBar.SetHealthBar(health / maxHealth);
         fishCount.SetFishCount(foundFish);
 
+        if (healingTimer > 0)
+        {
+            healing = false;
+            healingTimer -= 1f * Time.deltaTime;
+        }
+
+        if  (healingTimer <= 0)
+        {
+            healing = true;
+        }
+
+        if(health < maxHealth & healingTimer <= 0)
+        {
+            health += healingRate * Time.deltaTime;
+        }
+
         if (health <= 0)
         {
             FindObjectOfType<GameManager>().GameOver();
@@ -93,7 +121,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Fish"))
         {
 
-            // gameObject.GetComponent<TrailRenderer>().material.SetColor(Shader.PropertyToID("_BaseColor"), collision.gameObject.GetComponent<Renderer>().material.GetColor(Shader.PropertyToID("_BaseColor")));
+            //gameObject.GetComponent<TrailRenderer>().material.SetColor(Shader.PropertyToID("_BaseColor"), collision.gameObject.GetComponent<Renderer>().material.GetColor(Shader.PropertyToID("_BaseColor")));
             //gameObject.GetComponent<Renderer>().material.SetColor(Shader.PropertyToID("_BaseColor"), collision.gameObject.GetComponent<Renderer>().material.GetColor(Shader.PropertyToID("_BaseColor")));
 
             if (collision.gameObject.GetComponent<FishController>().following == false)
@@ -108,6 +136,8 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.CompareTag("Mine"))
         {
             health -= 1;
+            healingTimer = healingTimerMax;
+
             Debug.Log("Health = " + health);
         }
     }
@@ -117,8 +147,6 @@ public class PlayerController : MonoBehaviour
     //Player Movement and Input
     void Movement()
     {
-        
-
 
         playerSpeed = playerDefaultSpeed;
 
