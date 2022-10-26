@@ -29,6 +29,17 @@ public class PlayerController : MonoBehaviour
     public TrailRenderer rightWing;
     public TrailRenderer leftWing;
 
+    // Animator
+    private bool hasAnimator;
+    private Animator animator;
+
+    // Animation IDs
+    private int animIDSpeed;
+    private int animIDBoost;
+    private int animIDCharging;
+    private int animIDTLeft;
+    private int animIDTRight;
+
     public enum PlayerState
     {
         turningLeft,
@@ -45,6 +56,12 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         controller = GetComponent<CharacterController>();
 
+        // find and set animator IDs
+        hasAnimator = TryGetComponent(out animator);
+        AssignAnimationIDs();
+
+        Debug.Log(animator.avatar);
+
         rightWing.emitting = false;
         leftWing.emitting = false;
 
@@ -54,6 +71,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        hasAnimator = TryGetComponent(out animator);
 
         Movement();
 
@@ -99,11 +117,18 @@ public class PlayerController : MonoBehaviour
     //Player Movement and Input
     void Movement()
     {
+        
+
 
         playerSpeed = playerDefaultSpeed;
 
         rightWing.emitting = false;
         leftWing.emitting = false;
+
+        animator.SetBool(animIDTLeft, false);
+        animator.SetBool(animIDTRight, false);
+        animator.SetBool(animIDCharging, false);
+        animator.SetBool(animIDBoost, false);
 
 
         if (Input.touchCount > 0)
@@ -160,6 +185,7 @@ public class PlayerController : MonoBehaviour
             boostTime = boostTime - (1 * Time.deltaTime);
             Debug.Log("BoostTime = " + boostTime);
             if (boostTime <= 0) boosting = false;
+            animator.SetBool(animIDBoost, true);
         }
 
         void turnLeft()
@@ -171,6 +197,7 @@ public class PlayerController : MonoBehaviour
             leftWing.emitting = false;
 
             currentPlayerState = PlayerState.turningLeft;
+            animator.SetBool(animIDTLeft, true);
         }
 
         void turnRight()
@@ -182,6 +209,7 @@ public class PlayerController : MonoBehaviour
             leftWing.emitting = true;
 
             currentPlayerState = PlayerState.turningRight;
+            animator.SetBool(animIDTRight, true);
         }
 
         void slowDown()
@@ -193,6 +221,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("boostCharge = " + boostCharge);
 
             currentPlayerState = PlayerState.slowingDown;
+            animator.SetBool(animIDCharging, true);
         }
 
 
@@ -201,7 +230,15 @@ public class PlayerController : MonoBehaviour
 
       
     }
-    
+
+    private void AssignAnimationIDs()
+    {
+        animIDSpeed = Animator.StringToHash("Speed");
+        animIDBoost = Animator.StringToHash("Boosting");
+        animIDCharging = Animator.StringToHash("Charging");
+        animIDTLeft = Animator.StringToHash("TurnLeft");
+        animIDTRight = Animator.StringToHash("TurnRight");
+    }
 
     void touchDebug()
     {
