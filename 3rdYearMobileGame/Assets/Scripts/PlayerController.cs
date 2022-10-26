@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-   
+    public float health;
+    public float maxHealth = 3;
     public int foundFish;
     public float playerSpeed = 5f;
     public float playerDefaultSpeed = 5f;
@@ -14,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public float boostTime = 3f;
 
     public bool boosting = false;
+    public bool charging = false;
 
     public float turnRate = 150f;
     public Transform[] pastPosition;
@@ -21,6 +23,9 @@ public class PlayerController : MonoBehaviour
     Rigidbody rb;
     CharacterController controller;
 
+    public FishCount fishCount;
+    public HealthBar healthBar;
+    public BoostBar boostBar;
     public TrailRenderer rightWing;
     public TrailRenderer leftWing;
 
@@ -42,13 +47,58 @@ public class PlayerController : MonoBehaviour
 
         rightWing.emitting = false;
         leftWing.emitting = false;
+
+        health = maxHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 turnRight = new Vector3(0, 1, 0);
-        Vector3 turnLeft = new Vector3(0, -1, 0);
+
+        Movement();
+
+        boostBar.SetBoostBar(boostCharge / 100);
+        healthBar.SetHealthBar(health / maxHealth);
+        fishCount.SetFishCount(foundFish);
+
+        if (health <= 0)
+        {
+            FindObjectOfType<GameManager>().GameOver();
+            Destroy(gameObject);
+        }
+
+        touchDebug();
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.CompareTag("Fish"))
+        {
+
+            // gameObject.GetComponent<TrailRenderer>().material.SetColor(Shader.PropertyToID("_BaseColor"), collision.gameObject.GetComponent<Renderer>().material.GetColor(Shader.PropertyToID("_BaseColor")));
+            //gameObject.GetComponent<Renderer>().material.SetColor(Shader.PropertyToID("_BaseColor"), collision.gameObject.GetComponent<Renderer>().material.GetColor(Shader.PropertyToID("_BaseColor")));
+
+            if (collision.gameObject.GetComponent<FishController>().following == false)
+            {
+                collision.gameObject.GetComponent<FishController>().following = true;
+                foundFish += 1;
+            }
+           Debug.Log("Found Fish " + foundFish);
+
+        }
+
+        if(collision.gameObject.CompareTag("Mine"))
+        {
+            health -= 1;
+            Debug.Log("Health = " + health);
+        }
+    }
+
+  
+
+    //Player Movement and Input
+    void Movement()
+    {
 
         playerSpeed = playerDefaultSpeed;
 
@@ -61,60 +111,45 @@ public class PlayerController : MonoBehaviour
             Touch touch = Input.GetTouch(0);
             Vector3 touchPosition = Camera.main.ScreenToViewportPoint(touch.position);
             Debug.Log(touchPosition);
-            if(Input.touchCount < 2)
+            if (Input.touchCount < 2)
             {
                 if (touchPosition.x < .5)
                 {
-                    transform.Rotate(new Vector3(0, 1,0) * turnRate  * Time.deltaTime);
-                    currentPlayerState = PlayerState.turningLeft;
+                    turnLeft();
                 }
                 if (touchPosition.x >= .5)
                 {
-                    transform.Rotate(new Vector3(0, -1, 0)* turnRate * Time.deltaTime);
-                    currentPlayerState = PlayerState.turningRight;
+                    turnRight();
                 }
             }
-            if(Input.touchCount >= 2)
+            if (Input.touchCount >= 2)
             {
-                transform.Translate(Vector3.forward * -2.5f * Time.deltaTime, Space.Self);
-                currentPlayerState = PlayerState.slowingDown;
 
+                slowDown();
             }
 
         }
 
-         if (Input.GetKey(KeyCode.LeftArrow) & !Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) & !Input.GetKey(KeyCode.RightArrow))
         {
-            //transform.Rotate( new Vector3( 0, -1, 0) * turnRate * Time.deltaTime);
-            transform.Rotate(0, -150f * Time.deltaTime, 0);
-            boostCharge = 0;
-            rightWing.emitting = true;
-            leftWing.emitting = false;
+            turnLeft();
         }
 
         else if (Input.GetKey(KeyCode.RightArrow) & !Input.GetKey(KeyCode.LeftArrow))
         {
-            //transform.Rotate(turnRight * turnRate * Time.deltaTime);
-            transform.Rotate(0, 150f * Time.deltaTime, 0);
-            boostCharge = 0;
-            rightWing.emitting = false;
-            leftWing.emitting = true;
+            turnRight();
         }
 
         else if (Input.GetKey(KeyCode.LeftArrow) & Input.GetKey(KeyCode.RightArrow))
         {
-            rightWing.emitting = false;
-            leftWing.emitting = false;
-            playerSpeed = playerSlowSpeed;
-            boostCharge = boostCharge + (75 * Time.deltaTime);
-            Debug.Log("boostCharge = " + boostCharge);
+            slowDown();
         }
 
-         if (boostCharge > 100 & boosting == false)
+        if (boostCharge > 100 & boosting == false)
         {
             boosting = true;
             boostTime = 3;
-           // playerSpeed = playerBoostSpeed;
+            // playerSpeed = playerBoostSpeed;
         }
 
         if (boosting == true)
@@ -127,38 +162,45 @@ public class PlayerController : MonoBehaviour
             if (boostTime <= 0) boosting = false;
         }
 
-
-         controller.Move(transform.forward * playerSpeed * Time.deltaTime);
-
-
-
-
-
-        touchDebug();
-    }
-
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (collision.gameObject.CompareTag("Fish"))
+        void turnLeft()
         {
+            transform.Rotate(0, -150f * Time.deltaTime, 0);
 
-            // gameObject.GetComponent<TrailRenderer>().material.SetColor(Shader.PropertyToID("_BaseColor"), collision.gameObject.GetComponent<Renderer>().material.GetColor(Shader.PropertyToID("_BaseColor")));
+            boostCharge = 0;
+            rightWing.emitting = true;
+            leftWing.emitting = false;
 
-            //gameObject.GetComponent<Renderer>().material.SetColor(Shader.PropertyToID("_BaseColor"), collision.gameObject.GetComponent<Renderer>().material.GetColor(Shader.PropertyToID("_BaseColor")));
-
-            // Destroy(collision.gameObject);
-            if (collision.gameObject.GetComponent<FishController>().following == false)
-            {
-                collision.gameObject.GetComponent<FishController>().following = true;
-                foundFish += 1;
-                //collision.gameObject.GetComponent<FishController>().following = true;
-            }
-           Debug.Log("Found Fish " + foundFish);
-
+            currentPlayerState = PlayerState.turningLeft;
         }
+
+        void turnRight()
+        {
+            transform.Rotate(0, 150f * Time.deltaTime, 0);
+
+            boostCharge = 0;
+            rightWing.emitting = false;
+            leftWing.emitting = true;
+
+            currentPlayerState = PlayerState.turningRight;
+        }
+
+        void slowDown()
+        {
+            rightWing.emitting = false;
+            leftWing.emitting = false;
+            playerSpeed = playerSlowSpeed;
+            boostCharge = boostCharge + (75 * Time.deltaTime);
+            Debug.Log("boostCharge = " + boostCharge);
+
+            currentPlayerState = PlayerState.slowingDown;
+        }
+
+
+
+        controller.Move(transform.forward * playerSpeed * Time.deltaTime);
+
+      
     }
-
-
     
 
     void touchDebug()

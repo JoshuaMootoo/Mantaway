@@ -8,10 +8,12 @@ public class CrateController : MonoBehaviour
 
     public GameObject fish;
 
+    Rigidbody rb;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = gameObject.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -40,6 +42,32 @@ public class CrateController : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            //Push Crate ahead of player when colliding with it slowly
+            if (collision.gameObject.GetComponent<PlayerController>().boosting == false)
+            {
+                rb.AddForce((transform.position - collision.gameObject.transform.position).normalized * 10, ForceMode.Impulse);
+            }
+
+            //Break Crate when colliding with it during boost
+            if (collision.gameObject.GetComponent<PlayerController>().boosting == true)
+            {
+
+                for (int i = 0; i < heldFish; i++)
+                {
+                    Instantiate(fish, transform.position, transform.rotation);
+
+                }
+
+                Destroy(gameObject);
+
+            }
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
