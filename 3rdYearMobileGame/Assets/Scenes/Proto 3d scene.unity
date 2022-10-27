@@ -476,8 +476,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 272699877}
-  m_LocalRotation: {x: 0.6021955, y: 0.0000000068683477, z: -0.000000005180804, w: 0.79834867}
-  m_LocalPosition: {x: -55.63, y: 37, z: -12.88}
+  m_LocalRotation: {x: 0.60351664, y: 0.000000024733216, z: -0.000000018720636, w: 0.7973504}
+  m_LocalPosition: {x: -55.63, y: 26.35, z: -9.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -767,7 +767,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: f49ab16e770e1f647bd87d8f10ad7245, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -797,13 +797,13 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.29999474
-        inSlope: -1.3574572
-        outSlope: -1.3574572
+        value: 0.1930765
+        inSlope: -1.358146
+        outSlope: -1.358146
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.187665
+        outWeight: 0.09559012
       - serializedVersion: 3
         time: 0.9058695
         value: 0
@@ -932,8 +932,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423348986}
-  m_LocalRotation: {x: 0.6021955, y: 0.0000000068683477, z: -0.000000005180804, w: 0.79834867}
-  m_LocalPosition: {x: -55.63, y: 37, z: -12.88}
+  m_LocalRotation: {x: 0.60351664, y: 0.000000024733216, z: -0.000000018720636, w: 0.7973504}
+  m_LocalPosition: {x: -55.63, y: 26.35, z: -9.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1028,7 +1028,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: d6c260a71a54c054c8e96b3296ce4f00, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1206,7 +1206,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 450361351}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 100, y: 1, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1375,7 +1375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 35, z: -10}
+  m_FollowOffset: {x: 0, y: 24.35, z: -6.87}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -1409,8 +1409,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
-  m_LookaheadTime: 0.37
-  m_LookaheadSmoothing: 0.2
+  m_LookaheadTime: 0.57
+  m_LookaheadSmoothing: 3.6
   m_LookaheadIgnoreY: 0
   m_HorizontalDamping: 0.5
   m_VerticalDamping: 0.5
@@ -1902,7 +1902,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: d6c260a71a54c054c8e96b3296ce4f00, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2361,7 +2361,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f228b0fd41619da4fb39662548563624, type: 2}
+  - {fileID: 2100000, guid: 6621bbdb9d0118e478967e7986dd4a42, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3163,6 +3163,10 @@ PrefabInstance:
     - target: {fileID: 5146694023940336653, guid: b4e8bc4d08988bf49bd11f7c2fe24a06, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5146694024808813817, guid: b4e8bc4d08988bf49bd11f7c2fe24a06, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 756
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b4e8bc4d08988bf49bd11f7c2fe24a06, type: 3}
