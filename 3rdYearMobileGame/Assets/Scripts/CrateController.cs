@@ -5,8 +5,10 @@ using UnityEngine;
 public class CrateController : MonoBehaviour
 {
     public int heldFish = 5;
+    public float torqueStrength = 50;
 
     public GameObject fish;
+    GameObject player;
 
     Rigidbody rb;
 
@@ -14,6 +16,7 @@ public class CrateController : MonoBehaviour
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
+        player = FindObjectOfType<PlayerController>().gameObject;
     }
 
     // Update is called once per frame
@@ -22,24 +25,6 @@ public class CrateController : MonoBehaviour
     
     }
 
-   void OnTriggerEnter(Collider collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            if (collision.gameObject.GetComponent<PlayerController>().boosting == true)
-            {
-
-                for (int i = 0; i < heldFish; i++)
-                {
-                    Instantiate(fish, transform.position, transform.rotation);
-                    
-                }
-
-                Destroy(gameObject);
-
-            }
-        }
-    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -49,6 +34,7 @@ public class CrateController : MonoBehaviour
             if (collision.gameObject.GetComponent<PlayerController>().boosting == false)
             {
                 rb.AddForce((transform.position - collision.gameObject.transform.position).normalized * 10, ForceMode.Impulse);
+                rb.AddTorque(new Vector3(Random.Range(0.5f, 1f), Random.Range(0.5f, 1f), Random.Range(0.5f, 1f)).normalized * torqueStrength, ForceMode.Impulse);
             }
 
             //Break Crate when colliding with it during boost
@@ -57,8 +43,11 @@ public class CrateController : MonoBehaviour
 
                 for (int i = 0; i < heldFish; i++)
                 {
-                    Instantiate(fish, transform.position, transform.rotation);
+                   GameObject InstantiatedFish = Instantiate(fish, transform.position, transform.rotation);
 
+                    InstantiatedFish.GetComponent<FishController>().following = true;
+                    InstantiatedFish.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-1,1), 0, Random.Range(-1,1)).normalized * 5, ForceMode.Impulse);
+                    player.gameObject.GetComponent<PlayerController>().foundFish += 1;
                 }
 
                 Destroy(gameObject);

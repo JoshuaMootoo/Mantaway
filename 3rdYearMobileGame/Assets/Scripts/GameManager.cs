@@ -9,12 +9,16 @@ public class GameManager : MonoBehaviour
     bool levelComplete = false;
     public float restarDelay = 1f;
 
+    public GameObject LevelCompletePanel;
+    public GameObject GameOverPanel;
+
     public void GameOver()
     {
         if(gameOver == false)
         {
             gameOver = true;
             Debug.Log("GameOver");
+            GameOverPanel.SetActive(true);
             Invoke("Restart", restarDelay);
         }
     }
@@ -25,6 +29,7 @@ public class GameManager : MonoBehaviour
         {
             levelComplete = true;
             Debug.Log("Level Complete");
+            LevelCompletePanel.SetActive(true);
             Invoke("Exit", restarDelay);
         }
     }

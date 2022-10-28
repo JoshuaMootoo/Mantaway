@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MainMenu_UI : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class MainMenu_UI : MonoBehaviour
     void OnStartClicked ()
     {
         Debug.Log("Start Button Clicked");
+        SceneManager.LoadScene(1);
     }
 
     void OnSettingsClicked ()

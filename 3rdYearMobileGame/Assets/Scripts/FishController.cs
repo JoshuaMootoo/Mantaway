@@ -5,21 +5,32 @@ using UnityEngine;
 public class FishController : MonoBehaviour
 {
     public bool following = false;
+    public float fishSpeed = 4;
+    private float startTime;
     //public bool found = false;
-    public Transform player;
+    Transform player;
+    Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
     {
+        startTime = Time.time;
+        rb = GetComponent<Rigidbody>();
         player = FindObjectOfType<PlayerController>().transform;
+
+
+        gameObject.GetComponent<Renderer>().material.SetColor(Shader.PropertyToID("_BaseColor"), Random.ColorHSV());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (following)
+        if (following & (Time.time - startTime) > 0.5f)
         {
-            transform.position = Vector3.MoveTowards(transform.position, player.position, 4.0f * Time.deltaTime);
+             transform.position = Vector3.MoveTowards(transform.position, player.position, 4.0f * Time.deltaTime);
+            // rb.AddForce((player.position - transform.position), ForceMode.Acceleration);
+            //rb.velocity = (player.position - transform.position).normalized * fishSpeed;
+
         }
     }
 

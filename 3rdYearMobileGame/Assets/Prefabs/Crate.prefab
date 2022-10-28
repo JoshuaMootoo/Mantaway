@@ -112,6 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heldFish: 5
+  torqueStrength: 0.68
   fish: {fileID: 1163991604495920708, guid: 176db388813424a4695bc6dce435d88b, type: 3}
 --- !u!54 &1415154116
 Rigidbody:

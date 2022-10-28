@@ -7,8 +7,8 @@ public class PlayerController : MonoBehaviour
     //Health variables
     public float health;
     public float maxHealth = 3;
-    public float healingTimer = 0;
-    public float healingTimerMax = 2;
+    public float healingDelayTimer = 0;
+    public float healingDelayTimerMax = 4;
     public float healingRate = 0.5f;
     public bool healing;
 
@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
 
     //Boost variables
     public float boostCharge;
+    public float boostChargeMax = 100;
+    public float boostChargeRate = 100;
     public float boostTime = 3f;
     public bool boosting = false;
     public bool charging = false;
@@ -87,22 +89,22 @@ public class PlayerController : MonoBehaviour
 
         Movement();
 
-        boostBar.SetBoostBar(boostCharge / 100);
+        boostBar.SetBoostBar(boostCharge / boostChargeMax);
         healthBar.SetHealthBar(health / maxHealth);
         fishCount.SetFishCount(foundFish);
 
-        if (healingTimer > 0)
+        if (healingDelayTimer > 0)
         {
             healing = false;
-            healingTimer -= 1f * Time.deltaTime;
+            healingDelayTimer -= 1f * Time.deltaTime;
         }
 
-        if  (healingTimer <= 0)
+        if  (healingDelayTimer <= 0)
         {
             healing = true;
         }
 
-        if(health < maxHealth & healingTimer <= 0)
+        if(health < maxHealth & healingDelayTimer <= 0)
         {
             health += healingRate * Time.deltaTime;
         }
@@ -136,7 +138,7 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.CompareTag("Mine"))
         {
             health -= 1;
-            healingTimer = healingTimerMax;
+            healingDelayTimer = healingDelayTimerMax;
 
             Debug.Log("Health = " + health);
         }
@@ -198,7 +200,7 @@ public class PlayerController : MonoBehaviour
             slowDown();
         }
 
-        if (boostCharge > 100 & boosting == false)
+        if (boostCharge > boostChargeMax & boosting == false)
         {
             boosting = true;
             boostTime = 3;
@@ -245,7 +247,7 @@ public class PlayerController : MonoBehaviour
             rightWing.emitting = false;
             leftWing.emitting = false;
             playerSpeed = playerSlowSpeed;
-            boostCharge = boostCharge + (75 * Time.deltaTime);
+            boostCharge = boostCharge + (boostChargeRate * Time.deltaTime);
             Debug.Log("boostCharge = " + boostCharge);
 
             currentPlayerState = PlayerState.slowingDown;
