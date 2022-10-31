@@ -14,27 +14,22 @@ public class MainMenu_UI : MonoBehaviour
     [SerializeField]
     private Button quitButton;
 
-    private void Update()
-    {
-        startButton.onClick.AddListener(OnStartClicked);
-        settingsButton.onClick.AddListener(OnSettingsClicked);
-        quitButton.onClick.AddListener(OnQuitClicked);
 
-    }
 
-    void OnStartClicked ()
+    public void OnStartClicked ()
     {
-        Debug.Log("Start Button Clicked");
+        //Debug.Log("Start Button Clicked");
         SceneManager.LoadScene(1);
     }
 
-    void OnSettingsClicked ()
+    public void OnSettingsClicked ()
     {
         Debug.Log("Settings Button Clicked");
     }
 
-    void OnQuitClicked ()
+    public void OnQuitClicked ()
     {
         Debug.Log("Quit Button Clicked");
+        Application.Quit();
     }
 }
