@@ -8,6 +8,7 @@ public class CrateController : MonoBehaviour
     public float torqueStrength = 50;
 
     public GameObject fish;
+    FishManager fishManager;
     GameObject player;
 
     Rigidbody rb;
@@ -17,6 +18,7 @@ public class CrateController : MonoBehaviour
     {
         rb = gameObject.GetComponent<Rigidbody>();
         player = FindObjectOfType<PlayerController>().gameObject;
+        fishManager = FindObjectOfType<FishManager>();
     }
 
     // Update is called once per frame
@@ -41,14 +43,7 @@ public class CrateController : MonoBehaviour
             if (collision.gameObject.GetComponent<PlayerController>().boosting == true)
             {
 
-                for (int i = 0; i < heldFish; i++)
-                {
-                   GameObject InstantiatedFish = Instantiate(fish, transform.position, transform.rotation);
-
-                    InstantiatedFish.GetComponent<FishController>().following = true;
-                    InstantiatedFish.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-1,1), 0, Random.Range(-1,1)).normalized * 5, ForceMode.Impulse);
-                    player.gameObject.GetComponent<PlayerController>().foundFish += 1;
-                }
+                fishManager.SpawnFish(heldFish, transform.position);
 
                 Destroy(gameObject);
 
@@ -56,22 +51,4 @@ public class CrateController : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            if (collision.gameObject.GetComponent<PlayerController>().boosting == true)
-            {
-
-                for (int i = 0; i < heldFish; i++)
-                {
-                    Instantiate(fish, transform.position, transform.rotation);
-
-                }
-
-                Destroy(gameObject);
-
-            }
-        }
-    }
 }
