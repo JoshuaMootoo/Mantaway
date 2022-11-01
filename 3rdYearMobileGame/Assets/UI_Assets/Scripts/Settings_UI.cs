@@ -22,4 +22,6 @@ public class Settings_UI : MonoBehaviour
         //Debug.Log(volume);
         audioMixer.SetFloat("Sound_EP", volume);
     }
+
+    
 }
