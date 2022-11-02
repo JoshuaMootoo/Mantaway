@@ -16,16 +16,17 @@ public class PlayerController : MonoBehaviour
     public int foundFish;
     
     //Player speed variables
-    public float playerSpeed = 5f;
+    [HideInInspector] public float playerSpeed = 5f;
     public float playerDefaultSpeed = 5f;
     public float playerSlowSpeed = 2.5f;
     public float playerBoostSpeed = 10f;
 
     //Boost variables
-    public float boostCharge;
+    [HideInInspector] float boostCharge;
     public float boostChargeMax = 100;
     public float boostChargeRate = 100;
-    public float boostTime = 3f;
+    [HideInInspector] float boostTime = 3f;
+    public float boostTimeMax = 3f;
     public bool boosting = false;
     public bool charging = false;
 
@@ -34,6 +35,8 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody rb;
     CharacterController controller;
+
+    AudioManager audioManager;
 
     //Hud objects
     public FishCount fishCount;
@@ -70,6 +73,8 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         controller = GetComponent<CharacterController>();
+
+        audioManager = FindObjectOfType<AudioManager>();
 
         // find and set animator IDs
         hasAnimator = TryGetComponent(out animator);
@@ -130,11 +135,16 @@ public class PlayerController : MonoBehaviour
             {
                 collision.gameObject.GetComponent<FishController>().following = true;
                 foundFish += 1;
+
+                Debug.Log("Found Fish " + foundFish);
+                audioManager.Play("CollectFish");
+
             }
-           Debug.Log("Found Fish " + foundFish);
+          
 
         }
 
+        
         if(collision.gameObject.CompareTag("Mine"))
         {
             health -= 1;
@@ -144,7 +154,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-  
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Terrain"))
+        {
+            audioManager.Play("TerrainCollision");
+        }
+
+    }
+
+
 
     //Player Movement and Input
     void Movement()
@@ -203,7 +222,7 @@ public class PlayerController : MonoBehaviour
         if (boostCharge > boostChargeMax & boosting == false)
         {
             boosting = true;
-            boostTime = 3;
+            boostTime = boostTimeMax;
             // playerSpeed = playerBoostSpeed;
         }
 
@@ -214,8 +233,12 @@ public class PlayerController : MonoBehaviour
             playerSpeed = playerBoostSpeed;
             boostTime = boostTime - (1 * Time.deltaTime);
             Debug.Log("BoostTime = " + boostTime);
-            if (boostTime <= 0) boosting = false;
             animator.SetBool(animIDBoost, true);
+
+            if (boostTime <= 0)
+            {
+                boosting = false;
+            }
         }
 
         void turnLeft()

@@ -4478,6 +4478,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1163991604495920704, guid: 176db388813424a4695bc6dce435d88b, type: 3}
   m_PrefabInstance: {fileID: 526473482}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1964785716
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1964785718}
+  - component: {fileID: 1964785717}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1964785717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964785716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15dbbb72e9ec2d6469c947af4bce2a17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: TerrainCollision
+    clip: {fileID: 8300000, guid: f814c0e61fa3d0c4292ab8aaec7f6205, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: CollectFish
+    clip: {fileID: 8300000, guid: f814c0e61fa3d0c4292ab8aaec7f6205, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+--- !u!4 &1964785718
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964785716}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1983242499
 GameObject:
   m_ObjectHideFlags: 0
@@ -4522,10 +4579,9 @@ MonoBehaviour:
   playerDefaultSpeed: 5
   playerSlowSpeed: 2.5
   playerBoostSpeed: 10
-  boostCharge: 0
   boostChargeMax: 100
   boostChargeRate: 100
-  boostTime: 3
+  boostTimeMax: 3
   boosting: 0
   charging: 0
   turnRate: 0.5

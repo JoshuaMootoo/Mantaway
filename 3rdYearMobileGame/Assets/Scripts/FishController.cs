@@ -37,6 +37,7 @@ public class FishController : MonoBehaviour
     public void Movement(Vector3 targetPoint,float deltaTime)
     {
         transform.position = Vector3.MoveTowards(transform.position, targetPoint, fishSpeed * deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetPoint - transform.position), 0.15F);
     }
 
    
