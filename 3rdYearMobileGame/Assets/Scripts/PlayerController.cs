@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
 
     public float turnRate = 150f;
     public Transform[] pastPosition;
+    public List<Vector3> pastPositionList;
 
     Rigidbody rb;
     CharacterController controller;
@@ -80,6 +81,7 @@ public class PlayerController : MonoBehaviour
         hasAnimator = TryGetComponent(out animator);
         AssignAnimationIDs();
 
+        pastPositionList = new List<Vector3>();
 
         rightWing.emitting = false;
         leftWing.emitting = false;
@@ -189,7 +191,6 @@ public class PlayerController : MonoBehaviour
             Debug.Log(touchPosition);
             if (Input.touchCount < 2)
             {
-                charging = false;
                 if (touchPosition.x < .5)
                 {
                     turnLeft();
@@ -204,28 +205,36 @@ public class PlayerController : MonoBehaviour
 
                 slowDown();
             }
+            else if (Input.touchCount != 2)
+            {
+                charging = false;
+            }
 
         }
+        //Check if the device running this is a desktop
+        if (SystemInfo.deviceType == DeviceType.Desktop)
+        {
+            //Keyboard Controls
+            if (Input.GetKey(KeyCode.LeftArrow) & !Input.GetKey(KeyCode.RightArrow))
+            {
+                turnLeft();
+            }
 
-        //Keyboard Controls
-        if (Input.GetKey(KeyCode.LeftArrow) & !Input.GetKey(KeyCode.RightArrow))
-        {
-            turnLeft();
-        }
+            else if (Input.GetKey(KeyCode.RightArrow) & !Input.GetKey(KeyCode.LeftArrow))
+            {
+                turnRight();
+            }
 
-        else if (Input.GetKey(KeyCode.RightArrow) & !Input.GetKey(KeyCode.LeftArrow))
-        {
-            turnRight();
+            else if (Input.GetKey(KeyCode.LeftArrow) & Input.GetKey(KeyCode.RightArrow))
+            {
+                slowDown();
+            }
+            else if (!Input.GetKey(KeyCode.LeftArrow) & !Input.GetKey(KeyCode.RightArrow))
+            {
+                charging = false;
+            }
         }
-
-        else if (Input.GetKey(KeyCode.LeftArrow) & Input.GetKey(KeyCode.RightArrow))
-        {
-            slowDown();
-        }
-        else if (!Input.GetKey(KeyCode.LeftArrow) & !Input.GetKey(KeyCode.RightArrow))
-        {
-            charging = false;
-        }
+        
 
 
         if (charging & boostCharge < boostChargeMax)
@@ -319,6 +328,8 @@ public class PlayerController : MonoBehaviour
 
         //transform.position = transform.position + transform.forward * playerSpeed * Time.deltaTime;
 
+        pastPositionList.Insert(0, transform.position + new Vector3(Random.Range(-2,2), 0, Random.Range(-2, 2)));
+        if (pastPositionList.Count > 100) pastPositionList.RemoveAt(pastPositionList.Count -1);
 
     }
 

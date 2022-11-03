@@ -5,30 +5,45 @@ using TMPro;
 
 public class FPSCounter : MonoBehaviour
 {
-
-
-    public int avgFrameRate;
     public TextMeshProUGUI display_Text;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-         InvokeRepeating("GetFPS", 0.1f, 0.1f);
+    public int Granularity = 5; // how many frames to wait until you re-calculate the FPS
+    List<double> times;
+    int counter = 5;
 
-        
+    public void Start()
+    {
+        times = new List<double>();
     }
 
-    void GetFPS()
+    public void Update()
     {
-        float current = 0;
-        current = (int)(1f / Time.unscaledDeltaTime);
-        avgFrameRate = (int)current;
-        display_Text.SetText(avgFrameRate.ToString());
+        if (counter <= 0)
+        {
+            CalcFPS();
+            counter = Granularity;
+        }
+
+        times.Add(Time.deltaTime);
+        counter--;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void CalcFPS()
     {
-        //GetFPS();
+        double sum = 0;
+        foreach (double F in times)
+        {
+            sum += F;
+        }
+
+        double average = sum / times.Count;
+        double fps = 1 / average;
+
+        int intFPS = Mathf.RoundToInt((float)fps);
+
+        display_Text.SetText(intFPS.ToString());
     }
+
+    //https://stackoverflow.com/questions/32251805/calculating-the-frame-rate-in-a-unity-scene
+    // User MKII
 }
