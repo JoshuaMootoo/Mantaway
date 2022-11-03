@@ -23,7 +23,7 @@ public class MineController : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
 
-            Instantiate(explosionParticleEmitter, transform.position, transform.rotation);
+           if(explosionParticleEmitter != null) Instantiate(explosionParticleEmitter, transform.position, transform.rotation);
 
             FindObjectOfType<AudioManager>().Play("MineExplosion");
 

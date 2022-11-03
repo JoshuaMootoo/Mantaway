@@ -20,7 +20,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level3.unity
     guid: 11e2912e40b57ae4383764fcf22fb990
-  - enabled: 1
-    path: Assets/Scenes/Proto 3d scene UI Update.unity
-    guid: 2fd4ead9553d0df4e9434e9e0ee9e2f0
   m_configObjects: {}

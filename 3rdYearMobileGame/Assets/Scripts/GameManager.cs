@@ -14,18 +14,18 @@ public class GameManager : MonoBehaviour
 
     AudioManager audioManager;
 
-    public static GameManager instance;
+    //public static GameManager instance;
 
     private void Awake()
     {
-        if (instance == null)
-            instance = this;
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-        DontDestroyOnLoad(gameObject);
+        //if (instance == null)
+        //    instance = this;
+        //else
+        //{
+        //    Destroy(gameObject);
+        //    return;
+        //}
+        //DontDestroyOnLoad(gameObject);
 
         audioManager = FindObjectOfType<AudioManager>();
     }
@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
            
         }
     }
+
 
 
     public void GameOver()
@@ -84,7 +85,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+     
     }
 
 
