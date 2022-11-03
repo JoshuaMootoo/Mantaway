@@ -5,6 +5,8 @@ using UnityEngine;
 public class MineController : MonoBehaviour
 {
     // Start is called before the first frame update
+    public GameObject explosionParticleEmitter;
+
     void Start()
     {
         
@@ -21,7 +23,7 @@ public class MineController : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
 
-            // Instantiate(THIS WILL BE A PARTICLE EFFECT, transform.position, transform.rotation);
+            Instantiate(explosionParticleEmitter, transform.position, transform.rotation);
 
             FindObjectOfType<AudioManager>().Play("MineExplosion");
 

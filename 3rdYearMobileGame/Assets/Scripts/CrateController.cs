@@ -5,6 +5,7 @@ using UnityEngine;
 public class CrateController : MonoBehaviour
 {
     public int heldFish = 5;
+    public int fishRequirement = 0;
     public float torqueStrength = 50;
 
     public GameObject fish;
@@ -42,10 +43,13 @@ public class CrateController : MonoBehaviour
             }
 
             //Break Crate when colliding with it during boost
-            if (collision.gameObject.GetComponent<PlayerController>().boosting == true)
+            if (collision.gameObject.GetComponent<PlayerController>().boosting == true & player.GetComponent<PlayerController>().foundFish >= fishRequirement)
             {
-
-                fishManager.SpawnFish(heldFish, transform.position);
+                for(int i = 0; i < heldFish; i++)
+                {
+                    fishManager.SpawnFish(1, transform.position + new Vector3(Random.Range(-1,1) ,0,Random.Range(-1,1)));
+                }
+                
 
                 FindObjectOfType<AudioManager>().Play("CrateSmash");
 

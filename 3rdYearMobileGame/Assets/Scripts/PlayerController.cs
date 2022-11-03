@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour
 
         pastPositionList = new List<Vector3>();
 
+        InvokeRepeating("AddToPositionList", 0.1f, 0.2f);
         rightWing.emitting = false;
         leftWing.emitting = false;
 
@@ -137,7 +138,7 @@ public class PlayerController : MonoBehaviour
             {
                 collision.gameObject.GetComponent<FishController>().following = true;
                 foundFish += 1;
-
+                FindObjectOfType<FishManager>().AddToList(collision.GetComponent<FishController>());
                 Debug.Log("Found Fish " + foundFish);
                 audioManager.Play("CollectFish");
 
@@ -328,9 +329,14 @@ public class PlayerController : MonoBehaviour
 
         //transform.position = transform.position + transform.forward * playerSpeed * Time.deltaTime;
 
-        pastPositionList.Insert(0, transform.position + new Vector3(Random.Range(-2,2), 0, Random.Range(-2, 2)));
-        if (pastPositionList.Count > 100) pastPositionList.RemoveAt(pastPositionList.Count -1);
+       
 
+    }
+
+    private void AddToPositionList()
+    {
+        pastPositionList.Insert(0, transform.position + new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2)));
+        if (pastPositionList.Count > 100) pastPositionList.RemoveAt(pastPositionList.Count - 1);
     }
 
     private void AssignAnimationIDs()

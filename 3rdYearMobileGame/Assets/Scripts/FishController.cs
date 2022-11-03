@@ -5,7 +5,7 @@ using UnityEngine;
 public class FishController : MonoBehaviour
 {
     public bool following = false;
-    public float fishSpeed = 4;
+    public float fishSpeed = 5;
     public float startTime;
     //public bool found = false;
     
@@ -36,8 +36,8 @@ public class FishController : MonoBehaviour
 
     public void Movement(Vector3 targetPoint,float deltaTime)
     {
-        if ((targetPoint - transform.position).magnitude > 3f) fishSpeed += .1f*Time.deltaTime;
-        if ((targetPoint - transform.position).magnitude < 0.5f) fishSpeed -= .1f*Time.deltaTime;
+        if ((targetPoint - transform.position).magnitude > 3f) fishSpeed += 1f*Time.deltaTime;
+        if ((targetPoint - transform.position).magnitude < 0.5f) fishSpeed -= 1f*Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, targetPoint, fishSpeed * deltaTime);
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetPoint - transform.position), 0.15F);
     }

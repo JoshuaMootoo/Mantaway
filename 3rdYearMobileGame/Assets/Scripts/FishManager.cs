@@ -17,13 +17,13 @@ public class FishManager : MonoBehaviour
     void Start()
     {
         FishList = new List<FishController>();
-        foreach(Transform child in transform)
-        {
-            if(child.tag == "Fish")
-            {
-                FishList.Add(child.GetComponent<FishController>());
-            }
-        }
+        //foreach(Transform child in transform)
+        //{
+        //    if(child.tag == "Fish")
+        //    {
+        //        FishList.Add(child.GetComponent<FishController>());
+        //    }
+        //}
         
     }
 
@@ -36,7 +36,7 @@ public class FishManager : MonoBehaviour
         foreach (FishController fish in FishList)
         {
 
-            if (fish.following == true & (Time.time - fish.startTime) > 0.5f)
+            if (fish.following == true)
             {
 
                 fish.Movement(targetPositions[i],Time.deltaTime);
@@ -58,4 +58,10 @@ public class FishManager : MonoBehaviour
             FishList.Insert(0, InstantiatedFish.GetComponent<FishController>());
         }
     }
+
+    public void AddToList(FishController fish)
+    {
+        FishList.Insert(0, fish);
+    }
+
 }
