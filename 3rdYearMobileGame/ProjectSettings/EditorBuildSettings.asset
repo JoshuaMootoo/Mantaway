@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/LevelSelect.unity
     guid: 92814221ee4e0b74e90ac2b016ce321a
   - enabled: 1
-    path: Assets/Scenes/Proto 3d scene.unity
+    path: Assets/Scenes/Level2.unity
     guid: c786943f85abd8b4a93547679abba9f4
   - enabled: 0
     path: 
