@@ -5,8 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class LoadScene : MonoBehaviour
 {
-    public void OnLoadScene(Object sceneName)
+    public void OnLoadScene(int sceneNumber)
     {
-        SceneManager.LoadScene(sceneName.name);
+        SceneManager.LoadScene(sceneNumber);
+    }
+
+    public void OnRestartLevel()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
