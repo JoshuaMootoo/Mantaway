@@ -7,6 +7,7 @@ TagManager:
   - Fish
   - Mine
   - Terrain
+  - HUD
   layers:
   - Default
   - TransparentFX
