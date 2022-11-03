@@ -572,8 +572,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32ec02f35faf9ca4b960a156cfa136ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  avgFrameRate: 0
   display_Text: {fileID: 1726154333}
+  Granularity: 5
 --- !u!1 &5146694023176362482
 GameObject:
   m_ObjectHideFlags: 0

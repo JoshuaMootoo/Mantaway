@@ -2219,6 +2219,7 @@ MonoBehaviour:
   fishPrefab: {fileID: 1163991604495920708, guid: 176db388813424a4695bc6dce435d88b, type: 3}
   targetObject: {fileID: 1983242504}
   FishList: []
+  targetPositions: []
 --- !u!4 &772850867 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2294779934670019171, guid: 2437fe0cb3182364c847efed57774178, type: 3}
@@ -4757,6 +4758,7 @@ MonoBehaviour:
   charging: 0
   turnRate: 0.5
   pastPosition: []
+  pastPositionList: []
   fishCount: {fileID: 1017324827}
   healthBar: {fileID: 1911058044}
   boostBar: {fileID: 553217892}

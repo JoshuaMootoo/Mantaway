@@ -58,5 +58,25 @@ public class CrateController : MonoBehaviour
             }
         }
     }
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            //Break Crate when colliding with it during boost
+            if (collision.gameObject.GetComponent<PlayerController>().boosting == true & player.GetComponent<PlayerController>().foundFish >= fishRequirement)
+            {
+                for (int i = 0; i < heldFish; i++)
+                {
+                    fishManager.SpawnFish(1, transform.position + new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1)));
+                }
+
+
+                FindObjectOfType<AudioManager>().Play("CrateSmash");
+
+                Destroy(gameObject);
+
+            }
+        }
+    }
 
 }
