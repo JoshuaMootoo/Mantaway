@@ -23,6 +23,7 @@ public class EndLevel : MonoBehaviour
         {
 
             FindObjectOfType<GameManager>().LevelComplete();
+            
         }
     }
 }

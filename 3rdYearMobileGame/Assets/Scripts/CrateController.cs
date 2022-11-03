@@ -37,6 +37,8 @@ public class CrateController : MonoBehaviour
             {
                 rb.AddForce((transform.position - collision.gameObject.transform.position).normalized * 10, ForceMode.Impulse);
                 rb.AddTorque(new Vector3(Random.Range(0.5f, 1f), Random.Range(0.5f, 1f), Random.Range(0.5f, 1f)).normalized * torqueStrength, ForceMode.Impulse);
+
+                FindObjectOfType<AudioManager>().Play("CrateCollision");
             }
 
             //Break Crate when colliding with it during boost
@@ -44,6 +46,8 @@ public class CrateController : MonoBehaviour
             {
 
                 fishManager.SpawnFish(heldFish, transform.position);
+
+                FindObjectOfType<AudioManager>().Play("CrateSmash");
 
                 Destroy(gameObject);
 

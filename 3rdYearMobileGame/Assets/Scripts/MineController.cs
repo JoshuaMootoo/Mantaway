@@ -20,10 +20,12 @@ public class MineController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            
-           // Instantiate(THIS WILL BE A PARTICLE EFFECT, transform.position, transform.rotation);
 
-            Destroy(gameObject);
+            // Instantiate(THIS WILL BE A PARTICLE EFFECT, transform.position, transform.rotation);
+
+            FindObjectOfType<AudioManager>().Play("MineExplosion");
+
+            Destroy(gameObject);    
         }
     }
 }

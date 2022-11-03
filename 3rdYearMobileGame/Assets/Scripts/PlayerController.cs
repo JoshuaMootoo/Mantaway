@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     public int foundFish;
     
     //Player speed variables
-    [HideInInspector] public float playerSpeed = 5f;
+    public float playerSpeed = 5f;
     public float playerDefaultSpeed = 5f;
     public float playerSlowSpeed = 2.5f;
     public float playerBoostSpeed = 10f;
@@ -140,10 +140,8 @@ public class PlayerController : MonoBehaviour
                 audioManager.Play("CollectFish");
 
             }
-          
 
         }
-
         
         if(collision.gameObject.CompareTag("Mine"))
         {
@@ -152,6 +150,8 @@ public class PlayerController : MonoBehaviour
 
             Debug.Log("Health = " + health);
         }
+
+        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -159,6 +159,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Terrain"))
         {
             audioManager.Play("TerrainCollision");
+            Debug.Log("terrain collision");
         }
 
     }
@@ -174,12 +175,13 @@ public class PlayerController : MonoBehaviour
         rightWing.emitting = false;
         leftWing.emitting = false;
 
+
         animator.SetBool(animIDTLeft, false);
         animator.SetBool(animIDTRight, false);
         animator.SetBool(animIDCharging, false);
         animator.SetBool(animIDBoost, false);
 
-
+        //touch Controls
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -187,6 +189,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log(touchPosition);
             if (Input.touchCount < 2)
             {
+                charging = false;
                 if (touchPosition.x < .5)
                 {
                     turnLeft();
@@ -204,6 +207,7 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        //Keyboard Controls
         if (Input.GetKey(KeyCode.LeftArrow) & !Input.GetKey(KeyCode.RightArrow))
         {
             turnLeft();
@@ -218,26 +222,48 @@ public class PlayerController : MonoBehaviour
         {
             slowDown();
         }
+        else if (!Input.GetKey(KeyCode.LeftArrow) & !Input.GetKey(KeyCode.RightArrow))
+        {
+            charging = false;
+        }
 
+
+        if (charging & boostCharge < boostChargeMax)
+        {
+            boostCharge = boostCharge + (boostChargeRate * Time.deltaTime);
+            Debug.Log("boostCharge = " + boostCharge);
+        }
+        else if(!charging & boostCharge > 0  || boosting & boostCharge > 0)
+        {
+            boostCharge = boostCharge - (boostChargeRate * Time.deltaTime);
+            audioManager.Stop("BoostCharging");
+        }
+
+
+        //Initiate Boosting
         if (boostCharge > boostChargeMax & boosting == false)
         {
             boosting = true;
             boostTime = boostTimeMax;
-            // playerSpeed = playerBoostSpeed;
+            audioManager.Play("Boosting");
+            audioManager.Play("BoostStart");
+            audioManager.Stop("BoostCharging");
         }
 
         if (boosting == true)
         {
             rightWing.emitting = true;
             leftWing.emitting = true;
-            playerSpeed = playerBoostSpeed;
+            //playerSpeed = playerBoostSpeed;
+            playerSpeed = Mathf.Lerp(playerBoostSpeed, playerSpeed, Time.deltaTime);
             boostTime = boostTime - (1 * Time.deltaTime);
             Debug.Log("BoostTime = " + boostTime);
             animator.SetBool(animIDBoost, true);
 
-            if (boostTime <= 0)
+            if (boostTime <= 0) //stop boosting 
             {
                 boosting = false;
+                audioManager.Stop("Boosting");
             }
         }
 
@@ -245,7 +271,8 @@ public class PlayerController : MonoBehaviour
         {
             transform.Rotate(0, -150f * Time.deltaTime, 0);
 
-            boostCharge = 0;
+            //boostCharge = 0;
+            charging = false;
             rightWing.emitting = true;
             leftWing.emitting = false;
 
@@ -257,7 +284,8 @@ public class PlayerController : MonoBehaviour
         {
             transform.Rotate(0, 150f * Time.deltaTime, 0);
 
-            boostCharge = 0;
+            //boostCharge = 0;
+            charging = false;
             rightWing.emitting = false;
             leftWing.emitting = true;
 
@@ -270,18 +298,28 @@ public class PlayerController : MonoBehaviour
             rightWing.emitting = false;
             leftWing.emitting = false;
             playerSpeed = playerSlowSpeed;
-            boostCharge = boostCharge + (boostChargeRate * Time.deltaTime);
-            Debug.Log("boostCharge = " + boostCharge);
+
+            if(!charging & !boosting)
+            {
+                charging = true;
+                audioManager.Play("BoostCharging");
+            }
 
             currentPlayerState = PlayerState.slowingDown;
             animator.SetBool(animIDCharging, true);
+           
         }
 
 
+        //final Movement of player position
 
         controller.Move(transform.forward * playerSpeed * Time.deltaTime);
 
-      
+        //rb.MovePosition(transform.position + new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * playerSpeed * Time.deltaTime);
+
+        //transform.position = transform.position + transform.forward * playerSpeed * Time.deltaTime;
+
+
     }
 
     private void AssignAnimationIDs()
