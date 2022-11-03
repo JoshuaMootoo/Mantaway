@@ -334,7 +334,7 @@ MonoBehaviour:
   sounds:
   - name: LevelComplete
     clip: {fileID: 8300000, guid: 038f1657893a0c048a86e59221873a84, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     outputAudioMixerGroup: {fileID: -6986168817390629419, guid: 470973d26f4015149a4ae959d374a5c7, type: 2}
     loop: 0
@@ -369,8 +369,8 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: CrateSmash
     clip: {fileID: 8300000, guid: 253688bbf952c6d4d89dba252245c70f, type: 3}
-    volume: 1
-    pitch: 1
+    volume: 0.4
+    pitch: 0.3
     outputAudioMixerGroup: {fileID: -2833884473609145981, guid: 470973d26f4015149a4ae959d374a5c7, type: 2}
     loop: 0
     source: {fileID: 0}
@@ -7639,6 +7639,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1828852670379531998, guid: f3690061a6ddf274dbfe7b8999a6429f, type: 3}
+      propertyPath: heldFish
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1828852670379531999, guid: f3690061a6ddf274dbfe7b8999a6429f, type: 3}
       propertyPath: m_Name
       value: Crate (1)
@@ -7710,6 +7714,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1828852670379531938, guid: f3690061a6ddf274dbfe7b8999a6429f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828852670379531998, guid: f3690061a6ddf274dbfe7b8999a6429f, type: 3}
+      propertyPath: heldFish
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1828852670379531999, guid: f3690061a6ddf274dbfe7b8999a6429f, type: 3}
@@ -7923,15 +7931,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2376322561679120848, guid: c114e8b1b82f7a548895304c9cffbea9, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.60351664
+      value: 0.6035167
       objectReference: {fileID: 0}
     - target: {fileID: 2376322561679120848, guid: c114e8b1b82f7a548895304c9cffbea9, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000024733216
+      value: -0.000000024733204
       objectReference: {fileID: 0}
     - target: {fileID: 2376322561679120848, guid: c114e8b1b82f7a548895304c9cffbea9, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000018720636
+      value: 0.000000018720629
       objectReference: {fileID: 0}
     - target: {fileID: 2376322561679120848, guid: c114e8b1b82f7a548895304c9cffbea9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -8073,15 +8081,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2811294324523364729, guid: b7025aeae82202644870109187c945cf, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.60351664
+      value: 0.6035167
       objectReference: {fileID: 0}
     - target: {fileID: 2811294324523364729, guid: b7025aeae82202644870109187c945cf, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000024733216
+      value: -0.000000024733204
       objectReference: {fileID: 0}
     - target: {fileID: 2811294324523364729, guid: b7025aeae82202644870109187c945cf, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000018720636
+      value: 0.000000018720629
       objectReference: {fileID: 0}
     - target: {fileID: 2811294324523364729, guid: b7025aeae82202644870109187c945cf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
