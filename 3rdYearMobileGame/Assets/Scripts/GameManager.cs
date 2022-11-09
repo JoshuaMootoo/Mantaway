@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
 
     void Exit()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("LevelSelect");
     }
 
 
