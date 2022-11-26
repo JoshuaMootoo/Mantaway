@@ -7,10 +7,20 @@ public class FishCount : MonoBehaviour
 {
     public TextMeshProUGUI fishCount;
 
+    public int maxFish;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+       foreach( FishController fish in FindObjectsOfType<FishController>())
+        {
+            maxFish += 1;
+        }
+
+       foreach (CrateController crate in FindObjectsOfType<CrateController>())
+        {
+            maxFish += crate.heldFish;
+        }
     }
 
     // Update is called once per frame
@@ -21,6 +31,6 @@ public class FishCount : MonoBehaviour
 
     public void SetFishCount(int foundFish)
     {
-        fishCount.SetText("Fish " + foundFish + "/100");
+        fishCount.SetText("Fish " + foundFish + "/" + maxFish);
     }
 }
