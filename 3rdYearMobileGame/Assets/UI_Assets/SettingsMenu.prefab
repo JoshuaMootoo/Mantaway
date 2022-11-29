@@ -397,7 +397,7 @@ GameObject:
   - component: {fileID: 5252121769481505150}
   - component: {fileID: 5252121769481505145}
   m_Layer: 5
-  m_Name: SettingsPannel
+  m_Name: SettingsPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -569,7 +569,7 @@ GameObject:
   - component: {fileID: 5252121769547645138}
   - component: {fileID: 5252121769547645133}
   m_Layer: 5
-  m_Name: SettingsPannel
+  m_Name: SettingsPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2135,7 +2135,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Joshua Mootoo \u2013 UI Programmer\r\nJimmy Ramelkamp \u2013 Gameplay
-    Programmer\r\nKonstanine Teale \u2013 Gameplay Programmer/3D Artist\r\nChanae
+    Programmer\r\nKonstantin Teale \u2013 Gameplay Programmer/3D Artist\r\nChanae
     Henry \u2013 2D artist\r\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c544509944e666e49aab6ebdb75c1455, type: 2}
