@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
     public float healingDelayTimerMax = 4;
     public float healingRate = 0.5f;
     public bool healing;
-
    
     public int foundFish;
     
@@ -20,6 +19,11 @@ public class PlayerController : MonoBehaviour
     public float playerDefaultSpeed = 5f;
     public float playerSlowSpeed = 2.5f;
     public float playerBoostSpeed = 10f;
+
+    float rotationY;
+    public bool correcting = false;
+    public float initialAngle;
+    public float correctingTime;
 
     //Boost variables
     [HideInInspector] float boostCharge;
@@ -219,19 +223,36 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftArrow) & !Input.GetKey(KeyCode.RightArrow))
             {
                 turnLeft();
+                correcting = false;
+
             }
 
             else if (Input.GetKey(KeyCode.RightArrow) & !Input.GetKey(KeyCode.LeftArrow))
             {
                 turnRight();
+                correcting = false;
+
             }
 
             else if (Input.GetKey(KeyCode.LeftArrow) & Input.GetKey(KeyCode.RightArrow))
             {
                 slowDown();
+                correcting = false;
             }
             else if (!Input.GetKey(KeyCode.LeftArrow) & !Input.GetKey(KeyCode.RightArrow))
             {
+                if(!correcting)
+                {
+                    initialAngle = rotationY;
+                    correctingTime = 0;
+                    correcting = true;
+                }
+                if(correcting)
+                {
+                    courseCorrection(initialAngle, correctingTime);
+                    correctingTime += Time.deltaTime;
+
+                }
                 charging = false;
             }
         }
@@ -279,7 +300,8 @@ public class PlayerController : MonoBehaviour
 
         void turnLeft()
         {
-            transform.Rotate(0, -150f * Time.deltaTime, 0);
+            //transform.Rotate(0, -150f * Time.deltaTime, 0);
+            rotationY += -150f * Time.deltaTime;
 
             //boostCharge = 0;
             charging = false;
@@ -292,7 +314,8 @@ public class PlayerController : MonoBehaviour
 
         void turnRight()
         {
-            transform.Rotate(0, 150f * Time.deltaTime, 0);
+            //transform.Rotate(0, 150f * Time.deltaTime, 0);
+            rotationY += 150f * Time.deltaTime;
 
             //boostCharge = 0;
             charging = false;
@@ -320,14 +343,18 @@ public class PlayerController : MonoBehaviour
            
         }
 
+        void courseCorrection(float angle, float timeCount)
+        {
+            rotationY = Mathf.Lerp(angle, 0, timeCount);
+        }
+
+
 
         //final Movement of player position
 
+        rotationY = Mathf.Clamp(rotationY, -90, 90);
+        transform.rotation = Quaternion.Euler(0, rotationY, 0);
         controller.Move(transform.forward * playerSpeed * Time.deltaTime);
-
-        //rb.MovePosition(transform.position + new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * playerSpeed * Time.deltaTime);
-
-        //transform.position = transform.position + transform.forward * playerSpeed * Time.deltaTime;
 
        
 
