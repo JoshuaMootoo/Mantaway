@@ -2,18 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    bool gameOver = false;
-    bool levelComplete = false;
-    public float restarDelay = 1f;
+    public bool isGameOver;
+    public bool isLevelComplete;
 
-    public GameObject LevelCompletePanel;
-    public GameObject GameOverPanel;
+    public float timerValue;
 
     AudioManager audioManager;
-
+    UIManager uIManager;
     //public static GameManager instance;
 
     private void Awake()
@@ -28,6 +27,7 @@ public class GameManager : MonoBehaviour
         //DontDestroyOnLoad(gameObject);
 
         audioManager = FindObjectOfType<AudioManager>();
+        uIManager = FindObjectOfType<UIManager>();
     }
 
     // Start is called before the first frame update
@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = 60;
         //QualitySettings.vSyncCount = 1;
 
+        timerValue = 0;
 
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
@@ -43,50 +44,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-
-    public void GameOver()
+    private void Update()
     {
-        if(gameOver == false)
+        timerValue += Time.deltaTime;
+
+    }    
+    
+    public void EndGame(bool _isGameOver, bool _isLevelComplete)
+    {
+        isGameOver = _isGameOver;
+        isLevelComplete = _isLevelComplete;
+
+        Time.timeScale = 0;
+
+        uIManager.endGameTime = timerValue;
+        uIManager.EndGame(true);
+
+        if (isGameOver)
         {
-            gameOver = true;
             Debug.Log("GameOver");
-            GameOverPanel.SetActive(true);
-            FindObjectOfType<AudioManager>().Play("LevelFail");
-            Invoke("Restart", restarDelay);
-        }
-    }
-
-    public void LevelComplete()
-    {
-        if(levelComplete == false)
+            audioManager.Play("LevelFail");
+        } 
+        if (isLevelComplete)
         {
-            levelComplete = true;
             Debug.Log("Level Complete");
-            LevelCompletePanel.SetActive(true);
-            FindObjectOfType<AudioManager>().Play("LevelComplete");
-            Invoke("Exit", restarDelay);
-        }
+            audioManager.Play("LevelFail");
+        }        
     }
-
-    void Restart()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    void Exit()
-    {
-        SceneManager.LoadScene("LevelSelect");
-    }
-
-
-   
-
-    // Update is called once per frame
-    void Update()
-    {
-     
-    }
-
-
 }

@@ -8,8 +8,7 @@ public class EndLevel : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-
-            FindObjectOfType<GameManager>().LevelComplete();
+            FindObjectOfType<GameManager>().EndGame(false, true);
             
         }
     }

@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour
     public static bool isPaused = false;
     public GameObject gameHUD, pauseMenu;
 
+
     private void Start()
     {
         gameHUD = GameObject.FindGameObjectWithTag("HUD");

@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
 
         if (health <= 0)
         {
-            FindObjectOfType<GameManager>().GameOver();
+            FindObjectOfType<GameManager>().EndGame(true, false);
             Destroy(gameObject);
         }
 
