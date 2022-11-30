@@ -7,12 +7,18 @@ using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     GameManager gameManager;
+    FishCount fishCount;
+    PlayerController playerController;
 
     [Header("UI Panels")]
     [SerializeField] GameObject gameplayUI;
     [SerializeField] GameObject endGameUI;
+    [SerializeField] GameObject pauseMenuUI;
 
-    [Header("End Game UI Elements")]
+    [Header("Pause Menu UI Variables")]    
+    public static bool isPaused = false;
+
+    [Header("End Game UI Variables")]
     public TMP_Text endLevelText;
     public TMP_Text starRatingText;
     public GameObject[] stars = new GameObject[3];
@@ -25,6 +31,8 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
+        fishCount = FindObjectOfType<FishCount>();
+        playerController = FindObjectOfType<PlayerController>();
     }
 
     private void DisplayTimeInMin(float _endGameTime)
@@ -45,6 +53,7 @@ public class UIManager : MonoBehaviour
         endGameUI.SetActive(hasGameEnded);
 
         DisplayTimeInMin(endGameTime);
+        fishCountText.text = string.Format("Fish Collected - {0:00}/{1:00}", playerController.foundFish, fishCount.maxFish);
 
         if (gameManager.isGameOver)
         {
@@ -64,7 +73,14 @@ public class UIManager : MonoBehaviour
         }
     }
 
-//------------------------------------------------------ ADDED TO BUTTONS IN ENGINE ------------------------------------------------------
+    //------------------------------------------------------ ADDED TO BUTTONS IN ENGINE ------------------------------------------------------
+
+    public void Pause()
+    {
+        gameplayUI.SetActive(false);
+        pauseMenuUI.SetActive(true);
+        Time.timeScale = 0;
+    }
 
     public void NextLevel()
     {
@@ -81,6 +97,13 @@ public class UIManager : MonoBehaviour
     public void QuitGame()
     {
         SceneManager.LoadScene("LevelSelect");
+        Time.timeScale = 1;
+    }
+
+    public void Resume()
+    {
+        gameplayUI.SetActive(true);
+        pauseMenuUI.SetActive(false);
         Time.timeScale = 1;
     }
 }
