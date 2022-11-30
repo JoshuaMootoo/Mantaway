@@ -14,9 +14,9 @@ public class InstructionBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("ShowClose", 5);
         PauseUI.SetActive(false);
-        GameHUD.SetActive(false); 
+        GameHUD.SetActive(false);
+        Time.timeScale = 0;
     }
 
     // Update is called once per frame
@@ -35,5 +35,6 @@ public class InstructionBehaviour : MonoBehaviour
         this.gameObject.SetActive(false);
         PauseUI.SetActive(true);
         GameHUD.SetActive(true);
+        Time.timeScale = 1;
     }
 }
