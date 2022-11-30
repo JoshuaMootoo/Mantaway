@@ -7,6 +7,7 @@ public class FishCount : MonoBehaviour
 {
     public TextMeshProUGUI fishCount;
 
+    public int collectedfish;
     public int maxFish;
 
     // Start is called before the first frame update
@@ -31,6 +32,7 @@ public class FishCount : MonoBehaviour
 
     public void SetFishCount(int foundFish)
     {
-        fishCount.SetText("Fish " + foundFish + "/" + maxFish);
+        collectedfish = foundFish;
+        fishCount.SetText("Fish " + collectedfish + "/" + maxFish);
     }
 }
