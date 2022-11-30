@@ -324,7 +324,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2403347077675403342}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -55.63, y: 2, z: -2.88}
   m_LocalScale: {x: 0.73484, y: 0.73484, z: 0.73484}
   m_ConstrainProportionsScale: 0
@@ -351,18 +351,22 @@ MonoBehaviour:
   healingDelayTimerMax: 2
   healingRate: 0.5
   healing: 0
+  oilDamageRate: 1
   foundFish: 0
-  playerSpeed: 5
-  playerDefaultSpeed: 5
-  playerSlowSpeed: 2.5
-  playerBoostSpeed: 10
+  playerSpeed: 7
+  playerDefaultSpeed: 7
+  playerSlowSpeed: 0.5
+  playerBoostSpeed: 2
+  boostLerpTimeSpeed: 3
+  addedFishSpeedModifier: 0.5
   boostChargeMax: 100
-  boostChargeRate: 100
-  boostTimeMax: 3
+  boostChargeRate: 200
+  boostTimeMax: 2
   boosting: 0
   charging: 0
   turnRate: 0.5
   pastPosition: []
+  pastPositionList: []
   fishCount: {fileID: 0}
   healthBar: {fileID: 0}
   boostBar: {fileID: 0}
@@ -401,7 +405,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 0
 --- !u!136 &2403347077675403328
 CapsuleCollider:
@@ -1551,8 +1555,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9047241510125478478}
-  m_LocalRotation: {x: 0.9999982, y: -0.0000000049859996, z: 0.0000026226007, w: -0.0019010964}
-  m_LocalPosition: {x: 2.0831706e-18, y: 0.006076022, z: 0.0002822236}
+  m_LocalRotation: {x: 0.9999982, y: -0.0000000049859636, z: 0.0000026226007, w: -0.0019010603}
+  m_LocalPosition: {x: 0, y: -3.7252902e-11, z: 0.0002822232}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

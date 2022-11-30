@@ -52,6 +52,8 @@ public class FishManager : MonoBehaviour
             GameObject InstantiatedFish = Instantiate(fishPrefab, position, Quaternion.Euler(0,0,0));
 
             InstantiatedFish.GetComponent<FishController>().following = true;
+            InstantiatedFish.GetComponent<FishController>().fishSpeed = targetObject.gameObject.GetComponent<PlayerController>().playerSpeed;
+
             //InstantiatedFish.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1)).normalized * 5, ForceMode.Impulse);
             targetObject.gameObject.GetComponent<PlayerController>().foundFish += 1;
 
@@ -61,7 +63,13 @@ public class FishManager : MonoBehaviour
 
     public void AddToList(FishController fish)
     {
+        fish.GetComponent<FishController>().fishSpeed = targetObject.gameObject.GetComponent<PlayerController>().playerSpeed;
         FishList.Insert(0, fish);
+    }
+
+    public void RemoveFromList()
+    {
+        FishList.RemoveAt(FishList.Count - 1);
     }
 
 }

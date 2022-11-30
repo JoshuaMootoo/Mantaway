@@ -11,19 +11,24 @@ public class PlayerController : MonoBehaviour
     public float healingDelayTimerMax = 4;
     public float healingRate = 0.5f;
     public bool healing;
-   
+
+    public float oilDamageRate = 1;
     public int foundFish;
     
     //Player speed variables
     public float playerSpeed = 5f;
     public float playerDefaultSpeed = 5f;
-    public float playerSlowSpeed = 2.5f;
-    public float playerBoostSpeed = 10f;
+    public float playerSlowSpeed = 0.5f;
+    public float playerBoostSpeed = 2f;
+    float boostLerpTime;
+    public float boostLerpTimeSpeed = 3;
+    public float addedFishSpeedModifier = 0.1f;
 
+    //Player Rotation Variables
     float rotationY;
-    public bool correcting = false;
-    public float initialAngle;
-    public float correctingTime;
+    bool correcting = false;
+    float initialAngle;
+    float correctingTime;
 
     //Boost variables
     [HideInInspector] float boostCharge;
@@ -42,6 +47,7 @@ public class PlayerController : MonoBehaviour
     CharacterController controller;
 
     AudioManager audioManager;
+    FishManager fishManager;
 
     //Hud objects
     public FishCount fishCount;
@@ -80,6 +86,7 @@ public class PlayerController : MonoBehaviour
         controller = GetComponent<CharacterController>();
 
         audioManager = FindObjectOfType<AudioManager>();
+        fishManager = FindObjectOfType<FishManager>();
 
         // find and set animator IDs
         hasAnimator = TryGetComponent(out animator);
@@ -154,11 +161,23 @@ public class PlayerController : MonoBehaviour
         {
             health -= 1;
             healingDelayTimer = healingDelayTimerMax;
+            foundFish -= 1;
+            fishManager.RemoveFromList();
 
             Debug.Log("Health = " + health);
         }
 
         
+
+        
+    }
+
+    private void OnTriggerStay(Collider collision)
+    {
+        if (collision.gameObject.CompareTag("Oil"))
+        {
+            health -= oilDamageRate * Time.deltaTime;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -176,8 +195,8 @@ public class PlayerController : MonoBehaviour
     //Player Movement and Input
     void Movement()
     {
-
-        playerSpeed = playerDefaultSpeed;
+        float addedFishSpeed = addedFishSpeedModifier * foundFish;
+        playerSpeed = playerDefaultSpeed + addedFishSpeed;
 
         rightWing.emitting = false;
         leftWing.emitting = false;
@@ -274,6 +293,7 @@ public class PlayerController : MonoBehaviour
         //Initiate Boosting
         if (boostCharge > boostChargeMax & boosting == false)
         {
+            boostLerpTime = 0;
             boosting = true;
             boostTime = boostTimeMax;
             audioManager.Play("Boosting");
@@ -285,8 +305,10 @@ public class PlayerController : MonoBehaviour
         {
             rightWing.emitting = true;
             leftWing.emitting = true;
-            //playerSpeed = playerBoostSpeed;
-            playerSpeed = Mathf.Lerp(playerBoostSpeed, playerSpeed, Time.deltaTime);
+      
+            playerSpeed = (playerDefaultSpeed  + addedFishSpeed) * Mathf.SmoothStep(playerSlowSpeed, playerBoostSpeed, boostLerpTime);
+            boostLerpTime += Time.deltaTime * boostLerpTimeSpeed;
+
             boostTime = boostTime - (1 * Time.deltaTime);
             Debug.Log("BoostTime = " + boostTime);
             animator.SetBool(animIDBoost, true);
@@ -330,7 +352,7 @@ public class PlayerController : MonoBehaviour
         {
             rightWing.emitting = false;
             leftWing.emitting = false;
-            playerSpeed = playerSlowSpeed;
+            playerSpeed = (playerDefaultSpeed + addedFishSpeed) * playerSlowSpeed;
 
             if(!charging & !boosting)
             {
@@ -356,7 +378,7 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, rotationY, 0);
         controller.Move(transform.forward * playerSpeed * Time.deltaTime);
 
-       
+        transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
 
     }
 
