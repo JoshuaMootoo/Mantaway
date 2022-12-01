@@ -9,6 +9,7 @@ TagManager:
   - Terrain
   - HUD
   - Oil
+  - SettingsUI
   layers:
   - Default
   - TransparentFX

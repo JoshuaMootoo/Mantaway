@@ -15,8 +15,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject endGameUI;
     [SerializeField] GameObject pauseMenuUI;
 
-    [Header("Pause Menu UI Variables")]    
-    public static bool isPaused = false;
+    [Header("Pause Menu UI Variables")]
+    [SerializeField] GameObject settingsUI;
 
     [Header("End Game UI Variables")]
     public TMP_Text endLevelText;
@@ -33,6 +33,8 @@ public class UIManager : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
         fishCount = FindObjectOfType<FishCount>();
         playerController = FindObjectOfType<PlayerController>();
+
+        settingsUI = GameObject.FindGameObjectWithTag("SettingsUI").transform.GetChild(0).gameObject;
     }
 
     private void DisplayTimeInMin(float _endGameTime)
@@ -82,6 +84,18 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 0;
     }
 
+    public void Resume()
+    {
+        gameplayUI.SetActive(true);
+        pauseMenuUI.SetActive(false);
+        Time.timeScale = 1;
+    }
+
+    public void Settings()
+    {
+        settingsUI.SetActive(true);
+    }
+
     public void NextLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -97,13 +111,6 @@ public class UIManager : MonoBehaviour
     public void QuitGame()
     {
         SceneManager.LoadScene("LevelSelect");
-        Time.timeScale = 1;
-    }
-
-    public void Resume()
-    {
-        gameplayUI.SetActive(true);
-        pauseMenuUI.SetActive(false);
         Time.timeScale = 1;
     }
 }

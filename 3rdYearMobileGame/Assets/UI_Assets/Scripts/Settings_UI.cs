@@ -7,6 +7,19 @@ public class Settings_UI : MonoBehaviour
 {
     public AudioMixer audioMixer;
 
+    public static Settings_UI instance;
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+        DontDestroyOnLoad(gameObject);
+    }
+
     public void SetMasterVolume (float volume)
     {
         //Debug.Log(volume);
