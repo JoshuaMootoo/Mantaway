@@ -3547,17 +3547,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 176db388813424a4695bc6dce435d88b, type: 3}
---- !u!114 &1017324827 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5146694024333139585, guid: b4e8bc4d08988bf49bd11f7c2fe24a06, type: 3}
-  m_PrefabInstance: {fileID: 5146694024276720538}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d03aaec53c7a3ac40bc5389081d566bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!43 &1036109532
 Mesh:
   m_ObjectHideFlags: 0
@@ -4185,6 +4174,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 176db388813424a4695bc6dce435d88b, type: 3}
+--- !u!114 &1136785657 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4578232391834589087, guid: b4e8bc4d08988bf49bd11f7c2fe24a06, type: 3}
+  m_PrefabInstance: {fileID: 5146694024276720538}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03aaec53c7a3ac40bc5389081d566bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1186161439
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7535,7 +7535,7 @@ PrefabInstance:
     - target: {fileID: 2403347077675403339, guid: 21123170b0d494741b6c5110dfc9b32f, type: 3}
       propertyPath: fishCount
       value: 
-      objectReference: {fileID: 1017324827}
+      objectReference: {fileID: 1136785657}
     - target: {fileID: 2403347077675403339, guid: 21123170b0d494741b6c5110dfc9b32f, type: 3}
       propertyPath: healthBar
       value: 
@@ -7817,6 +7817,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5146694023940336653, guid: b4e8bc4d08988bf49bd11f7c2fe24a06, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6772160562636104126, guid: b4e8bc4d08988bf49bd11f7c2fe24a06, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6772160562636104126, guid: b4e8bc4d08988bf49bd11f7c2fe24a06, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
