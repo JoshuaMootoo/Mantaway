@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class InstructionBehaviour : MonoBehaviour
 {
-    [SerializeField]
-    GameObject PauseUI;
+    
     [SerializeField]
     GameObject GameHUD;
     [SerializeField]
@@ -14,9 +13,8 @@ public class InstructionBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PauseUI.SetActive(false);
         GameHUD.SetActive(false);
-        Time.timeScale = 0;
+        Time.timeScale = 0.01f;
     }
 
     // Update is called once per frame
@@ -33,7 +31,6 @@ public class InstructionBehaviour : MonoBehaviour
     public void CloseInstructionUI()
     {
         this.gameObject.SetActive(false);
-        PauseUI.SetActive(true);
         GameHUD.SetActive(true);
         Time.timeScale = 1;
     }

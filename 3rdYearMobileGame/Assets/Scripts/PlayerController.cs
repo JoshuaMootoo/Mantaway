@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     //Mechanics Triggers
     public bool courseCorrectionEnabled = true;
     public bool angleLockEnabled = true;
+    public bool steeringInputFlipped = false;
 
     //Boost variables
     [HideInInspector] float boostCharge;
@@ -222,11 +223,15 @@ public class PlayerController : MonoBehaviour
             {
                 if (touchPosition.x < .5)
                 {
-                    turnLeft();
+                    if (steeringInputFlipped) turnRight();
+                    else turnLeft();
+                    correcting = false;
                 }
                 if (touchPosition.x >= .5)
                 {
-                    turnRight();
+                    if (steeringInputFlipped) turnLeft();
+                    else turnRight();
+                    correcting = false;
                 }
             }
             if (Input.touchCount >= 2)
@@ -265,14 +270,16 @@ public class PlayerController : MonoBehaviour
             //Keyboard Controls
             if (Input.GetKey(KeyCode.LeftArrow) & !Input.GetKey(KeyCode.RightArrow))
             {
-                turnLeft();
+                if (steeringInputFlipped) turnRight();
+                else turnLeft();
                 correcting = false;
 
             }
 
             else if (Input.GetKey(KeyCode.RightArrow) & !Input.GetKey(KeyCode.LeftArrow))
             {
-                turnRight();
+                if (steeringInputFlipped) turnLeft();
+                else turnRight();
                 correcting = false;
 
             }
@@ -405,7 +412,7 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, rotationY, 0);
         controller.Move(transform.forward * playerSpeed * Time.deltaTime);
 
-        transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+        transform.position = new Vector3(transform.position.x, 2f, transform.position.z);
 
     }
 

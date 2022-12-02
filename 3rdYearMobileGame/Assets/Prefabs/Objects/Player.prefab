@@ -359,6 +359,10 @@ MonoBehaviour:
   playerBoostSpeed: 2
   boostLerpTimeSpeed: 3
   addedFishSpeedModifier: 0.5
+  rotationRange: 85
+  courseCorrectionEnabled: 1
+  angleLockEnabled: 1
+  steeringInputFlipped: 0
   boostChargeMax: 100
   boostChargeRate: 200
   boostTimeMax: 2
@@ -579,7 +583,7 @@ TrailRenderer:
     shadowBias: 0.5
     generateLightingData: 0
   m_MinVertexDistance: 0.1
-  m_Autodestruct: 1
+  m_Autodestruct: 0
   m_Emitting: 1
 --- !u!1 &2765934359409943366
 GameObject:
