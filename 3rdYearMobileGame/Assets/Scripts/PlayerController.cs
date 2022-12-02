@@ -25,10 +25,15 @@ public class PlayerController : MonoBehaviour
     public float addedFishSpeedModifier = 0.1f;
 
     //Player Rotation Variables
+    public float rotationRange = 85;
     float rotationY;
     bool correcting = false;
     float initialAngle;
     float correctingTime;
+
+    //Mechanics Triggers
+    public bool courseCorrectionEnabled = true;
+    public bool angleLockEnabled = true;
 
     //Boost variables
     [HideInInspector] float boostCharge;
@@ -231,6 +236,25 @@ public class PlayerController : MonoBehaviour
             }
             else if (Input.touchCount != 2)
             {
+
+                if(courseCorrectionEnabled)
+                {
+                    if (!correcting)
+                    {
+                        initialAngle = rotationY;
+                        correctingTime = 0;
+                        correcting = true;
+                    }
+                    if (correcting)
+                    {
+                        courseCorrection(initialAngle, correctingTime);
+                        correctingTime += Time.deltaTime;
+
+                    }
+                }
+                
+
+
                 charging = false;
             }
 
@@ -260,17 +284,20 @@ public class PlayerController : MonoBehaviour
             }
             else if (!Input.GetKey(KeyCode.LeftArrow) & !Input.GetKey(KeyCode.RightArrow))
             {
-                if(!correcting)
+                if (courseCorrectionEnabled)
                 {
-                    initialAngle = rotationY;
-                    correctingTime = 0;
-                    correcting = true;
-                }
-                if(correcting)
-                {
-                    courseCorrection(initialAngle, correctingTime);
-                    correctingTime += Time.deltaTime;
+                    if (!correcting)
+                    {
+                        initialAngle = rotationY;
+                        correctingTime = 0;
+                        correcting = true;
+                    }
+                    if (correcting)
+                    {
+                        courseCorrection(initialAngle, correctingTime);
+                        correctingTime += Time.deltaTime;
 
+                    }
                 }
                 charging = false;
             }
@@ -374,7 +401,7 @@ public class PlayerController : MonoBehaviour
 
         //final Movement of player position
 
-        rotationY = Mathf.Clamp(rotationY, -90, 90);
+        if (angleLockEnabled) rotationY = Mathf.Clamp(rotationY, -rotationRange, rotationRange);
         transform.rotation = Quaternion.Euler(0, rotationY, 0);
         controller.Move(transform.forward * playerSpeed * Time.deltaTime);
 
