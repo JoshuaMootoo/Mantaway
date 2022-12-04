@@ -6,21 +6,12 @@ public class EelBehaviour : MonoBehaviour
 {
     Animator animator;
 
-    [SerializeField]
-    BoxCollider aggroArea;
-
-    [SerializeField]
-    BoxCollider damageArea;
-
-    GameObject player;
-
     int attackAnimID;
-    bool isAttacking;
+    bool isAttacking = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        player = FindObjectOfType<PlayerController>().gameObject;
 
         // Find Animator
         animator = GetComponent<Animator>();
@@ -29,14 +20,21 @@ public class EelBehaviour : MonoBehaviour
         attackAnimID = Animator.StringToHash("Attack");
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnTriggerEnter(Collider other)
     {
-        
+        // Attack on Area enter
+        Debug.Log("Entered Attack area");
+        if (!isAttacking)
+        {
+            animator.SetTrigger(attackAnimID);
+            isAttacking = true;
+        }
     }
 
-    void Attack()
+    void OnAttackEnd()
     {
-        animator.SetTrigger(attackAnimID);
+        // Reset Attack after end
+
+        isAttacking = false;
     }
 }
