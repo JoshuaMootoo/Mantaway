@@ -98,9 +98,10 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    public void QuitGame()
+    public void QuitGame(bool mainMenu)
     {
-        SceneManager.LoadScene("LevelSelect");
+        if (mainMenu) SceneManager.LoadScene("MainMenu");
+        else SceneManager.LoadScene("LevelSelect");
         Time.timeScale = 1;
     }
 }
