@@ -14,8 +14,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject gameplayUI;
     [SerializeField] GameObject endGameUI;
     [SerializeField] GameObject pauseMenuUI;
-
-    [Header("Pause Menu UI Variables")]
     [SerializeField] GameObject settingsUI;
 
     [Header("End Game UI Variables")]
@@ -33,8 +31,6 @@ public class UIManager : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
         fishCount = FindObjectOfType<FishCount>();
         playerController = FindObjectOfType<PlayerController>();
-
-        settingsUI = GameObject.FindGameObjectWithTag("SettingsUI").transform.GetChild(0).gameObject;
     }
 
     private void DisplayTimeInMin(float _endGameTime)
@@ -46,7 +42,7 @@ public class UIManager : MonoBehaviour
 
     public void StarReward(int whatStar, bool hasAquired)
     {
-        stars[whatStar].gameObject.SetActive(hasAquired);
+        stars[whatStar].SetActive(hasAquired);
     }
 
     public void EndGame(bool hasGameEnded)
@@ -77,23 +73,17 @@ public class UIManager : MonoBehaviour
 
     //------------------------------------------------------ ADDED TO BUTTONS IN ENGINE ------------------------------------------------------
 
-    public void Pause()
+    public void PauseMenu(bool isPaused)
     {
-        gameplayUI.SetActive(false);
-        pauseMenuUI.SetActive(true);
-        Time.timeScale = 0;
+        gameplayUI.SetActive(!isPaused);
+        pauseMenuUI.SetActive(isPaused);
+        if (isPaused) Time.timeScale = 0;
+        else Time.timeScale = 1;
     }
 
-    public void Resume()
+    public void Settings(bool isActve)
     {
-        gameplayUI.SetActive(true);
-        pauseMenuUI.SetActive(false);
-        Time.timeScale = 1;
-    }
-
-    public void Settings()
-    {
-        settingsUI.SetActive(true);
+        settingsUI.SetActive(isActve);
     }
 
     public void NextLevel()
@@ -108,9 +98,10 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    public void QuitGame()
+    public void QuitGame(bool mainMenu)
     {
-        SceneManager.LoadScene("LevelSelect");
+        if (mainMenu) SceneManager.LoadScene("MainMenu");
+        else SceneManager.LoadScene("LevelSelect");
         Time.timeScale = 1;
     }
 }
