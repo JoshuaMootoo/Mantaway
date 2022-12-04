@@ -242,31 +242,33 @@ public class PlayerController : MonoBehaviour
                 slowDown();
                 correcting = false;
             }
-            else if (Input.touchCount != 2)
-            {
-
-                if(courseCorrectionEnabled)
-                {
-                    if (!correcting)
-                    {
-                        initialAngle = rotationY;
-                        correctingTime = 0;
-                        correcting = true;
-                    }
-                    if (correcting)
-                    {
-                        courseCorrection(initialAngle, correctingTime);
-                        correctingTime += Time.deltaTime;
-
-                    }
-                }
-                
-
-
-                charging = false;
-            }
+            
 
         }
+        else if (Input.touchCount == 0)
+        {
+
+            if (courseCorrectionEnabled)
+            {
+                if (!correcting)
+                {
+                    initialAngle = rotationY;
+                    correctingTime = 0;
+                    correcting = true;
+                }
+                if (correcting)
+                {
+                    courseCorrection(initialAngle, correctingTime);
+                    correctingTime += Time.deltaTime;
+
+                }
+            }
+
+
+
+            charging = false;
+        }
+
         //Check if the device running this is a desktop
         if (SystemInfo.deviceType == DeviceType.Desktop)
         {
