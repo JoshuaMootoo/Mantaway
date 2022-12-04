@@ -5,22 +5,36 @@ using UnityEngine;
 public class InstructionBehaviour : MonoBehaviour
 {
     
-    [SerializeField]
+   
     GameObject GameHUD;
     [SerializeField]
     GameObject CloseButton;
+    [SerializeField]
+    float slowmotionSpeed = 0.03f; 
+    [SerializeField]
+    float timerLength = 2;
+    float timer;
+
+    void Awake()
+    {
+        GameHUD = GameObject.FindGameObjectWithTag("HUD");
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         GameHUD.SetActive(false);
-        Time.timeScale = 0.01f;
+        Time.timeScale = slowmotionSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (timer < timerLength & !CloseButton.activeSelf) timer += 1 * Time.unscaledDeltaTime;
+        if (timer >= timerLength & !CloseButton.activeSelf)
+        {
+            ShowClose();
+        }
     }
 
     void ShowClose()

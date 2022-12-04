@@ -49,7 +49,8 @@ public class CrateController : MonoBehaviour
                 {
                     fishManager.SpawnFish(1, transform.position + new Vector3(Random.Range(-1,1) ,0,Random.Range(-1,1)));
                 }
-                
+
+                //Handheld.Vibrate();
 
                 FindObjectOfType<AudioManager>().Play("CrateSmash");
 

@@ -171,6 +171,8 @@ public class PlayerController : MonoBehaviour
             fishManager.RemoveFromList();
 
             Debug.Log("Health = " + health);
+
+            //Handheld.Vibrate();
         }
 
         
@@ -238,6 +240,7 @@ public class PlayerController : MonoBehaviour
             {
 
                 slowDown();
+                correcting = false;
             }
             else if (Input.touchCount != 2)
             {
