@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class UIManager : MonoBehaviour
     public TMP_Text fishCountText;
     public TMP_Text completionTimeText;
     public GameObject nextLevelButton;
+    public Button restartButton;
 
     public float endGameTime;
 
@@ -57,6 +59,7 @@ public class UIManager : MonoBehaviour
         {
             endLevelText.text = "Try Again";
             starRatingText.text = "";
+            restartButton.GetComponentInChildren<TMP_Text>().text = "Retry Level";
             //  set all stars aquired to false for level
             //  add fish collected to text
             nextLevelButton.SetActive(false);
@@ -65,6 +68,7 @@ public class UIManager : MonoBehaviour
         {
             endLevelText.text = "Level Complete";
             starRatingText.text = "";
+            restartButton.GetComponentInChildren<TMP_Text>().text = "Restart Level";
             //  check what stars have been aquired and activate them;
             //  add fish collected to text
             nextLevelButton.SetActive(true);

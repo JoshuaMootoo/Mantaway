@@ -2595,6 +2595,7 @@ MonoBehaviour:
   fishCountText: {fileID: 2682165190305354688}
   completionTimeText: {fileID: 7161473380981042921}
   nextLevelButton: {fileID: 5098501901396181574}
+  restartButton: {fileID: 4131130920659611938}
   endGameTime: 0
 --- !u!114 &384779788207533968
 MonoBehaviour:
@@ -6891,7 +6892,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8336230242347072160, guid: 92c10f23d114b1046958adc2095d9597, type: 3}
       propertyPath: m_Name
-      value: QuitButton
+      value: LevelSelectButton
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92c10f23d114b1046958adc2095d9597, type: 3}
@@ -7630,6 +7631,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1234181566477925820, guid: 92c10f23d114b1046958adc2095d9597, type: 3}
   m_PrefabInstance: {fileID: 3658154031464750519}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4131130920659611938 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 833418934661344405, guid: 92c10f23d114b1046958adc2095d9597, type: 3}
+  m_PrefabInstance: {fileID: 3658154031464750519}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4716503051453179671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4716503051453179671 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8336230242347072160, guid: 92c10f23d114b1046958adc2095d9597, type: 3}
@@ -8091,7 +8103,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8336230242347072160, guid: 92c10f23d114b1046958adc2095d9597, type: 3}
       propertyPath: m_Name
-      value: QuitButton (1)
+      value: MainMenuButton
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92c10f23d114b1046958adc2095d9597, type: 3}
@@ -8489,7 +8501,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8336230242347072160, guid: 92c10f23d114b1046958adc2095d9597, type: 3}
       propertyPath: m_Name
-      value: QuitButton (1)
+      value: MainMenuButton
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92c10f23d114b1046958adc2095d9597, type: 3}
@@ -9011,7 +9023,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8336230242347072160, guid: 92c10f23d114b1046958adc2095d9597, type: 3}
       propertyPath: m_Name
-      value: QuitButton
+      value: LevelSelectButton
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92c10f23d114b1046958adc2095d9597, type: 3}
