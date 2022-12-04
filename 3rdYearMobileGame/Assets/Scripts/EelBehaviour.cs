@@ -23,11 +23,13 @@ public class EelBehaviour : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         // Attack on Area enter
-        Debug.Log("Entered Attack area");
+        if (other.gameObject.tag == "Player")
+        {
         if (!isAttacking)
         {
             animator.SetTrigger(attackAnimID);
             isAttacking = true;
+        }
         }
     }
 
