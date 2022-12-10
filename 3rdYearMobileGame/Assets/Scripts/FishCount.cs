@@ -6,13 +6,8 @@ using TMPro;
 
 public class FishCount : MonoBehaviour
 {
-    public TextMeshProUGUI fishCount;
-    public Slider slider;
-
     public int collectedfish;
     public int maxFish;
-
-    float sliderPercent;
 
     // Start is called before the first frame update
     void Start()
@@ -26,15 +21,11 @@ public class FishCount : MonoBehaviour
         {
             maxFish += crate.heldFish;
         }
-        slider = GetComponent<Slider>();
-        slider.maxValue = maxFish;
     }
 
 
     public void SetFishCount(int foundFish)
     {
         collectedfish = foundFish;
-        fishCount.SetText(collectedfish + "/" + maxFish);
-        slider.value = foundFish;
     }
 }

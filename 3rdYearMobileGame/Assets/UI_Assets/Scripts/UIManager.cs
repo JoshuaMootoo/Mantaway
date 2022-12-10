@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     GameManager gameManager;
-    FishCount fishCount;
     PlayerController playerController;
 
     [Header("UI Panels")]
@@ -16,23 +15,41 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject endGameUI;
     [SerializeField] GameObject pauseMenuUI;
     [SerializeField] GameObject settingsUI;
-
+    
     [Header("End Game UI Variables")]
     public TMP_Text endLevelText;
     public TMP_Text starRatingText;
     public GameObject[] stars = new GameObject[3];
     public TMP_Text fishCountText;
+    public Slider fishCountSlider;
     public TMP_Text completionTimeText;
     public GameObject nextLevelButton;
     public Button restartButton;
 
     public float endGameTime;
 
+    [Header("Fish Counter")]
+    public int collectedfish;
+    public int maxFish;
+
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
-        fishCount = FindObjectOfType<FishCount>();
         playerController = FindObjectOfType<PlayerController>();
+
+
+        foreach (FishController fish in FindObjectsOfType<FishController>())
+        {
+            maxFish += 1;
+        }
+
+        foreach (CrateController crate in FindObjectsOfType<CrateController>())
+        {
+            maxFish += crate.heldFish;
+        }
+
+        fishCountSlider.minValue = 0;
+        fishCountSlider.maxValue = maxFish;
     }
 
     private void DisplayTimeInMin(float _endGameTime)
@@ -42,9 +59,29 @@ public class UIManager : MonoBehaviour
         completionTimeText.text = string.Format("Completion Time - {0:00}:{1:00}", mins, secs);
     }
 
+    public void SetFishCount(int foundFish)
+    {
+        collectedfish = foundFish;
+    }
+
     public void StarReward(int whatStar, bool hasAquired)
     {
         stars[whatStar].SetActive(hasAquired);
+    }
+
+    public void EndGamePlayerPrefs()
+    {
+        string endGameTimeString = "EndLevelTimeLevel" + PlayerPrefs.GetInt("CurrentLevel");
+        if (endGameTime < PlayerPrefs.GetFloat(endGameTimeString) && PlayerPrefs.HasKey(endGameTimeString) || !PlayerPrefs.HasKey(endGameTimeString))
+            PlayerPrefs.SetFloat("EndLevelTimeLevel" + PlayerPrefs.GetInt("CurrentLevel"), endGameTime);
+
+        string fishCollectedString = "FishCollectedLevel" + PlayerPrefs.GetInt("CurrentLevel");
+        if (collectedfish > PlayerPrefs.GetInt(fishCollectedString) && PlayerPrefs.HasKey(fishCollectedString) || !PlayerPrefs.HasKey(fishCollectedString))
+            PlayerPrefs.SetInt(fishCollectedString, collectedfish);
+
+        string totalFishString = "TotalFishLevel" + PlayerPrefs.GetInt("CurrentLevel");
+        if (!PlayerPrefs.HasKey(totalFishString))
+            PlayerPrefs.SetInt(totalFishString, maxFish);
     }
 
     public void EndGame(bool hasGameEnded)
@@ -53,13 +90,16 @@ public class UIManager : MonoBehaviour
         endGameUI.SetActive(hasGameEnded);
 
         DisplayTimeInMin(endGameTime);
-        fishCountText.text = string.Format("Fish Collected - {0:00}/{1:00}", playerController.foundFish, fishCount.maxFish);
+        fishCountText.text = string.Format("Fish Collected - {0:00}/{1:00}", playerController.foundFish, maxFish);
+        fishCountSlider.value = collectedfish;
 
         if (gameManager.isGameOver)
         {
             endLevelText.text = "Try Again";
             starRatingText.text = "";
             restartButton.GetComponentInChildren<TMP_Text>().text = "Retry Level";
+
+
             //  set all stars aquired to false for level
             //  add fish collected to text
             nextLevelButton.SetActive(false);
@@ -69,6 +109,7 @@ public class UIManager : MonoBehaviour
             endLevelText.text = "Level Complete";
             starRatingText.text = "";
             restartButton.GetComponentInChildren<TMP_Text>().text = "Restart Level";
+            EndGamePlayerPrefs();
             //  check what stars have been aquired and activate them;
             //  add fish collected to text
             nextLevelButton.SetActive(true);

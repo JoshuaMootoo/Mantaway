@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
     FishManager fishManager;
 
     //Hud objects
-    public FishCount fishCount;
+    public UIManager uIManager;
     public HealthBar healthBar;
     public BoostBar boostBar;
 
@@ -93,6 +93,7 @@ public class PlayerController : MonoBehaviour
 
         audioManager = FindObjectOfType<AudioManager>();
         fishManager = FindObjectOfType<FishManager>();
+        uIManager = FindObjectOfType<UIManager>();
 
         // find and set animator IDs
         hasAnimator = TryGetComponent(out animator);
@@ -116,7 +117,7 @@ public class PlayerController : MonoBehaviour
 
         boostBar.SetBoostBar(boostCharge / boostChargeMax);
         healthBar.SetHealthBar(health / maxHealth);
-        fishCount.SetFishCount(foundFish);
+        uIManager.SetFishCount(foundFish);
 
         if (healingDelayTimer > 0)
         {

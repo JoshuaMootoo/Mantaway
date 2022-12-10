@@ -15,9 +15,9 @@ public class Settings_UI : MonoBehaviour
     public static Settings_UI instance;
     private void Awake()
     {
-        masterSlider.value = PlayerPrefs.GetFloat("MasterVolume");      Debug.Log(PlayerPrefs.GetFloat("MasterVolume"));
-        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");        Debug.Log(PlayerPrefs.GetFloat("MusicVolume"));
-        soundSlider.value = PlayerPrefs.GetFloat("SoundVolume");        Debug.Log(PlayerPrefs.GetFloat("SoundVolume"));
+        masterSlider.value = PlayerPrefs.GetFloat("MasterVolume");      //  Debug.Log(PlayerPrefs.GetFloat("MasterVolume"));
+        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");        //  Debug.Log(PlayerPrefs.GetFloat("MusicVolume"));
+        soundSlider.value = PlayerPrefs.GetFloat("SoundVolume");        //  Debug.Log(PlayerPrefs.GetFloat("SoundVolume"));
     }
 
     private void Update()
