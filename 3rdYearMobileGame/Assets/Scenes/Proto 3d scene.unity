@@ -4697,7 +4697,7 @@ MonoBehaviour:
   turnRate: 0.5
   pastPosition: []
   pastPositionList: []
-  fishCount: {fileID: 0}
+  uIManager: {fileID: 0}
   healthBar: {fileID: 1911058044}
   boostBar: {fileID: 553217892}
   rightWing: {fileID: 1846213010}
@@ -5914,10 +5914,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6749639829710101058, guid: 53a4658efce762f4391cd6fc3af1d89b, type: 3}
-      propertyPath: oilAcceleration
-      value: 0.2
-      objectReference: {fileID: 0}
     - target: {fileID: 6749639829710101059, guid: 53a4658efce762f4391cd6fc3af1d89b, type: 3}
       propertyPath: m_RootOrder
       value: 13
@@ -5932,7 +5928,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6749639829710101059, guid: 53a4658efce762f4391cd6fc3af1d89b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.99
+      value: -15.24
       objectReference: {fileID: 0}
     - target: {fileID: 6749639829710101059, guid: 53a4658efce762f4391cd6fc3af1d89b, type: 3}
       propertyPath: m_LocalRotation.w
