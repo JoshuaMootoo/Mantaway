@@ -8,6 +8,7 @@ public class CrateController : MonoBehaviour
     public int fishRequirement = 0;
     public float torqueStrength = 50;
 
+    public GameObject crateParticleEmitter;
     public GameObject fish;
     FishManager fishManager;
     GameObject player;
@@ -53,6 +54,10 @@ public class CrateController : MonoBehaviour
                 //Handheld.Vibrate();
 
                 FindObjectOfType<AudioManager>().Play("CrateSmash");
+
+                //Spawn Particles
+                if (crateParticleEmitter != null) Instantiate(crateParticleEmitter, transform.position, transform.rotation);
+
 
                 Destroy(gameObject);
 

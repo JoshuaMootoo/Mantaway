@@ -70,7 +70,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heldFish: 5
+  fishRequirement: 0
   torqueStrength: 0.68
+  crateParticleEmitter: {fileID: 1917452769099736568, guid: 607430f273c631c43a44b0812c23687f, type: 3}
   fish: {fileID: 1163991604495920708, guid: 176db388813424a4695bc6dce435d88b, type: 3}
 --- !u!54 &1415154116
 Rigidbody:
