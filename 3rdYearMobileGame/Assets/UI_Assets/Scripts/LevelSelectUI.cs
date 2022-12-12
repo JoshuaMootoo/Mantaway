@@ -16,6 +16,9 @@ public class LevelSelectUI : MonoBehaviour
     public TMP_Text fishCollected;
     public TMP_Text bestCompletionTime;
 
+    [SerializeField] ScrollRect scrollRect;
+    [SerializeField] Button[] levelButtons;
+
     private void Update()
     {
         levelTitle.text = "Level " + levelNum;
@@ -61,6 +64,11 @@ public class LevelSelectUI : MonoBehaviour
     public void BackButton()
     {
         anim.SetBool("IsActive", false);
+        scrollRect.enabled = true;
+        foreach (Button button in levelButtons)
+        {
+            button.enabled = true;
+        }
     }
 
     public void LevelSelect(int _levelSceneNum)
@@ -68,6 +76,11 @@ public class LevelSelectUI : MonoBehaviour
         levelSceneNum = _levelSceneNum;
         levelNum = _levelSceneNum - 1;
         anim.SetBool("IsActive", true);
+        scrollRect.enabled = false;
+        foreach (Button button in levelButtons)
+        {
+            button.enabled = false;
+        }
     }
 
     public void StartGameButton()
