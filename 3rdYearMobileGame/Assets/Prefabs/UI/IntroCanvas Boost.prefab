@@ -1307,9 +1307,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df472cccc6838b142869ee6ee39420f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameHUD: {fileID: 0}
   CloseButton: {fileID: 3808689572140926483}
-  timerLength: 2
+  slowmotionSpeed: 0.03
+  timerLength: 4
 --- !u!1 &7738791208016216320
 GameObject:
   m_ObjectHideFlags: 0
@@ -1327,7 +1327,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8919881879118777004
 RectTransform:
   m_ObjectHideFlags: 0

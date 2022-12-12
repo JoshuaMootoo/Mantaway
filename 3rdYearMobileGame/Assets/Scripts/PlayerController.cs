@@ -216,7 +216,8 @@ public class PlayerController : MonoBehaviour
         animator.SetBool(animIDCharging, false);
         animator.SetBool(animIDBoost, false);
 
-        //touch Controls
+        if(SystemInfo.deviceType == DeviceType.Handheld)
+        {
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -269,6 +270,8 @@ public class PlayerController : MonoBehaviour
 
             charging = false;
         }
+        }
+
 
         //Check if the device running this is a desktop
         if (SystemInfo.deviceType == DeviceType.Desktop)
@@ -424,7 +427,7 @@ public class PlayerController : MonoBehaviour
 
     private void AddToPositionList()
     {
-        pastPositionList.Insert(0, transform.position + new Vector3(Random.Range(-1, 1), 0, Random.Range(-2, 2)));
+        pastPositionList.Insert(0, transform.position /*+ new Vector3(Random.Range(-1, 1), 0, Random.Range(-2, 2))*/);
         if (pastPositionList.Count > 100) pastPositionList.RemoveAt(pastPositionList.Count - 1);
     }
 

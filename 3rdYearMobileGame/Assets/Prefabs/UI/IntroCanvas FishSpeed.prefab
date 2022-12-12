@@ -406,7 +406,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CloseButton: {fileID: 3808689572140926483}
-  timerLength: 1
+  slowmotionSpeed: 0.03
+  timerLength: 2
 --- !u!1 &9168831934519098040
 GameObject:
   m_ObjectHideFlags: 0

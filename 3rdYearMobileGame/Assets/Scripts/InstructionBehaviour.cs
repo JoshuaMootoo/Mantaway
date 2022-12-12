@@ -33,7 +33,8 @@ public class InstructionBehaviour : MonoBehaviour
         if (timer < timerLength & !CloseButton.activeSelf) timer += 1 * Time.unscaledDeltaTime;
         if (timer >= timerLength & !CloseButton.activeSelf)
         {
-            ShowClose();
+            //ShowClose();
+            CloseInstructionUI();
         }
     }
 
