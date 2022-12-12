@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
     public Button restartButton;
 
     public float endGameTime;
+    public int levelNum;
 
     [Header("Fish Counter")]
     public int collectedfish;
@@ -59,9 +60,11 @@ public class UIManager : MonoBehaviour
         completionTimeText.text = string.Format("Completion Time - {0:00}:{1:00}", mins, secs);
     }
 
-    public void SetFishCount(int foundFish)
+    public void HasAchievedStar()
     {
-        collectedfish = foundFish;
+        if (PlayerPrefs.GetInt(HasCompletedLevel(levelNum)) == 1) StarReward(0, true);                                                  else StarReward(0, false);
+        if (PlayerPrefs.GetFloat(EndLevelTime(levelNum)) < PlayerPrefs.GetFloat(LevelParTimeString(levelNum))) StarReward(1, true);     else StarReward(1, false);
+        if (PlayerPrefs.GetInt(FishCollected(levelNum)) == PlayerPrefs.GetInt(TotalFish(levelNum))) StarReward(2, true);                else StarReward(2, false);
     }
 
     public void StarReward(int whatStar, bool hasAquired)
@@ -107,13 +110,59 @@ public class UIManager : MonoBehaviour
         if (gameManager.isLevelComplete)
         {
             endLevelText.text = "Level Complete";
+            PlayerPrefs.SetInt(HasCompletedLevel(levelNum), 1);
             starRatingText.text = "";
+            HasAchievedStar();
             restartButton.GetComponentInChildren<TMP_Text>().text = "Restart Level";
             EndGamePlayerPrefs();
             //  check what stars have been aquired and activate them;
             //  add fish collected to text
             nextLevelButton.SetActive(true);
         }
+    }
+
+    //---------------------------------------------------------- CALLED BY PLAYER ------------------------------------------------------------
+
+    public void SetFishCount(int foundFish)
+    {
+        collectedfish = foundFish;
+    }
+
+    //--------------------------------------------------------- PLAYERPREFS STRINGS ----------------------------------------------------------
+
+    string EndLevelTime(int level)
+    {
+        string endLevelTimeString;
+        endLevelTimeString = "EndLevelTimeLevel" + level;
+        return endLevelTimeString;
+    }
+
+    string FishCollected(int level)
+    {
+        string fishCollectedString;
+        fishCollectedString = "FishCollectedLevel" + level;
+        return fishCollectedString;
+    }
+
+    string TotalFish(int level)
+    {
+        string totalFishString;
+        totalFishString = "TotalFishLevel" + level;
+        return totalFishString;
+    }
+
+    string LevelParTimeString(int level)
+    {
+        string levelParTimeString;
+        levelParTimeString = "ParTimeLevel" + level;
+        return levelParTimeString;
+    }
+
+    string HasCompletedLevel(int level)
+    {
+        string hasCompletedLevelString;
+        hasCompletedLevelString = "HasCompletedLevel" + level;
+        return hasCompletedLevelString;
     }
 
     //------------------------------------------------------ ADDED TO BUTTONS IN ENGINE ------------------------------------------------------
