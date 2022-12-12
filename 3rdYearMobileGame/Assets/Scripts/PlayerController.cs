@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
@@ -115,8 +117,18 @@ public class PlayerController : MonoBehaviour
 
         Movement();
 
-        boostBar.SetBoostBar(boostCharge / boostChargeMax);
-        healthBar.SetHealthBar(health / maxHealth);
+        if(boostBar != null)boostBar.SetBoostBar(boostCharge / boostChargeMax);
+        if(healthBar != null) healthBar.SetHealthBar(health / maxHealth);
+        //Volume vignette
+        float healthPercent      = 1 - (health / maxHealth);
+        float vignetteIntensityTarget = 1- ((1 - healthPercent) * (1 - healthPercent));
+        FindObjectOfType<Volume>().sharedProfile.TryGet<Vignette>(out var vignette);
+        if(vignette.intensity.value != vignetteIntensityTarget)
+        {
+            vignette.intensity.value += (vignetteIntensityTarget - vignette.intensity.value) * 0.5f;
+        }
+       
+
         uIManager.SetFishCount(foundFish);
 
         if (healingDelayTimer > 0)
@@ -218,58 +230,50 @@ public class PlayerController : MonoBehaviour
 
         if(SystemInfo.deviceType == DeviceType.Handheld)
         {
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-            Vector3 touchPosition = Camera.main.ScreenToViewportPoint(touch.position);
-            Debug.Log(touchPosition);
-            if (Input.touchCount < 2)
+            if (Input.touchCount > 0)
             {
-                if (touchPosition.x < .5)
+                Touch touch = Input.GetTouch(0);
+                Vector3 touchPosition = Camera.main.ScreenToViewportPoint(touch.position);
+                Debug.Log(touchPosition);
+                if (Input.touchCount < 2)
                 {
-                    if (steeringInputFlipped) turnRight();
-                    else turnLeft();
+                    if (touchPosition.x < .5)
+                    {
+                        if (steeringInputFlipped) turnRight();
+                        else turnLeft();
+                        correcting = false;
+                    }
+                    if (touchPosition.x >= .5)
+                    {
+                        if (steeringInputFlipped) turnLeft();
+                        else turnRight();
+                        correcting = false;
+                    }
+                }
+                if (Input.touchCount >= 2)
+                {
+                    slowDown();
                     correcting = false;
                 }
-                if (touchPosition.x >= .5)
-                {
-                    if (steeringInputFlipped) turnLeft();
-                    else turnRight();
-                    correcting = false;
-                }
             }
-            if (Input.touchCount >= 2)
+            else if (Input.touchCount == 0)
             {
-
-                slowDown();
-                correcting = false;
-            }
-            
-
-        }
-        else if (Input.touchCount == 0)
-        {
-
-            if (courseCorrectionEnabled)
-            {
-                if (!correcting)
+                if (courseCorrectionEnabled)
                 {
-                    initialAngle = rotationY;
-                    correctingTime = 0;
-                    correcting = true;
+                    if (!correcting)
+                    {
+                        initialAngle = rotationY;
+                        correctingTime = 0;
+                        correcting = true;
+                    }
+                    if (correcting)
+                    {
+                        courseCorrection(initialAngle, correctingTime);
+                        correctingTime += Time.deltaTime;
+                    }
                 }
-                if (correcting)
-                {
-                    courseCorrection(initialAngle, correctingTime);
-                    correctingTime += Time.deltaTime;
-
-                }
+                charging = false;
             }
-
-
-
-            charging = false;
-        }
         }
 
 
@@ -421,7 +425,9 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, rotationY, 0);
         controller.Move(transform.forward * playerSpeed * Time.deltaTime);
 
-        transform.position = new Vector3(transform.position.x, 2f, transform.position.z);
+        if(transform.position.y != 2)
+        //transform.position = new Vector3(transform.position.x, 2f, transform.position.z);
+        transform.Translate(new Vector3(transform.position.x, 2f, transform.position.z) - transform.position);
 
     }
 
