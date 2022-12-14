@@ -19,20 +19,21 @@ public class LevelSelectUI : MonoBehaviour
     public TMP_Text parTime;
 
     [SerializeField] ScrollRect scrollRect;
-    [SerializeField] Button[] levelButtons;
+    [SerializeField] Button[] levelButtons = new Button[10];
 
-    [SerializeField] float[] parTimes;
+    [SerializeField] float[] parTimes = new float[10];
+
+    public GameObject[] stars = new GameObject[3];
 
     private void Start()
     {
         for (int i = 1; i <= 10; i++)
         {
-            if (!PlayerPrefs.HasKey(LevelParTimeString(i)) || PlayerPrefs.HasKey(LevelParTimeString(i)) && PlayerPrefs.GetFloat(LevelParTimeString(i)) != parTimes[i])
-                PlayerPrefs.SetFloat(LevelParTimeString(i), parTimes[i]);
-            else return;
+            //  Sets all the par times for each level
+            PlayerPrefs.SetFloat(LevelParTimeString(i), parTimes[i-1]);
+            //  if the variable doesnt exist, Sets the level complete variable to 0 meaning the level isnt completed
             if (!PlayerPrefs.HasKey(HasCompletedLevel(i)))
                 PlayerPrefs.SetInt(HasCompletedLevel(i), 0);
-            else return;
         }
     }
     private void Update()
@@ -52,6 +53,33 @@ public class LevelSelectUI : MonoBehaviour
         float mins = Mathf.FloorToInt(_endGameTime / 60);
         float secs = Mathf.FloorToInt(_endGameTime % 60);
         return string.Format("{0:00}:{1:00}", mins, secs);
+    }
+
+    public void HasAchievedStar()
+    {
+        Debug.Log(PlayerPrefs.GetInt(HasCompletedLevel(levelNum)));
+        Debug.Log(PlayerPrefs.GetFloat(EndLevelTimeString(levelNum)));
+        Debug.Log(PlayerPrefs.GetFloat(FishCollectedString(levelNum)));
+        Debug.Log(PlayerPrefs.GetFloat(TotalFishString(levelNum)));
+
+        if (PlayerPrefs.GetInt(HasCompletedLevel(levelNum)) == 1) 
+        {
+            //  Star 1 requires you to complete the level
+            StarReward(0, true); 
+            //  Star 2 requires you to beat the par time
+            if (PlayerPrefs.GetFloat(EndLevelTimeString(levelNum)) < PlayerPrefs.GetFloat(LevelParTimeString(levelNum))) 
+                StarReward(1, true); 
+            else StarReward(1, false);
+            //  Star 3 requires you to collect all the fish
+            if (PlayerPrefs.GetInt(FishCollectedString(levelNum)) == PlayerPrefs.GetInt(TotalFishString(levelNum))) 
+                StarReward(2, true); 
+            else StarReward(2, false);
+        } else StarReward(0, false);
+    }
+
+    public void StarReward(int whatStar, bool hasAquired)
+    {
+        stars[whatStar].SetActive(hasAquired);
     }
 
     //--------------------------------------------------------- PLAYERPREFS STRINGS ----------------------------------------------------------
@@ -109,6 +137,7 @@ public class LevelSelectUI : MonoBehaviour
         levelNum = _levelSceneNum - 1;
         anim.SetBool("IsActive", true);
         scrollRect.enabled = false;
+        HasAchievedStar();
         foreach (Button button in levelButtons)
         {
             button.enabled = false;

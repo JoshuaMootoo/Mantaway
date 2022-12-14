@@ -373,7 +373,32 @@ MonoBehaviour:
   bestCompletionTime: {fileID: 4838342305035108155}
   parTime: {fileID: 5712354983488080275}
   scrollRect: {fileID: 0}
-  levelButtons: []
+  levelButtons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  parTimes:
+  - 20
+  - 20
+  - 25
+  - 30
+  - 25
+  - 30
+  - 20
+  - 20
+  - 20
+  - 20
+  stars:
+  - {fileID: 4217488689186267389}
+  - {fileID: 2889901488419098150}
+  - {fileID: 5943463917690937206}
 --- !u!95 &829126191
 Animator:
   serializedVersion: 4
@@ -638,7 +663,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -1500, y: 0}
   m_SizeDelta: {x: 900, y: 900}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3113731281845456994
