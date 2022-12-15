@@ -51,6 +51,8 @@ public class UIManager : MonoBehaviour
 
         fishCountSlider.minValue = 0;
         fishCountSlider.maxValue = maxFish;
+
+        levelNum = PlayerPrefs.GetInt("CurrentLevel");
     }
 
     private void DisplayTimeInMin(float _endGameTime)
