@@ -184,6 +184,7 @@ public class UIManager : MonoBehaviour
 
     public void NextLevel()
     {
+        PlayerPrefs.SetInt("CurrentLevel", levelNum + 1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         Time.timeScale = 1;
     }
