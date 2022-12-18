@@ -34,13 +34,18 @@ public class FishController : MonoBehaviour
     //    }
     //}
 
-    public void Movement(Vector3 targetPoint,float deltaTime)
+    public void Movement(Vector3 targetPoint,Vector3 playerPosition, float deltaTime)
     {
-        if ((targetPoint - transform.position).magnitude > 3f) fishSpeed += 0.5f*Time.deltaTime;
-        if ((targetPoint - transform.position).magnitude < 3f) fishSpeed -= 0.5f*Time.deltaTime;
+        if ((targetPoint - transform.position).magnitude > 1.5f) fishSpeed *= 2f;
+        if ((targetPoint - transform.position).magnitude < 1f) fishSpeed *= 0.5f;
         transform.position = Vector3.MoveTowards(transform.position, targetPoint, fishSpeed * deltaTime);
+
+        //Vector3 lookPoint = ((playerPosition - targetPoint) / 2) + targetPoint;
+
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(targetPoint - transform.position), 15);
+        //transform.Translate(transform.forward * fishSpeed * deltaTime,Space.Self);
         //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetPoint - transform.position), 0.15F);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(targetPoint - transform.position), 5);
+        
        
     }
 

@@ -433,7 +433,7 @@ public class PlayerController : MonoBehaviour
 
     private void AddToPositionList()
     {
-        pastPositionList.Insert(0, transform.position /*+ new Vector3(Random.Range(-1, 1), 0, Random.Range(-2, 2))*/);
+        pastPositionList.Insert(0, transform.position + new Vector3(Random.Range(-1, 1), 0, Random.Range(-2, 2)));
         if (pastPositionList.Count > 100) pastPositionList.RemoveAt(pastPositionList.Count - 1);
     }
 

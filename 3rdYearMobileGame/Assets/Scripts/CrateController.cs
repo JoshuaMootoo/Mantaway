@@ -79,6 +79,9 @@ public class CrateController : MonoBehaviour
 
                 FindObjectOfType<AudioManager>().Play("CrateSmash");
 
+                //Spawn Particles
+                if (crateParticleEmitter != null) Instantiate(crateParticleEmitter, transform.position, transform.rotation);
+
                 Destroy(gameObject);
 
             }

@@ -40,9 +40,9 @@ public class FishManager : MonoBehaviour
 
             if (fish.following == true)
             {
-
-                fish.Movement(targetPositions[i],Time.deltaTime);
-                //fish.fishSpeed = playerSpeed;
+                fish.fishSpeed = playerSpeed;
+                fish.Movement(targetPositions[i],targetObject.position,Time.deltaTime);
+                
             }
             i++;
         }
@@ -55,7 +55,7 @@ public class FishManager : MonoBehaviour
             GameObject InstantiatedFish = Instantiate(fishPrefab, position, Quaternion.Euler(0,0,0));
 
             InstantiatedFish.GetComponent<FishController>().following = true;
-            InstantiatedFish.GetComponent<FishController>().fishSpeed = targetObject.gameObject.GetComponent<PlayerController>().playerSpeed;
+            //InstantiatedFish.GetComponent<FishController>().fishSpeed = targetObject.gameObject.GetComponent<PlayerController>().playerSpeed;
 
             //InstantiatedFish.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1)).normalized * 5, ForceMode.Impulse);
             targetObject.gameObject.GetComponent<PlayerController>().foundFish += 1;
