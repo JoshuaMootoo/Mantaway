@@ -10,6 +10,10 @@ public class UIManager : MonoBehaviour
     GameManager gameManager;
     PlayerController playerController;
 
+    [Header("Scene Transition Variables")]
+    public Animator anim;
+    public float waitTime = 1;
+
     [Header("UI Panels")]
     [SerializeField] GameObject gameplayUI;
     [SerializeField] GameObject endGameUI;
@@ -32,7 +36,7 @@ public class UIManager : MonoBehaviour
     [Header("Fish Counter")]
     public int collectedfish;
     public int maxFish;
-
+    
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
@@ -185,20 +189,27 @@ public class UIManager : MonoBehaviour
     public void NextLevel()
     {
         PlayerPrefs.SetInt("CurrentLevel", levelNum + 1);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        StartCoroutine(LoadScene(levelNum + 2));
         Time.timeScale = 1;
     }
 
     public void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        StartCoroutine(LoadScene(levelNum + 1));
         Time.timeScale = 1;
     }
 
     public void QuitGame(bool mainMenu)
     {
-        if (mainMenu) SceneManager.LoadScene("MainMenu");
-        else SceneManager.LoadScene("LevelSelect");
+        if (mainMenu) StartCoroutine(LoadScene(0));
+        else StartCoroutine(LoadScene(1));
         Time.timeScale = 1;
+    }
+
+    IEnumerator LoadScene(int sceneNum)
+    {
+        anim.SetTrigger("Start");
+        yield return new WaitForSeconds(waitTime);
+        SceneManager.LoadScene(sceneNum);
     }
 }

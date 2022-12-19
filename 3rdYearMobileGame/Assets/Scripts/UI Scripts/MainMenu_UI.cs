@@ -6,13 +6,24 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu_UI : MonoBehaviour
 {
-    [Header("Menu Buttons")]
-    [SerializeField]
-    private Button quitButton;
+    public Animator anim;
+    public float waitTime = 1;
+
+    public void OnLoadScene(int sceneNumber)
+    {
+        StartCoroutine(LoadScene(sceneNumber));
+    }
 
     public void OnQuitClicked ()
     {
         //Debug.Log("Quit Button Clicked");
         Application.Quit();
+    }
+
+    IEnumerator LoadScene(int sceneNum)
+    {
+        anim.SetTrigger("Start");
+        yield return new WaitForSeconds(waitTime);
+        SceneManager.LoadScene(sceneNum);
     }
 }

@@ -7,6 +7,10 @@ using UnityEngine.UI;
 
 public class LevelSelectUI : MonoBehaviour
 {
+    [Header("Scene Transition Variables")]
+    public Animator animST;
+    public float waitTime = 1;
+
     [SerializeField] Animator anim;
 
     [SerializeField] int levelNum;
@@ -153,6 +157,13 @@ public class LevelSelectUI : MonoBehaviour
     public void StartGameButton()
     {
         PlayerPrefs.SetInt("CurrentLevel", levelNum);
-        SceneManager.LoadScene(levelSceneNum);
+        StartCoroutine(LoadScene(levelSceneNum));
+    }
+
+    IEnumerator LoadScene(int sceneNum)
+    {
+        animST.SetTrigger("Start");
+        yield return new WaitForSeconds(waitTime);
+        SceneManager.LoadScene(sceneNum);
     }
 }
