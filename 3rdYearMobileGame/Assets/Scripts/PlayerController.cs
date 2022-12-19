@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     float boostLerpTime;
     public float boostLerpTimeSpeed = 3;
     public float addedFishSpeedModifier = 0.1f;
+    float slowDownTime = 0;
 
     //Player Rotation Variables
     public float rotationRange = 85;
@@ -119,8 +120,9 @@ public class PlayerController : MonoBehaviour
 
         if(boostBar != null)boostBar.SetBoostBar(boostCharge / boostChargeMax);
         if(healthBar != null) healthBar.SetHealthBar(health / maxHealth);
+
         //Volume vignette
-        float healthPercent      = 1 - (health / maxHealth);
+        float healthPercent = 1 - (health / maxHealth);
         float vignetteIntensityTarget = 1- ((1 - healthPercent) * (1 - healthPercent));
         FindObjectOfType<Volume>().sharedProfile.TryGet<Vignette>(out var vignette);
         if(vignette.intensity.value != vignetteIntensityTarget)
@@ -149,21 +151,21 @@ public class PlayerController : MonoBehaviour
 
         if (health <= 0)
         {
-            FindObjectOfType<GameManager>().EndGame(true, false);
-            Destroy(gameObject);
+            //Player Death now disabled
+            //FindObjectOfType<GameManager>().EndGame(true, false);
+            //Destroy(gameObject);
+            
+            health = 0;
         }
 
-        touchDebug();
+        //touchDebug();
     }
 
+    //Collision Events
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Fish"))
         {
-
-            //gameObject.GetComponent<TrailRenderer>().material.SetColor(Shader.PropertyToID("_BaseColor"), collision.gameObject.GetComponent<Renderer>().material.GetColor(Shader.PropertyToID("_BaseColor")));
-            //gameObject.GetComponent<Renderer>().material.SetColor(Shader.PropertyToID("_BaseColor"), collision.gameObject.GetComponent<Renderer>().material.GetColor(Shader.PropertyToID("_BaseColor")));
-
             if (collision.gameObject.GetComponent<FishController>().following == false)
             {
                 collision.gameObject.GetComponent<FishController>().following = true;
@@ -187,10 +189,6 @@ public class PlayerController : MonoBehaviour
 
             //Handheld.Vibrate();
         }
-
-        
-
-        
     }
 
     private void OnTriggerStay(Collider collision)
@@ -198,6 +196,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Oil"))
         {
             health -= oilDamageRate * Time.deltaTime;
+            healingDelayTimer = healingDelayTimerMax;
         }
     }
 
@@ -208,10 +207,7 @@ public class PlayerController : MonoBehaviour
             audioManager.Play("TerrainCollision");
             Debug.Log("terrain collision");
         }
-
     }
-
-
 
     //Player Movement and Input
     void Movement()
@@ -228,6 +224,7 @@ public class PlayerController : MonoBehaviour
         animator.SetBool(animIDCharging, false);
         animator.SetBool(animIDBoost, false);
 
+        //Check if device running this is a phone
         if(SystemInfo.deviceType == DeviceType.Handheld)
         {
             if (Input.touchCount > 0)
@@ -329,12 +326,21 @@ public class PlayerController : MonoBehaviour
         {
             boostCharge = boostCharge + (boostChargeRate * Time.deltaTime);
             Debug.Log("boostCharge = " + boostCharge);
+
+            float slowDownSmooth = slowDownTime * slowDownTime;
+
+            float slowSpeedTarget = (playerDefaultSpeed + addedFishSpeed) * playerSlowSpeed;
+            playerSpeed = (playerDefaultSpeed + addedFishSpeed) * (1 - (playerSlowSpeed * slowDownSmooth));
+
+            slowDownTime += Time.deltaTime * 2;
+            Mathf.Clamp01(slowDownTime);
         }
         else if(!charging & boostCharge > 0  || boosting & boostCharge > 0)
         {
             boostCharge = boostCharge - (boostChargeRate * Time.deltaTime);
             audioManager.Stop("BoostCharging");
         }
+        if (!charging) slowDownTime = 0;
 
 
         //Initiate Boosting
@@ -399,9 +405,9 @@ public class PlayerController : MonoBehaviour
         {
             rightWing.emitting = false;
             leftWing.emitting = false;
-            playerSpeed = (playerDefaultSpeed + addedFishSpeed) * playerSlowSpeed;
+            
 
-            if(!charging & !boosting)
+            if (!charging & !boosting)
             {
                 charging = true;
                 audioManager.Play("BoostCharging");
@@ -425,9 +431,8 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, rotationY, 0);
         controller.Move(transform.forward * playerSpeed * Time.deltaTime);
 
-        if(transform.position.y != 2)
-        //transform.position = new Vector3(transform.position.x, 2f, transform.position.z);
-        transform.Translate(new Vector3(transform.position.x, 2f, transform.position.z) - transform.position);
+        //Player Height Reset
+        controller.Move((Vector3.up * 2) - (Vector3.up * transform.position.y));
 
     }
 

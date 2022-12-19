@@ -36,8 +36,8 @@ public class FishController : MonoBehaviour
 
     public void Movement(Vector3 targetPoint,Vector3 playerPosition, float deltaTime)
     {
-        if ((targetPoint - transform.position).magnitude > 1.5f) fishSpeed *= 2f;
-        if ((targetPoint - transform.position).magnitude < 1f) fishSpeed *= 0.5f;
+       // if ((targetPoint - transform.position).magnitude > 1.5f) fishSpeed *= 2f;
+       // if ((targetPoint - transform.position).magnitude < 1f) fishSpeed *= 0.5f;
         transform.position = Vector3.MoveTowards(transform.position, targetPoint, fishSpeed * deltaTime);
 
         //Vector3 lookPoint = ((playerPosition - targetPoint) / 2) + targetPoint;

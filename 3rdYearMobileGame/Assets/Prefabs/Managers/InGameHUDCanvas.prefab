@@ -8435,9 +8435,37 @@ PrefabInstance:
     m_TransformParent: {fileID: 6435298210343040329}
     m_Modifications:
     - target: {fileID: 833418934661344405, guid: 92c10f23d114b1046958adc2095d9597, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 833418934661344405, guid: 92c10f23d114b1046958adc2095d9597, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 833418934661344405, guid: 92c10f23d114b1046958adc2095d9597, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1004096611432184931}
+    - target: {fileID: 833418934661344405, guid: 92c10f23d114b1046958adc2095d9597, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 833418934661344405, guid: 92c10f23d114b1046958adc2095d9597, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PauseMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 833418934661344405, guid: 92c10f23d114b1046958adc2095d9597, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 833418934661344405, guid: 92c10f23d114b1046958adc2095d9597, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 833418934661344405, guid: 92c10f23d114b1046958adc2095d9597, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1234181566477925820, guid: 92c10f23d114b1046958adc2095d9597, type: 3}
       propertyPath: m_Pivot.x
       value: 1

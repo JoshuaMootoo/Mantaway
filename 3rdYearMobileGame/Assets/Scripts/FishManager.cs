@@ -12,7 +12,7 @@ public class FishManager : MonoBehaviour
 
     public List<Vector3> targetPositions;
 
-    float playerSpeed;
+    PlayerController player;
 
 
     // Start is called before the first frame update
@@ -26,7 +26,7 @@ public class FishManager : MonoBehaviour
         //        FishList.Add(child.GetComponent<FishController>());
         //    }
         //}
-        playerSpeed = targetObject.GetComponent<PlayerController>().playerSpeed;
+        player = targetObject.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -40,7 +40,7 @@ public class FishManager : MonoBehaviour
 
             if (fish.following == true)
             {
-                fish.fishSpeed = playerSpeed;
+                fish.fishSpeed = player.playerSpeed;
                 fish.Movement(targetPositions[i],targetObject.position,Time.deltaTime);
                 
             }

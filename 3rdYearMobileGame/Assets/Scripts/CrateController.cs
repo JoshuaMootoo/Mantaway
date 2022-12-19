@@ -29,7 +29,6 @@ public class CrateController : MonoBehaviour
     
     }
 
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -37,7 +36,7 @@ public class CrateController : MonoBehaviour
             //Push Crate ahead of player when colliding with it slowly
             if (collision.gameObject.GetComponent<PlayerController>().boosting == false)
             {
-                rb.AddForce((transform.position - collision.gameObject.transform.position).normalized * 10, ForceMode.Impulse);
+                rb.AddForce((transform.position - collision.gameObject.transform.position).normalized * player.GetComponent<PlayerController>().playerSpeed, ForceMode.Impulse);
                 rb.AddTorque(new Vector3(Random.Range(0.5f, 1f), Random.Range(0.5f, 1f), Random.Range(0.5f, 1f)).normalized * torqueStrength, ForceMode.Impulse);
 
                 FindObjectOfType<AudioManager>().Play("CrateCollision");
@@ -58,9 +57,7 @@ public class CrateController : MonoBehaviour
                 //Spawn Particles
                 if (crateParticleEmitter != null) Instantiate(crateParticleEmitter, transform.position, transform.rotation);
 
-
                 Destroy(gameObject);
-
             }
         }
     }
@@ -83,9 +80,7 @@ public class CrateController : MonoBehaviour
                 if (crateParticleEmitter != null) Instantiate(crateParticleEmitter, transform.position, transform.rotation);
 
                 Destroy(gameObject);
-
             }
         }
     }
-
 }

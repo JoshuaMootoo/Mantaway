@@ -371,7 +371,7 @@ MonoBehaviour:
   turnRate: 0.5
   pastPosition: []
   pastPositionList: []
-  fishCount: {fileID: 0}
+  uIManager: {fileID: 0}
   healthBar: {fileID: 0}
   boostBar: {fileID: 0}
   rightWing: {fileID: 2403347078080090335}
