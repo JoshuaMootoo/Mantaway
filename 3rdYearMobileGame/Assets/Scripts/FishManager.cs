@@ -9,8 +9,16 @@ public class FishManager : MonoBehaviour
     public Transform targetObject;
 
     public List<FishController> FishList;
+    public List<FishController> FishList2;
+    public List<FishController> FishList3;
 
     public List<Vector3> targetPositions;
+    public List<Vector3> targetPositions2;
+    public List<Vector3> targetPositions3;
+
+    public List<float> speeds;
+    public List<float> speeds2;
+    public List<float> speeds3;
 
     PlayerController player;
 
@@ -19,13 +27,10 @@ public class FishManager : MonoBehaviour
     void Start()
     {
         FishList = new List<FishController>();
-        //foreach(Transform child in transform)
-        //{
-        //    if(child.tag == "Fish")
-        //    {
-        //        FishList.Add(child.GetComponent<FishController>());
-        //    }
-        //}
+        FishList2 = new List<FishController>();
+        FishList3 = new List<FishController>();
+
+        
         player = targetObject.GetComponent<PlayerController>();
     }
 
@@ -34,20 +39,51 @@ public class FishManager : MonoBehaviour
     {
 
         targetPositions = targetObject.GetComponent<PlayerController>().pastPositionList;
+        targetPositions2 = targetObject.GetComponent<PlayerController>().pastPositionList2;
+        targetPositions3 = targetObject.GetComponent<PlayerController>().pastPositionList3;
+
+        speeds = player.speedList;
+        speeds2 = player.speedList2;
+        speeds3 = player.speedList3;
         int i = 0;
         foreach (FishController fish in FishList)
         {
 
             if (fish.following == true)
             {
-                fish.fishSpeed = player.playerSpeed;
+                fish.fishSpeed = speeds[i];
                 fish.Movement(targetPositions[i],targetObject.position,Time.deltaTime);
                 
             }
             i++;
         }
+        i = 0;
+        foreach (FishController fish in FishList2)
+        {
+
+            if (fish.following == true)
+            {
+                fish.fishSpeed = speeds2[i];
+                fish.Movement(targetPositions2[i], targetObject.position, Time.deltaTime);
+
+            }
+            i++;
+        }
+        i = 0;
+        foreach (FishController fish in FishList3)
+        {
+
+            if (fish.following == true)
+            {
+                fish.fishSpeed = speeds3[i];
+                fish.Movement(targetPositions3[i], targetObject.position, Time.deltaTime);
+
+            }
+            i++;
+        }
     }
 
+    int fishInsertTick = 0;
     public void SpawnFish(int fishToSpawn, Vector3 position)
     {
         for (int i = 0; i < fishToSpawn; i++)
@@ -55,24 +91,49 @@ public class FishManager : MonoBehaviour
             GameObject InstantiatedFish = Instantiate(fishPrefab, position, Quaternion.Euler(0,0,0));
 
             InstantiatedFish.GetComponent<FishController>().following = true;
-            //InstantiatedFish.GetComponent<FishController>().fishSpeed = targetObject.gameObject.GetComponent<PlayerController>().playerSpeed;
 
-            //InstantiatedFish.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1)).normalized * 5, ForceMode.Impulse);
             targetObject.gameObject.GetComponent<PlayerController>().foundFish += 1;
 
-            FishList.Insert(0, InstantiatedFish.GetComponent<FishController>());
+            if(fishInsertTick == 0)
+                FishList.Insert(FishList.Count, InstantiatedFish.GetComponent<FishController>());
+            if (fishInsertTick == 1)
+                FishList2.Insert(FishList2.Count, InstantiatedFish.GetComponent<FishController>());
+            if (fishInsertTick == 2)
+                FishList3.Insert(FishList3.Count, InstantiatedFish.GetComponent<FishController>());
+            fishInsertTick++;
+            if (fishInsertTick > 2) fishInsertTick = 0;
         }
     }
 
     public void AddToList(FishController fish)
     {
         fish.GetComponent<FishController>().fishSpeed = targetObject.gameObject.GetComponent<PlayerController>().playerSpeed;
-        FishList.Insert(0, fish);
-    }
+        
 
+        if (fishInsertTick == 0)
+            FishList.Insert(FishList.Count, fish);
+        if (fishInsertTick == 1)
+            FishList2.Insert(FishList2.Count, fish);
+        if (fishInsertTick == 2)
+            FishList3.Insert(FishList3.Count, fish);
+        fishInsertTick++;
+        if (fishInsertTick > 2) fishInsertTick = 0;
+    }
+    int fishRemoveTick = 0;
     public void RemoveFromList()
     {
-        FishList.RemoveAt(FishList.Count - 1);
+        FishController fish = FishList[0];
+        fish.Dead();
+
+        if (fishRemoveTick == 0)
+            FishList.RemoveAt(0);
+        if (fishRemoveTick == 1)
+            FishList2.RemoveAt(0);
+        if (fishRemoveTick == 2)
+            FishList.RemoveAt(0);
+        fishRemoveTick++;
+        if (fishRemoveTick > 2) fishRemoveTick = 0;
+
     }
 
 }

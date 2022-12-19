@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
 
     public float oilDamageRate = 1;
     public int foundFish;
+    public int fishLostFromMine = 3;
     
     //Player speed variables
     public float playerSpeed = 5f;
@@ -26,8 +27,10 @@ public class PlayerController : MonoBehaviour
     public float boostLerpTimeSpeed = 3;
     public float addedFishSpeedModifier = 0.1f;
     float slowDownTime = 0;
+    float neutralTime = 1;
 
     //Player Rotation Variables
+    public float turnRate = 150f;
     public float rotationRange = 85;
     float rotationY;
     bool correcting = false;
@@ -48,9 +51,14 @@ public class PlayerController : MonoBehaviour
     public bool boosting = false;
     public bool charging = false;
 
-    public float turnRate = 150f;
-    public Transform[] pastPosition;
+    
     public List<Vector3> pastPositionList;
+    public List<Vector3> pastPositionList2;
+    public List<Vector3> pastPositionList3;
+
+    public List<float> speedList;
+    public List<float> speedList2;
+    public List<float> speedList3;
 
     Rigidbody rb;
     CharacterController controller;
@@ -103,8 +111,17 @@ public class PlayerController : MonoBehaviour
         AssignAnimationIDs();
 
         pastPositionList = new List<Vector3>();
+        pastPositionList2 = new List<Vector3>();
+        pastPositionList3 = new List<Vector3>();
+
+        speedList = new List<float>();
+        speedList2 = new List<float>();
+        speedList3 = new List<float>();
+
 
         InvokeRepeating("AddToPositionList", 0.1f, 0.2f);
+        InvokeRepeating("AddToPositionList2", 0.166f, 0.2f);
+        InvokeRepeating("AddToPositionList3", 0.233f, 0.2f);
         rightWing.emitting = false;
         leftWing.emitting = false;
 
@@ -173,7 +190,6 @@ public class PlayerController : MonoBehaviour
                 FindObjectOfType<FishManager>().AddToList(collision.GetComponent<FishController>());
                 Debug.Log("Found Fish " + foundFish);
                 audioManager.Play("CollectFish");
-
             }
 
         }
@@ -182,8 +198,18 @@ public class PlayerController : MonoBehaviour
         {
             health -= 1;
             healingDelayTimer = healingDelayTimerMax;
-            foundFish -= 1;
-            fishManager.RemoveFromList();
+
+            
+            for(int i = 0; i < fishLostFromMine; i++)
+            {
+                if (foundFish > 0)
+                {
+                    foundFish -= 1;
+                    fishManager.RemoveFromList();
+                }
+                    
+            }
+            
 
             Debug.Log("Health = " + health);
 
@@ -217,7 +243,6 @@ public class PlayerController : MonoBehaviour
 
         rightWing.emitting = false;
         leftWing.emitting = false;
-
 
         animator.SetBool(animIDTLeft, false);
         animator.SetBool(animIDTRight, false);
@@ -278,15 +303,14 @@ public class PlayerController : MonoBehaviour
         if (SystemInfo.deviceType == DeviceType.Desktop)
         {
             //Keyboard Controls
-            if (Input.GetKey(KeyCode.LeftArrow) & !Input.GetKey(KeyCode.RightArrow))
+            if (Input.GetKey(KeyCode.LeftArrow) & !Input.GetKey(KeyCode.RightArrow))//Going Left
             {
                 if (steeringInputFlipped) turnRight();
                 else turnLeft();
                 correcting = false;
-
             }
 
-            else if (Input.GetKey(KeyCode.RightArrow) & !Input.GetKey(KeyCode.LeftArrow))
+            else if (Input.GetKey(KeyCode.RightArrow) & !Input.GetKey(KeyCode.LeftArrow))//Going Right
             {
                 if (steeringInputFlipped) turnLeft();
                 else turnRight();
@@ -294,12 +318,12 @@ public class PlayerController : MonoBehaviour
 
             }
 
-            else if (Input.GetKey(KeyCode.LeftArrow) & Input.GetKey(KeyCode.RightArrow))
+            else if (Input.GetKey(KeyCode.LeftArrow) & Input.GetKey(KeyCode.RightArrow))//Charging
             {
                 slowDown();
                 correcting = false;
             }
-            else if (!Input.GetKey(KeyCode.LeftArrow) & !Input.GetKey(KeyCode.RightArrow))
+            else if (!Input.GetKey(KeyCode.LeftArrow) & !Input.GetKey(KeyCode.RightArrow))//Neutral
             {
                 if (courseCorrectionEnabled)
                 {
@@ -313,7 +337,6 @@ public class PlayerController : MonoBehaviour
                     {
                         courseCorrection(initialAngle, correctingTime);
                         correctingTime += Time.deltaTime;
-
                     }
                 }
                 charging = false;
@@ -370,9 +393,37 @@ public class PlayerController : MonoBehaviour
             {
                 boosting = false;
                 audioManager.Stop("Boosting");
+                neutralTime = 0;
             }
         }
 
+        if (!boosting & !charging)
+        {
+            neutralTime += Time.deltaTime;
+            //Mathf.Clamp(neutralTime, 0, 1);
+            if (neutralTime > 1) neutralTime = 1;
+            playerSpeed += ((playerDefaultSpeed + addedFishSpeed) - playerSpeed) * 0.3f;
+
+
+            float neutralSmooth = 1 - ((1 - neutralTime) * (1 - neutralTime) * (1 - neutralTime) * (1 - neutralTime));
+
+            float neutralSpeedTarget = (playerDefaultSpeed + addedFishSpeed);
+            playerSpeed = (playerDefaultSpeed + addedFishSpeed) * (playerBoostSpeed -  ((playerBoostSpeed - 1) * neutralSmooth));
+
+            
+        }
+        
+        //Final Movement of player position
+        if (angleLockEnabled) rotationY = Mathf.Clamp(rotationY, -rotationRange, rotationRange);
+        transform.rotation = Quaternion.Euler(0, rotationY, 0);
+        controller.Move(transform.forward * playerSpeed * Time.deltaTime);
+
+        //Player Height Correction
+        controller.Move((Vector3.up * 2) - (Vector3.up * transform.position.y));
+
+
+
+        //PlayerMovement Functions
         void turnLeft()
         {
             //transform.Rotate(0, -150f * Time.deltaTime, 0);
@@ -405,7 +456,7 @@ public class PlayerController : MonoBehaviour
         {
             rightWing.emitting = false;
             leftWing.emitting = false;
-            
+
 
             if (!charging & !boosting)
             {
@@ -415,31 +466,38 @@ public class PlayerController : MonoBehaviour
 
             currentPlayerState = PlayerState.slowingDown;
             animator.SetBool(animIDCharging, true);
-           
+
         }
 
         void courseCorrection(float angle, float timeCount)
         {
             rotationY = Mathf.Lerp(angle, 0, timeCount);
         }
-
-
-
-        //final Movement of player position
-
-        if (angleLockEnabled) rotationY = Mathf.Clamp(rotationY, -rotationRange, rotationRange);
-        transform.rotation = Quaternion.Euler(0, rotationY, 0);
-        controller.Move(transform.forward * playerSpeed * Time.deltaTime);
-
-        //Player Height Reset
-        controller.Move((Vector3.up * 2) - (Vector3.up * transform.position.y));
-
     }
-
     private void AddToPositionList()
     {
         pastPositionList.Insert(0, transform.position + new Vector3(Random.Range(-1, 1), 0, Random.Range(-2, 2)));
         if (pastPositionList.Count > 100) pastPositionList.RemoveAt(pastPositionList.Count - 1);
+
+        speedList.Insert(0, playerSpeed);
+        if (speedList.Count > 100) speedList.RemoveAt(speedList.Count - 1);
+    }
+    private void AddToPositionList2()
+    {
+        pastPositionList2.Insert(0, transform.position + new Vector3(Random.Range(-1, 1), 0, Random.Range(-2, 2)));
+        if (pastPositionList2.Count > 100) pastPositionList2.RemoveAt(pastPositionList.Count - 1);
+
+        speedList2.Insert(0, playerSpeed);
+        if (speedList2.Count > 100) speedList2.RemoveAt(speedList2.Count - 1);
+
+    }
+    private void AddToPositionList3()
+    {
+        pastPositionList3.Insert(0, transform.position + new Vector3(Random.Range(-1, 1), 0, Random.Range(-2, 2)));
+        if (pastPositionList3.Count > 100) pastPositionList3.RemoveAt(pastPositionList.Count - 1);
+
+        speedList3.Insert(0, playerSpeed);
+        if (speedList3.Count > 100) speedList3.RemoveAt(speedList3.Count - 1);
     }
 
     private void AssignAnimationIDs()

@@ -22,17 +22,11 @@ public class FishController : MonoBehaviour
         gameObject.GetComponent<Renderer>().material.SetColor(Shader.PropertyToID("_BaseColor"), Random.ColorHSV());
     }
 
-    // Update is called once per frame
-    //void Update()
-    //{
-    //    if (following & (Time.time - startTime) > 0.5f)
-    //    {
-    //         transform.position = Vector3.MoveTowards(transform.position, player.position, 4.0f * Time.deltaTime);
-    //        // rb.AddForce((player.position - transform.position), ForceMode.Acceleration);
-    //        //rb.velocity = (player.position - transform.position).normalized * fishSpeed;
-
-    //    }
-    //}
+    
+    void Update()
+    {
+       
+    }
 
     public void Movement(Vector3 targetPoint,Vector3 playerPosition, float deltaTime)
     {
@@ -42,12 +36,28 @@ public class FishController : MonoBehaviour
 
         //Vector3 lookPoint = ((playerPosition - targetPoint) / 2) + targetPoint;
 
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(targetPoint - transform.position), 15);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(targetPoint - transform.position), 8);
         //transform.Translate(transform.forward * fishSpeed * deltaTime,Space.Self);
         //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetPoint - transform.position), 0.15F);
         
        
     }
 
-   
+    public void Dead()
+    {
+        GetComponent<Collider>().isTrigger = false;
+
+        GetComponent<Rigidbody>().AddForce(-transform.forward, ForceMode.Impulse);
+        GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(0.5f, 1f), Random.Range(0.5f, 1f), Random.Range(0.5f, 1f)).normalized * 0.68f, ForceMode.Impulse);
+    }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            GetComponent<Rigidbody>().AddForce((transform.position - collision.gameObject.transform.position).normalized * (collision.gameObject.GetComponent<PlayerController>().playerSpeed * 1.5f), ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(0.5f, 1f), Random.Range(0.5f, 1f), Random.Range(0.5f, 1f)).normalized * 0.68f, ForceMode.Impulse);
+        }
+    }
 }

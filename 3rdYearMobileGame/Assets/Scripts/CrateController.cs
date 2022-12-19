@@ -36,7 +36,7 @@ public class CrateController : MonoBehaviour
             //Push Crate ahead of player when colliding with it slowly
             if (collision.gameObject.GetComponent<PlayerController>().boosting == false)
             {
-                rb.AddForce((transform.position - collision.gameObject.transform.position).normalized * player.GetComponent<PlayerController>().playerSpeed, ForceMode.Impulse);
+                rb.AddForce((transform.position - collision.gameObject.transform.position).normalized * (player.GetComponent<PlayerController>().playerSpeed * 1.5f), ForceMode.Impulse);
                 rb.AddTorque(new Vector3(Random.Range(0.5f, 1f), Random.Range(0.5f, 1f), Random.Range(0.5f, 1f)).normalized * torqueStrength, ForceMode.Impulse);
 
                 FindObjectOfType<AudioManager>().Play("CrateCollision");
