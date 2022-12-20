@@ -167,6 +167,11 @@ public class LevelSelectUI : MonoBehaviour
         StartCoroutine(LoadScene(levelSceneNum));
     }
 
+    public void OtherButtonPress()
+    {
+        audioManager.Play("ButtonPress");
+    }
+
     IEnumerator LoadScene(int sceneNum)
     {
         animST.SetTrigger("Start");

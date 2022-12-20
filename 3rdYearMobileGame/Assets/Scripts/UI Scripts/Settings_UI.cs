@@ -7,6 +7,7 @@ using UnityEngine.Audio;
 public class Settings_UI : MonoBehaviour
 {
     public AudioMixer audioMixer;
+    AudioManager audioManager;
 
     public Slider masterSlider;
     public Slider musicSlider;
@@ -15,6 +16,8 @@ public class Settings_UI : MonoBehaviour
     public static Settings_UI instance;
     private void Awake()
     {
+        audioManager = FindObjectOfType<AudioManager>();
+
         masterSlider.value = PlayerPrefs.GetFloat("MasterVolume");      //  Debug.Log(PlayerPrefs.GetFloat("MasterVolume"));
         musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");        //  Debug.Log(PlayerPrefs.GetFloat("MusicVolume"));
         soundSlider.value = PlayerPrefs.GetFloat("SoundVolume");        //  Debug.Log(PlayerPrefs.GetFloat("SoundVolume"));
@@ -30,5 +33,9 @@ public class Settings_UI : MonoBehaviour
 
         audioMixer.SetFloat("Sound_EP", soundSlider.value);
         PlayerPrefs.SetFloat("SoundVolume", soundSlider.value);
-    }    
+    }
+        public void OtherButtonPress()
+    {
+        audioManager.Play("ButtonPress");
+    }
 }

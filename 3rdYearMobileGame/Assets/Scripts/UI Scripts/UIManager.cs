@@ -212,6 +212,10 @@ public class UIManager : MonoBehaviour
         else StartCoroutine(LoadScene(1));
         Time.timeScale = 1;
     }
+    public void OtherButtonPress()
+    {
+        audioManager.Play("ButtonPress");
+    }
 
     IEnumerator LoadScene(int sceneNum)
     {

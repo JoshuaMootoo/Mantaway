@@ -28,6 +28,11 @@ public class MainMenu_UI : MonoBehaviour
         Application.Quit();
     }
 
+    public void OtherButtonPress()
+    {
+        audioManager.Play("ButtonPress");
+    }
+
     IEnumerator LoadScene(int sceneNum)
     {
         anim.SetTrigger("Start");
