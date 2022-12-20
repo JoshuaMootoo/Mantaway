@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
 {
     GameManager gameManager;
     PlayerController playerController;
+    AudioManager audioManager;
 
     [Header("Scene Transition Variables")]
     public Animator anim;
@@ -41,6 +42,7 @@ public class UIManager : MonoBehaviour
     {
         gameManager = FindObjectOfType<GameManager>();
         playerController = FindObjectOfType<PlayerController>();
+        audioManager = FindObjectOfType<AudioManager>();
 
 
         foreach (FishController fish in FindObjectsOfType<FishController>())
@@ -175,6 +177,7 @@ public class UIManager : MonoBehaviour
 
     public void PauseMenu(bool isPaused)
     {
+        audioManager.Play("ButtonPress");
         gameplayUI.SetActive(!isPaused);
         pauseMenuUI.SetActive(isPaused);
         if (isPaused) Time.timeScale = 0;
@@ -183,11 +186,13 @@ public class UIManager : MonoBehaviour
 
     public void Settings(bool isActve)
     {
+        audioManager.Play("ButtonPress");
         settingsUI.SetActive(isActve);
     }
 
     public void NextLevel()
     {
+        audioManager.Play("ButtonPress");
         PlayerPrefs.SetInt("CurrentLevel", levelNum + 1);
         StartCoroutine(LoadScene(levelNum + 2));
         Time.timeScale = 1;
@@ -195,12 +200,14 @@ public class UIManager : MonoBehaviour
 
     public void Restart()
     {
+        audioManager.Play("ButtonPress");
         StartCoroutine(LoadScene(levelNum + 1));
         Time.timeScale = 1;
     }
 
     public void QuitGame(bool mainMenu)
     {
+        audioManager.Play("ButtonPress");
         if (mainMenu) StartCoroutine(LoadScene(0));
         else StartCoroutine(LoadScene(1));
         Time.timeScale = 1;

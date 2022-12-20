@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class LevelSelectUI : MonoBehaviour
 {
+    AudioManager audioManager;
+
     [Header("Scene Transition Variables")]
     public Animator animST;
     public float waitTime = 1;
@@ -31,6 +33,8 @@ public class LevelSelectUI : MonoBehaviour
 
     private void Start()
     {
+        audioManager = FindObjectOfType<AudioManager>();
+
         for (int i = 1; i <= 10; i++)
         {
             //  Sets all the par times for each level
@@ -127,6 +131,7 @@ public class LevelSelectUI : MonoBehaviour
 
     public void BackButton()
     {
+        audioManager.Play("ButtonPress");
         anim.SetBool("IsActive", false);
         scrollRect.enabled = true;
         foreach (Button button in levelButtons)
@@ -137,6 +142,7 @@ public class LevelSelectUI : MonoBehaviour
 
     public void LevelSelect(int _levelSceneNum)
     {
+        audioManager.Play("ButtonPress");
         levelSceneNum = _levelSceneNum;
         levelNum = _levelSceneNum - 1;
         anim.SetBool("IsActive", true);
@@ -156,6 +162,7 @@ public class LevelSelectUI : MonoBehaviour
 
     public void StartGameButton()
     {
+        audioManager.Play("ButtonPress");
         PlayerPrefs.SetInt("CurrentLevel", levelNum);
         StartCoroutine(LoadScene(levelSceneNum));
     }
