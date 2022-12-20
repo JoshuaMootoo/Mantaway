@@ -31,7 +31,7 @@ public class MainMenu_UI : MonoBehaviour
     IEnumerator LoadScene(int sceneNum)
     {
         anim.SetTrigger("Start");
-        yield return new WaitForSeconds(waitTime);
+        yield return new WaitForSecondsRealtime(waitTime);
         SceneManager.LoadScene(sceneNum);
     }
 }

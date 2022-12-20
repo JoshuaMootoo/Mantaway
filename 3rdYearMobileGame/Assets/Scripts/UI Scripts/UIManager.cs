@@ -37,7 +37,7 @@ public class UIManager : MonoBehaviour
     [Header("Fish Counter")]
     public int collectedfish;
     public int maxFish;
-    
+
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
@@ -194,14 +194,14 @@ public class UIManager : MonoBehaviour
     {
         audioManager.Play("ButtonPress");
         PlayerPrefs.SetInt("CurrentLevel", levelNum + 1);
-        StartCoroutine(LoadScene(levelNum + 2));
+        StartCoroutine(LoadScene(SceneManager.GetActiveScene().buildIndex + 1));
         Time.timeScale = 1;
     }
 
     public void Restart()
     {
         audioManager.Play("ButtonPress");
-        StartCoroutine(LoadScene(levelNum + 1));
+        StartCoroutine(LoadScene(SceneManager.GetActiveScene().buildIndex));
         Time.timeScale = 1;
     }
 
@@ -216,7 +216,7 @@ public class UIManager : MonoBehaviour
     IEnumerator LoadScene(int sceneNum)
     {
         anim.SetTrigger("Start");
-        yield return new WaitForSeconds(waitTime);
+        yield return new WaitForSecondsRealtime(waitTime);
         SceneManager.LoadScene(sceneNum);
     }
 }

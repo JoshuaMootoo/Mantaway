@@ -170,7 +170,7 @@ public class LevelSelectUI : MonoBehaviour
     IEnumerator LoadScene(int sceneNum)
     {
         animST.SetTrigger("Start");
-        yield return new WaitForSeconds(waitTime);
+        yield return new WaitForSecondsRealtime(waitTime);
         SceneManager.LoadScene(sceneNum);
     }
 }

@@ -3629,6 +3629,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1670039290}
     m_Modifications:
+    - target: {fileID: 7025610206912258651, guid: ebda41833c73a864ca58e9ebd1c83804, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -1090
+      objectReference: {fileID: 0}
+    - target: {fileID: 7025610208017494399, guid: ebda41833c73a864ca58e9ebd1c83804, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -1090
+      objectReference: {fileID: 0}
     - target: {fileID: 7025610208398205392, guid: ebda41833c73a864ca58e9ebd1c83804, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3659,7 +3667,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7025610208398205392, guid: ebda41833c73a864ca58e9ebd1c83804, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1920
+      value: 2160
       objectReference: {fileID: 0}
     - target: {fileID: 7025610208398205392, guid: ebda41833c73a864ca58e9ebd1c83804, type: 3}
       propertyPath: m_SizeDelta.y
@@ -3712,6 +3720,10 @@ PrefabInstance:
     - target: {fileID: 7025610208398205392, guid: ebda41833c73a864ca58e9ebd1c83804, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7025610208398205394, guid: ebda41833c73a864ca58e9ebd1c83804, type: 3}
+      propertyPath: m_Alpha
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7025610208398205399, guid: ebda41833c73a864ca58e9ebd1c83804, type: 3}
       propertyPath: m_Name
