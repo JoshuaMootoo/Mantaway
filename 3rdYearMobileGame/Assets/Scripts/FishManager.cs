@@ -122,18 +122,32 @@ public class FishManager : MonoBehaviour
     int fishRemoveTick = 0;
     public void RemoveFromList()
     {
-        FishController fish = FishList[0];
-        fish.Dead();
+        
 
         if (fishRemoveTick == 0)
+        {
+            FishController fish = FishList[0];
+            fish.Dead();
             FishList.RemoveAt(0);
+        }
+            
         if (fishRemoveTick == 1)
+        {
+            FishController fish = FishList2[0];
+            fish.Dead();
             FishList2.RemoveAt(0);
+        }
+            
         if (fishRemoveTick == 2)
-            FishList.RemoveAt(0);
+        {
+            FishController fish = FishList3[0];
+            fish.Dead();
+            FishList3.RemoveAt(0);
+        }
+            
         fishRemoveTick++;
         if (fishRemoveTick > 2) fishRemoveTick = 0;
-
+        Debug.Log("FishremoveTick" + fishRemoveTick);
     }
 
 }

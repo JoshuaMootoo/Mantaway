@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         isGameOver = _isGameOver;
         isLevelComplete = _isLevelComplete;
 
-        Time.timeScale = 0;
+        Time.timeScale = 0.1f;
 
         uIManager.endGameTime = timerValue;
         uIManager.EndGame(true);

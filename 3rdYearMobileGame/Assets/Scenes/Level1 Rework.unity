@@ -2725,7 +2725,14 @@ MonoBehaviour:
   fishPrefab: {fileID: 1163991604495920708, guid: 176db388813424a4695bc6dce435d88b, type: 3}
   targetObject: {fileID: 1983242504}
   FishList: []
+  FishList2: []
+  FishList3: []
   targetPositions: []
+  targetPositions2: []
+  targetPositions3: []
+  speeds: []
+  speeds2: []
+  speeds3: []
 --- !u!4 &772850867 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2294779934670019171, guid: 2437fe0cb3182364c847efed57774178, type: 3}
@@ -5465,6 +5472,74 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2294779934670019171, guid: 2437fe0cb3182364c847efed57774178, type: 3}
   m_PrefabInstance: {fileID: 1542550768}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1563908336
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7857415038497319418, guid: 39580d8b6c3b2ae41b21b62e20c46f05, type: 3}
+      propertyPath: m_Name
+      value: Feel Shake
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857415038497319421, guid: 39580d8b6c3b2ae41b21b62e20c46f05, type: 3}
+      propertyPath: m_RootOrder
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857415038497319421, guid: 39580d8b6c3b2ae41b21b62e20c46f05, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857415038497319421, guid: 39580d8b6c3b2ae41b21b62e20c46f05, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857415038497319421, guid: 39580d8b6c3b2ae41b21b62e20c46f05, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857415038497319421, guid: 39580d8b6c3b2ae41b21b62e20c46f05, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857415038497319421, guid: 39580d8b6c3b2ae41b21b62e20c46f05, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857415038497319421, guid: 39580d8b6c3b2ae41b21b62e20c46f05, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857415038497319421, guid: 39580d8b6c3b2ae41b21b62e20c46f05, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857415038497319421, guid: 39580d8b6c3b2ae41b21b62e20c46f05, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857415038497319421, guid: 39580d8b6c3b2ae41b21b62e20c46f05, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857415038497319421, guid: 39580d8b6c3b2ae41b21b62e20c46f05, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 39580d8b6c3b2ae41b21b62e20c46f05, type: 3}
+--- !u!114 &1563908337 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7857415038497319420, guid: 39580d8b6c3b2ae41b21b62e20c46f05, type: 3}
+  m_PrefabInstance: {fileID: 1563908336}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6da43522623d4704e979466dc7650b65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1619097096
 GameObject:
   m_ObjectHideFlags: 0
@@ -7851,6 +7926,10 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1911058044}
+    - target: {fileID: 2403347077675403339, guid: 21123170b0d494741b6c5110dfc9b32f, type: 3}
+      propertyPath: ShakeFeedback
+      value: 
+      objectReference: {fileID: 1563908337}
     - target: {fileID: 2403347077675403342, guid: 21123170b0d494741b6c5110dfc9b32f, type: 3}
       propertyPath: m_Name
       value: Player
