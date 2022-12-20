@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
         if (isLevelComplete)
         {
             Debug.Log("Level Complete");
-            audioManager.Play("LevelFail");
+            audioManager.Play("LevelComplete");
         }        
     }
 }

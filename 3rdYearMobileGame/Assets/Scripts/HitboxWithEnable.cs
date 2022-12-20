@@ -7,6 +7,7 @@ public class HitboxWithEnable : MonoBehaviour
 {
 
     PlayerController player;
+    FishManager FishManager;
 
     bool hasAttacked;
 
@@ -14,6 +15,7 @@ public class HitboxWithEnable : MonoBehaviour
     void Start()
     {
         player = FindObjectOfType<PlayerController>();
+        FishManager = FindObjectOfType<FishManager>();
     }
 
     private void OnEnable()
@@ -23,11 +25,20 @@ public class HitboxWithEnable : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!hasAttacked)
+        if(other.gameObject.CompareTag("Player") & !hasAttacked)
         {
             player.health -= 1;
             player.healingDelayTimer = player.healingDelayTimerMax;
             hasAttacked = true;
         }
+
+        if (other.gameObject.CompareTag("Fish"))
+        {
+            FishController fish = other.gameObject.GetComponent<FishController>();
+            Debug.Log("fish eaten");
+            FishManager.EatFish(fish.fishNumber, fish.fishTeam, fish);
+            
+        }
+
     }
 }

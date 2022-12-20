@@ -197,7 +197,7 @@ public class PlayerController : MonoBehaviour
             if (collision.gameObject.GetComponent<FishController>().following == false)
             {
                 collision.gameObject.GetComponent<FishController>().following = true;
-                foundFish += 1;
+                //foundFish += 1;
                 FindObjectOfType<FishManager>().AddToList(collision.GetComponent<FishController>());
                 Debug.Log("Found Fish " + foundFish);
                 audioManager.Play("CollectFish");
@@ -217,7 +217,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (foundFish > 0)
                 {
-                    foundFish -= 1;
+                    //foundFish -= 1;
                     fishManager.RemoveFromList();
                 }
                     

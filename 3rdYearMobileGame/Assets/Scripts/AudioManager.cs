@@ -13,14 +13,14 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null)
-            instance = this;
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-        DontDestroyOnLoad(gameObject);
+        //if (instance == null)
+        //    instance = this;
+        //else
+        //{
+        //    Destroy(gameObject);
+        //    return;
+        //}
+        //DontDestroyOnLoad(gameObject);
 
         foreach(Sound s in sounds)//add an audiosource for each sound in the sounds array to the audiomanager
         {

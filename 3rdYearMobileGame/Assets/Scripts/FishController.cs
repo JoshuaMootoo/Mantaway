@@ -7,6 +7,8 @@ public class FishController : MonoBehaviour
     public bool following = false;
     public float fishSpeed = 5;
     public float startTime;
+    public int fishNumber;
+    public int fishTeam;
     //public bool found = false;
     
     //Rigidbody rb;
@@ -19,7 +21,7 @@ public class FishController : MonoBehaviour
         
 
 
-        gameObject.GetComponent<Renderer>().material.SetColor(Shader.PropertyToID("_BaseColor"), Random.ColorHSV());
+        gameObject.GetComponent<Renderer>().material.SetColor(Shader.PropertyToID("_BaseColor"), Random.ColorHSV(0f, 1f, 0.5f, 1f, 1f, 1f, 1f, 1f));
     }
 
     
@@ -49,6 +51,9 @@ public class FishController : MonoBehaviour
 
         GetComponent<Rigidbody>().AddForce(-transform.forward, ForceMode.Impulse);
         GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(0.5f, 1f), Random.Range(0.5f, 1f), Random.Range(0.5f, 1f)).normalized * 0.68f, ForceMode.Impulse);
+
+        Destroy(gameObject, 5);
+
     }
 
 
@@ -60,4 +65,5 @@ public class FishController : MonoBehaviour
             GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(0.5f, 1f), Random.Range(0.5f, 1f), Random.Range(0.5f, 1f)).normalized * 0.68f, ForceMode.Impulse);
         }
     }
+    
 }

@@ -51,6 +51,7 @@ public class FishManager : MonoBehaviour
 
             if (fish.following == true)
             {
+                fish.fishNumber = i;
                 fish.fishSpeed = speeds[i];
                 fish.Movement(targetPositions[i],targetObject.position,Time.deltaTime);
                 
@@ -63,6 +64,7 @@ public class FishManager : MonoBehaviour
 
             if (fish.following == true)
             {
+                fish.fishNumber = i;
                 fish.fishSpeed = speeds2[i];
                 fish.Movement(targetPositions2[i], targetObject.position, Time.deltaTime);
 
@@ -75,12 +77,15 @@ public class FishManager : MonoBehaviour
 
             if (fish.following == true)
             {
+                fish.fishNumber = i;
                 fish.fishSpeed = speeds3[i];
                 fish.Movement(targetPositions3[i], targetObject.position, Time.deltaTime);
 
             }
             i++;
         }
+
+        player.foundFish = FishList.Count + FishList2.Count + FishList3.Count;
     }
 
     int fishInsertTick = 0;
@@ -111,11 +116,23 @@ public class FishManager : MonoBehaviour
         
 
         if (fishInsertTick == 0)
+        {
+            fish.fishTeam = 1;
             FishList.Insert(FishList.Count, fish);
+        }
+            
         if (fishInsertTick == 1)
+        {
+            fish.fishTeam = 2;
             FishList2.Insert(FishList2.Count, fish);
+        }
+            
         if (fishInsertTick == 2)
+        {
+            fish.fishTeam = 3;
             FishList3.Insert(FishList3.Count, fish);
+        }
+            
         fishInsertTick++;
         if (fishInsertTick > 2) fishInsertTick = 0;
     }
@@ -148,6 +165,25 @@ public class FishManager : MonoBehaviour
         fishRemoveTick++;
         if (fishRemoveTick > 2) fishRemoveTick = 0;
         Debug.Log("FishremoveTick" + fishRemoveTick);
+    }
+
+    public void EatFish(int fishNumber, int fishTeam, FishController fish   )
+    {
+        if (fishTeam == 1)
+        {
+            FishList.RemoveAt(fishNumber);
+            Destroy(fish.gameObject);
+        }
+        if (fishTeam == 2)
+        {
+            FishList2.RemoveAt(fishNumber);
+            Destroy(fish.gameObject);
+        }
+        if (fishTeam == 3)
+        {
+            FishList3.RemoveAt(fishNumber);
+            Destroy(fish.gameObject);
+        }
     }
 
 }
