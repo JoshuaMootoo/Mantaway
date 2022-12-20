@@ -135,6 +135,8 @@ public class PlayerController : MonoBehaviour
         leftWing.emitting = false;
 
         health = maxHealth;
+
+        audioManager.Play("AmbientSound");
     }
 
     // Update is called once per frame

@@ -122,3 +122,10 @@ MonoBehaviour:
     outputAudioMixerGroup: {fileID: -2833884473609145981, guid: 470973d26f4015149a4ae959d374a5c7, type: 2}
     loop: 0
     source: {fileID: 0}
+  - name: AmbientSound
+    clip: {fileID: 8300000, guid: 871f7838ffb0bcf4c8c852f571df2418, type: 3}
+    volume: 1
+    pitch: 1
+    outputAudioMixerGroup: {fileID: -2833884473609145981, guid: 470973d26f4015149a4ae959d374a5c7, type: 2}
+    loop: 1
+    source: {fileID: 0}
