@@ -1,12 +1,14 @@
+using MoreMountains.Feedbacks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using MoreMountains.Feel;
 
 public class PlayerController : MonoBehaviour
 {
-    //Health variables
+    [Header("Health Variables")]
     public float health;
     public float maxHealth = 3;
     public float healingDelayTimer = 0;
@@ -14,11 +16,13 @@ public class PlayerController : MonoBehaviour
     public float healingRate = 0.5f;
     public bool healing;
 
-    public float oilDamageRate = 1;
+    [Header("Fish Variables")]
     public int foundFish;
     public int fishLostFromMine = 3;
-    
-    //Player speed variables
+    [Space(8)]
+    public float oilDamageRate = 1;
+
+    [Header("Player Speed Variables")]
     public float playerSpeed = 5f;
     public float playerDefaultSpeed = 5f;
     public float playerSlowSpeed = 0.5f;
@@ -29,7 +33,7 @@ public class PlayerController : MonoBehaviour
     float slowDownTime = 0;
     float neutralTime = 1;
 
-    //Player Rotation Variables
+    [Header("Player Rotation Variables")]
     public float turnRate = 150f;
     public float rotationRange = 85;
     float rotationY;
@@ -37,12 +41,12 @@ public class PlayerController : MonoBehaviour
     float initialAngle;
     float correctingTime;
 
-    //Mechanics Triggers
+    [Header("Mechanic Triggers")]
     public bool courseCorrectionEnabled = true;
     public bool angleLockEnabled = true;
     public bool steeringInputFlipped = false;
 
-    //Boost variables
+    [Header("Boost Variables")]
     [HideInInspector] float boostCharge;
     public float boostChargeMax = 100;
     public float boostChargeRate = 100;
@@ -51,11 +55,12 @@ public class PlayerController : MonoBehaviour
     public bool boosting = false;
     public bool charging = false;
 
-    
+    [Header("Position Lists")]
     public List<Vector3> pastPositionList;
     public List<Vector3> pastPositionList2;
     public List<Vector3> pastPositionList3;
 
+    [Header("Speed Lists")]
     public List<float> speedList;
     public List<float> speedList2;
     public List<float> speedList3;
@@ -66,12 +71,15 @@ public class PlayerController : MonoBehaviour
     AudioManager audioManager;
     FishManager fishManager;
 
-    //Hud objects
+    [Header("Feedbacks")]
+    public MMFeedbacks ShakeFeedback;
+
+    [Header("HUD Objects")]
     public UIManager uIManager;
     public HealthBar healthBar;
     public BoostBar boostBar;
 
-    //Trail Renderers
+    [Header("Trail Renderers")]
     public TrailRenderer rightWing;
     public TrailRenderer leftWing;
 
@@ -94,6 +102,7 @@ public class PlayerController : MonoBehaviour
         speedingUp
     }
 
+    [Space(8)]
     public PlayerState currentPlayerState;
 
     // Start is called before the first frame update
@@ -199,8 +208,10 @@ public class PlayerController : MonoBehaviour
             health -= 1;
             healingDelayTimer = healingDelayTimerMax;
 
-            
-            for(int i = 0; i < fishLostFromMine; i++)
+            // Trigger Camera Shake
+            ShakeFeedback?.PlayFeedbacks();
+
+            for (int i = 0; i < fishLostFromMine; i++)
             {
                 if (foundFish > 0)
                 {
@@ -209,11 +220,6 @@ public class PlayerController : MonoBehaviour
                 }
                     
             }
-            
-
-            Debug.Log("Health = " + health);
-
-            //Handheld.Vibrate();
         }
     }
 
