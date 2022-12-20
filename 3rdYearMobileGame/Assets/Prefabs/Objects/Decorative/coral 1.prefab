@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2639255713487076068}
   - component: {fileID: 1373420331592463681}
   - component: {fileID: 3813328195182051723}
-  - component: {fileID: 3001560730475825054}
+  - component: {fileID: 523383704}
   m_Layer: 0
   m_Name: coral 1
   m_TagString: Untagged
@@ -26,14 +26,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3452947796987043934}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
   m_LocalPosition: {x: -57.587997, y: 0.0147673115, z: -19.842007}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
 --- !u!33 &1373420331592463681
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3001560730475825054
+--- !u!114 &523383704
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,6 +93,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3452947796987043934}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef6ce5bd2e812454c82f2dfe263e0b37, type: 3}
+  m_Script: {fileID: 11500000, guid: d6b431bf4722cbb4cb3984dc8b181dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

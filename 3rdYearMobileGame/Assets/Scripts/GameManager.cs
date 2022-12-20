@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0.1f;
 
         uIManager.endGameTime = timerValue;
-        uIManager.EndGame(true);
+        StartCoroutine(EndGame());
 
         if (isGameOver)
         {
@@ -70,5 +70,12 @@ public class GameManager : MonoBehaviour
             Debug.Log("Level Complete");
             audioManager.Play("LevelComplete");
         }        
+    }
+
+    IEnumerator EndGame()
+    {
+       
+        yield return new WaitForSecondsRealtime(2);
+        uIManager.EndGame(true);
     }
 }

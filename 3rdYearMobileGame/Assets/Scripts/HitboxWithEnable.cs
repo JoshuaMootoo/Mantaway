@@ -11,11 +11,15 @@ public class HitboxWithEnable : MonoBehaviour
 
     bool hasAttacked;
 
+    public float maxKilledFish = 5;
+    float killedFish = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         player = FindObjectOfType<PlayerController>();
         FishManager = FindObjectOfType<FishManager>();
+        
     }
 
     private void OnEnable()
@@ -32,13 +36,20 @@ public class HitboxWithEnable : MonoBehaviour
             hasAttacked = true;
         }
 
-        if (other.gameObject.CompareTag("Fish"))
+        if (other.gameObject.CompareTag("Fish") & killedFish < maxKilledFish)
         {
             FishController fish = other.gameObject.GetComponent<FishController>();
             Debug.Log("fish eaten");
             FishManager.EatFish(fish.fishNumber, fish.fishTeam, fish);
-            
+            killedFish++;
+            if (killedFish == maxKilledFish) Invoke("ResetKilledFish", 5);
         }
+        
 
+    }
+
+    void ResetKilledFish()
+    {
+        killedFish = 0;
     }
 }
