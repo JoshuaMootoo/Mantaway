@@ -73,6 +73,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Feedbacks")]
     public MMFeedbacks ShakeFeedback;
+    public MMFeedbacks SquashStretchFeedback;
 
     [Header("HUD Objects")]
     public UIManager uIManager;
@@ -383,6 +384,7 @@ public class PlayerController : MonoBehaviour
             audioManager.Play("Boosting");
             audioManager.Play("BoostStart");
             audioManager.Stop("BoostCharging");
+            SquashStretchFeedback?.PlayFeedbacks();
         }
 
         if (boosting == true)
