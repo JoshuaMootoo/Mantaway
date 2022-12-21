@@ -9,48 +9,33 @@ public class FishController : MonoBehaviour
     public float startTime;
     public int fishNumber;
     public int fishTeam;
-    //public bool found = false;
     
-    //Rigidbody rb;
+    Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
     {
         startTime = Time.time;
-        //rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         
-
-
+        //Randomise Colour
         gameObject.GetComponent<Renderer>().material.SetColor(Shader.PropertyToID("_BaseColor"), Random.ColorHSV(0f, 1f, 0.5f, 1f, 1f, 1f, 1f, 1f));
     }
 
-    
-    void Update()
-    {
-       
-    }
-
+    //Movement function called by the fishmanager when the fish is in a list and following the player. Will  not move itself otherwise
     public void Movement(Vector3 targetPoint,Vector3 playerPosition, float deltaTime)
     {
-       // if ((targetPoint - transform.position).magnitude > 1.5f) fishSpeed *= 2f;
-       // if ((targetPoint - transform.position).magnitude < 1f) fishSpeed *= 0.5f;
         transform.position = Vector3.MoveTowards(transform.position, targetPoint, fishSpeed * deltaTime);
-
-        //Vector3 lookPoint = ((playerPosition - targetPoint) / 2) + targetPoint;
-
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(targetPoint - transform.position), 8);
-        //transform.Translate(transform.forward * fishSpeed * deltaTime,Space.Self);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetPoint - transform.position), 0.15F);
-        
-       
     }
 
     public void Dead()
     {
+        //enable rigidbody collisions and add small force backwards
         GetComponent<Collider>().isTrigger = false;
 
-        GetComponent<Rigidbody>().AddForce(-transform.forward, ForceMode.Impulse);
-        GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(0.5f, 1f), Random.Range(0.5f, 1f), Random.Range(0.5f, 1f)).normalized * 0.68f, ForceMode.Impulse);
+        rb.AddForce(-transform.forward, ForceMode.Impulse);
+        rb.AddTorque(new Vector3(Random.Range(0.5f, 1f), Random.Range(0.5f, 1f), Random.Range(0.5f, 1f)).normalized * 0.68f, ForceMode.Impulse);
 
         Destroy(gameObject, 5);
 
@@ -59,10 +44,11 @@ public class FishController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        //Get nudged by player when they are dead
         if(collision.gameObject.CompareTag("Player"))
         {
-            GetComponent<Rigidbody>().AddForce((transform.position - collision.gameObject.transform.position).normalized * (collision.gameObject.GetComponent<PlayerController>().playerSpeed * 1.5f), ForceMode.Impulse);
-            GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(0.5f, 1f), Random.Range(0.5f, 1f), Random.Range(0.5f, 1f)).normalized * 0.68f, ForceMode.Impulse);
+            rb.AddForce((transform.position - collision.gameObject.transform.position).normalized * (collision.gameObject.GetComponent<PlayerController>().playerSpeed * 1.5f), ForceMode.Impulse);
+            rb.AddTorque(new Vector3(Random.Range(0.5f, 1f), Random.Range(0.5f, 1f), Random.Range(0.5f, 1f)).normalized * 0.68f, ForceMode.Impulse);
         }
     }
     
