@@ -6852,6 +6852,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 561700797528125667, guid: 821cabee807273b4ea0b33ac107a33aa, type: 3}
+      propertyPath: scrollRect
+      value: 
+      objectReference: {fileID: 1977549771}
     - target: {fileID: 1739467386143818636, guid: 821cabee807273b4ea0b33ac107a33aa, type: 3}
       propertyPath: m_Name
       value: LevelStatsUI

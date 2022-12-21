@@ -33,6 +33,7 @@ public class UIManager : MonoBehaviour
 
     public float endGameTime;
     public int levelNum;
+    public int starCounter = 0;
 
     [Header("Fish Counter")]
     public int collectedfish;
@@ -40,6 +41,8 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        starCounter = 0;
+
         gameManager = FindObjectOfType<GameManager>();
         playerController = FindObjectOfType<PlayerController>();
         audioManager = FindObjectOfType<AudioManager>();
@@ -58,7 +61,7 @@ public class UIManager : MonoBehaviour
         fishCountSlider.minValue = 0;
         fishCountSlider.maxValue = maxFish;
 
-        levelNum = PlayerPrefs.GetInt("CurrentLevel");
+        levelNum = (SceneManager.GetActiveScene().buildIndex - 1);
     }
 
     private void DisplayTimeInMin(float _endGameTime)
@@ -70,9 +73,24 @@ public class UIManager : MonoBehaviour
 
     public void HasAchievedStar()
     {
-        if (PlayerPrefs.GetInt(HasCompletedLevel(levelNum)) == 1) StarReward(0, true);                                                  else StarReward(0, false);
-        if (PlayerPrefs.GetFloat(EndLevelTime(levelNum)) < PlayerPrefs.GetFloat(LevelParTimeString(levelNum))) StarReward(1, true);     else StarReward(1, false);
-        if (PlayerPrefs.GetInt(FishCollected(levelNum)) == PlayerPrefs.GetInt(TotalFish(levelNum))) StarReward(2, true);                else StarReward(2, false);
+        if (PlayerPrefs.GetInt(HasCompletedLevel(levelNum)) == 1)
+        {
+            StarReward(0, true);
+            starCounter += 1;
+        }
+        else StarReward(0, false);
+        if (PlayerPrefs.GetFloat(EndLevelTime(levelNum)) < PlayerPrefs.GetFloat(LevelParTimeString(levelNum)))
+        {
+            StarReward(1, true);
+            starCounter += 1;
+        }
+        else StarReward(1, false);
+        if (PlayerPrefs.GetInt(FishCollected(levelNum)) == PlayerPrefs.GetInt(TotalFish(levelNum)))
+        {
+            StarReward(2, true);
+            starCounter += 1;
+        }
+        else StarReward(2, false);
     }
 
     public void StarReward(int whatStar, bool hasAquired)
@@ -80,20 +98,28 @@ public class UIManager : MonoBehaviour
         stars[whatStar].SetActive(hasAquired);
     }
 
+    public void StarRewardText ()
+    {
+        if (starCounter == 0) starRatingText.text = "";
+        if (starCounter == 1) starRatingText.text = "Well done!";
+        if (starCounter == 2) starRatingText.text = "Nice work!";
+        if (starCounter == 3) starRatingText.text = "Perfect!";
+    }
+
     public void EndGamePlayerPrefs()
     {
-        string endGameTimeString = "EndLevelTimeLevel" + PlayerPrefs.GetInt("CurrentLevel");
-        if (endGameTime < PlayerPrefs.GetFloat(endGameTimeString) && PlayerPrefs.HasKey(endGameTimeString) || !PlayerPrefs.HasKey(endGameTimeString))
-            PlayerPrefs.SetFloat("EndLevelTimeLevel" + PlayerPrefs.GetInt("CurrentLevel"), endGameTime);
+        
+        if (endGameTime < PlayerPrefs.GetFloat(EndLevelTime(levelNum)) && PlayerPrefs.HasKey(EndLevelTime(levelNum)) || !PlayerPrefs.HasKey(EndLevelTime(levelNum)))
+            PlayerPrefs.SetFloat(EndLevelTime(levelNum), endGameTime);
 
-        string fishCollectedString = "FishCollectedLevel" + PlayerPrefs.GetInt("CurrentLevel");
-        if (collectedfish > PlayerPrefs.GetInt(fishCollectedString) && PlayerPrefs.HasKey(fishCollectedString) || !PlayerPrefs.HasKey(fishCollectedString))
-            PlayerPrefs.SetInt(fishCollectedString, collectedfish);
+        if (collectedfish > PlayerPrefs.GetInt(FishCollected(levelNum)) && PlayerPrefs.HasKey(FishCollected(levelNum)) || !PlayerPrefs.HasKey(FishCollected(levelNum)))
+            PlayerPrefs.SetInt(FishCollected(levelNum), collectedfish);
 
-        string totalFishString = "TotalFishLevel" + PlayerPrefs.GetInt("CurrentLevel");
-        if (!PlayerPrefs.HasKey(totalFishString))
-            PlayerPrefs.SetInt(totalFishString, maxFish);
+        if (!PlayerPrefs.HasKey(TotalFish(levelNum)))
+            PlayerPrefs.SetInt(TotalFish(levelNum), maxFish);
     }
+
+
 
     public void EndGame(bool hasGameEnded)
     {
@@ -107,7 +133,6 @@ public class UIManager : MonoBehaviour
         if (gameManager.isGameOver)
         {
             endLevelText.text = "Try Again";
-            starRatingText.text = "";
             restartButton.GetComponentInChildren<TMP_Text>().text = "Retry Level";
 
 
@@ -127,6 +152,8 @@ public class UIManager : MonoBehaviour
             //  add fish collected to text
             nextLevelButton.SetActive(true);
         }
+
+        StarRewardText();
     }
 
     //---------------------------------------------------------- CALLED BY PLAYER ------------------------------------------------------------
