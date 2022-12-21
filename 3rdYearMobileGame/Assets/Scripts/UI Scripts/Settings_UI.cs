@@ -18,23 +18,29 @@ public class Settings_UI : MonoBehaviour
     {
         audioManager = FindObjectOfType<AudioManager>();
 
-        masterSlider.value = PlayerPrefs.GetFloat("MasterVolume");      //  Debug.Log(PlayerPrefs.GetFloat("MasterVolume"));
-        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");        //  Debug.Log(PlayerPrefs.GetFloat("MusicVolume"));
-        soundSlider.value = PlayerPrefs.GetFloat("SoundVolume");        //  Debug.Log(PlayerPrefs.GetFloat("SoundVolume"));
+        masterSlider.value = PlayerPrefs.GetFloat("MasterVolume");        Debug.Log(PlayerPrefs.GetFloat("MasterVolume"));
+        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");          Debug.Log(PlayerPrefs.GetFloat("MusicVolume"));
+        soundSlider.value = PlayerPrefs.GetFloat("SoundVolume");          Debug.Log(PlayerPrefs.GetFloat("SoundVolume"));
     }
 
-    private void Update()
-    { 
-        audioMixer.SetFloat("Master_EP", masterSlider.value);
-        PlayerPrefs.SetFloat("MasterVolume", masterSlider.value);
-
-        audioMixer.SetFloat("Music_EP", musicSlider.value);
-        PlayerPrefs.SetFloat("MusicVolume", musicSlider.value);
-
-        audioMixer.SetFloat("Sound_EP", soundSlider.value);
-        PlayerPrefs.SetFloat("SoundVolume", soundSlider.value);
+    public void SetMasterVolume(float sliderValue)
+    {
+        audioMixer.SetFloat("MasterVolume", Mathf.Log10(sliderValue) * 20);
+        PlayerPrefs.SetFloat("MasterVolume", sliderValue);
+        Debug.Log(sliderValue);
     }
-        public void OtherButtonPress()
+
+    public void SetMusicVolume(float sliderValue)
+    {
+        audioMixer.SetFloat("MusicVolume", Mathf.Log10(sliderValue) * 20);
+        PlayerPrefs.SetFloat("MusicVolume", sliderValue);
+    }
+    public void SetSoundVolume(float sliderValue)
+    {
+        audioMixer.SetFloat("SoundVolume", Mathf.Log10(sliderValue) * 20);
+        PlayerPrefs.SetFloat("SoundVolume", sliderValue);
+    }
+    public void OtherButtonPress()
     {
         audioManager.Play("ButtonPress");
     }

@@ -108,15 +108,24 @@ public class UIManager : MonoBehaviour
 
     public void EndGamePlayerPrefs()
     {
-        
-        if (endGameTime < PlayerPrefs.GetFloat(EndLevelTime(levelNum)) && PlayerPrefs.HasKey(EndLevelTime(levelNum)) || !PlayerPrefs.HasKey(EndLevelTime(levelNum)))
+
+        if (!PlayerPrefs.HasKey(EndLevelTime(levelNum)) ||
+            PlayerPrefs.HasKey(EndLevelTime(levelNum)) && endGameTime < PlayerPrefs.GetFloat(EndLevelTime(levelNum)))
+        {
             PlayerPrefs.SetFloat(EndLevelTime(levelNum), endGameTime);
+        }
 
-        if (collectedfish > PlayerPrefs.GetInt(FishCollected(levelNum)) && PlayerPrefs.HasKey(FishCollected(levelNum)) || !PlayerPrefs.HasKey(FishCollected(levelNum)))
+        if (!PlayerPrefs.HasKey(FishCollected(levelNum)) ||
+            PlayerPrefs.HasKey(FishCollected(levelNum)) && collectedfish > PlayerPrefs.GetInt(FishCollected(levelNum)))
+        {
             PlayerPrefs.SetInt(FishCollected(levelNum), collectedfish);
+        }
 
-        if (!PlayerPrefs.HasKey(TotalFish(levelNum)))
+        if (!PlayerPrefs.HasKey(TotalFish(levelNum)) || 
+            PlayerPrefs.HasKey(TotalFish(levelNum)) && maxFish != PlayerPrefs.GetInt(TotalFish(levelNum)))
+        {
             PlayerPrefs.SetInt(TotalFish(levelNum), maxFish);
+        }
     }
 
 
@@ -144,10 +153,9 @@ public class UIManager : MonoBehaviour
         {
             endLevelText.text = "Level Complete";
             PlayerPrefs.SetInt(HasCompletedLevel(levelNum), 1);
-            starRatingText.text = "";
+            EndGamePlayerPrefs();
             HasAchievedStar();
             restartButton.GetComponentInChildren<TMP_Text>().text = "Restart Level";
-            EndGamePlayerPrefs();
             //  check what stars have been aquired and activate them;
             //  add fish collected to text
             nextLevelButton.SetActive(true);
