@@ -232,6 +232,15 @@ public class PlayerController : MonoBehaviour
         {
             health -= oilDamageRate * Time.deltaTime;
             healingDelayTimer = healingDelayTimerMax;
+
+            if (health <= 0 & !FindObjectOfType<GameManager>().isGameOver)
+            {
+                
+                FindObjectOfType<GameManager>().EndGame(true, false);
+                //Destroy(gameObject);
+
+                health = 0;
+            }
         }
     }
 
