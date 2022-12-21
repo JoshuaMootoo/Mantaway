@@ -8,6 +8,7 @@ public class HitboxWithEnable : MonoBehaviour
 
     PlayerController player;
     FishManager FishManager;
+    AudioManager audioManager;
 
     bool hasAttacked;
 
@@ -19,12 +20,17 @@ public class HitboxWithEnable : MonoBehaviour
     {
         player = FindObjectOfType<PlayerController>();
         FishManager = FindObjectOfType<FishManager>();
-        
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     private void OnEnable()
     {
         hasAttacked = false;
+    }
+
+    private void OnDisable()
+    {
+        audioManager.Play("EelBite");
     }
 
     private void OnTriggerEnter(Collider other)
