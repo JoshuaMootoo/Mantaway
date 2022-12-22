@@ -155,7 +155,7 @@ public class UIManager : MonoBehaviour
         {
             endLevelText.text = "Level Complete";
             PlayerPrefs.SetInt(HasCompletedLevel(levelNum), 1);
-            EndGamePlayerPrefs();
+            if (PlayerPrefs.GetInt(HasCompletedLevel(levelNum)) == 1) EndGamePlayerPrefs();
             HasAchievedStar();
             restartButton.GetComponentInChildren<TMP_Text>().text = "Restart Level";
             //  check what stars have been aquired and activate them;

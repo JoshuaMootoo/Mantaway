@@ -37,7 +37,7 @@ public class LevelSelectUI : MonoBehaviour
     {
         audioManager = FindObjectOfType<AudioManager>();
 
-        for (int i = 1; i <= 10; i++)
+        for (int i = 1; i <= parTimes.Length; i++)
         {
             //  Sets all the par times for each level
             PlayerPrefs.SetFloat(LevelParTimeString(i), parTimes[i-1]);
@@ -48,14 +48,14 @@ public class LevelSelectUI : MonoBehaviour
     }
     private void Update()
     {
-        levelTitle.text = "Level " + levelNum;
-        if (PlayerPrefs.HasKey(FishCollectedString(levelNum)))
-            fishCollected.text = string.Format("Fish Collected - {0:00}/{1:00}", PlayerPrefs.GetInt(FishCollectedString(levelNum)), PlayerPrefs.GetInt(TotalFishString(levelNum)));
-        else fishCollected.text = "Fish Collected - ??/??";
-        if (PlayerPrefs.HasKey(EndLevelTimeString(levelNum))) bestCompletionTime.text = "Best Completion Time - " + DisplayTimeInMin(PlayerPrefs.GetFloat(EndLevelTimeString(levelNum)));
-        else bestCompletionTime.text = "Best Completion Time - --:--";
-        levelImage.sprite = levelSprites[levelNum - 1];
-        parTime.text = "Par Time - " + DisplayTimeInMin(PlayerPrefs.GetFloat(LevelParTimeString(levelNum)));
+        //levelTitle.text = "Level " + levelNum;
+        //if (PlayerPrefs.HasKey(FishCollectedString(levelNum)))
+        //    fishCollected.text = string.Format("Fish Collected - {0:00}/{1:00}", PlayerPrefs.GetInt(FishCollectedString(levelNum)), PlayerPrefs.GetInt(TotalFishString(levelNum)));
+        //else fishCollected.text = "Fish Collected - ??/??";
+        //if (PlayerPrefs.HasKey(EndLevelTimeString(levelNum))) bestCompletionTime.text = "Best Completion Time - " + DisplayTimeInMin(PlayerPrefs.GetFloat(EndLevelTimeString(levelNum)));
+        //else bestCompletionTime.text = "Best Completion Time - --:--";
+        //levelImage.sprite = levelSprites[levelNum - 1];
+        //parTime.text = "Par Time - " + DisplayTimeInMin(PlayerPrefs.GetFloat(LevelParTimeString(levelNum)));
 
 
     }
@@ -152,10 +152,20 @@ public class LevelSelectUI : MonoBehaviour
         anim.SetBool("IsActive", true);
         scrollRect.enabled = false;
         HasAchievedStar();
+        levelImage.sprite = levelSprites[levelNum - 1];
         foreach (Button button in levelButtons)
         {
             button.enabled = false;
         }
+        levelTitle.text = "Level " + levelNum;
+        if (PlayerPrefs.HasKey(FishCollectedString(levelNum)))
+            fishCollected.text = string.Format("Fish Collected - {0:00}/{1:00}", PlayerPrefs.GetInt(FishCollectedString(levelNum)), PlayerPrefs.GetInt(TotalFishString(levelNum)));
+        else fishCollected.text = "Fish Collected - ??/??";
+        if (PlayerPrefs.HasKey(EndLevelTimeString(levelNum))) bestCompletionTime.text = "Best Completion Time - " + DisplayTimeInMin(PlayerPrefs.GetFloat(EndLevelTimeString(levelNum)));
+        else bestCompletionTime.text = "Best Completion Time - --:--";
+        levelImage.sprite = levelSprites[levelNum - 1];
+        parTime.text = "Par Time - " + DisplayTimeInMin(PlayerPrefs.GetFloat(LevelParTimeString(levelNum)));
+
     }
 
     public void LevelParTime(float _parTime)

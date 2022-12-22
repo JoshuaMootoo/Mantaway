@@ -14,13 +14,34 @@ public class Settings_UI : MonoBehaviour
     public Slider soundSlider;
 
     public static Settings_UI instance;
-    private void Awake()
+    private void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
 
-        if (PlayerPrefs.HasKey("MasterVolume")) masterSlider.value = PlayerPrefs.GetFloat("MasterVolume");  else masterSlider.value = 1;
-        if (PlayerPrefs.HasKey("MasterVolume")) musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");    else musicSlider.value = 1;
-        if (PlayerPrefs.HasKey("MasterVolume")) soundSlider.value = PlayerPrefs.GetFloat("SoundVolume");    else soundSlider.value = 1;
+        if (PlayerPrefs.HasKey("MasterVolume")) masterSlider.value = PlayerPrefs.GetFloat("MasterVolume"); 
+        else { 
+            masterSlider.value = 1; 
+            PlayerPrefs.SetFloat("MasterVolume", 1); 
+        }
+
+        if (PlayerPrefs.HasKey("MusicVolume"))
+        {
+            musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
+        }
+        else
+        {
+            musicSlider.value = 1;
+            PlayerPrefs.SetFloat("MusicVolume", 1);
+        }
+        if (PlayerPrefs.HasKey("SoundVolume"))
+        {
+            soundSlider.value = PlayerPrefs.GetFloat("SoundVolume");
+        }
+        else
+        {
+            soundSlider.value = 1;
+            PlayerPrefs.SetFloat("SoundVolume", 1);
+        }
 
         Debug.Log(PlayerPrefs.GetFloat("MasterVolume"));
         Debug.Log(PlayerPrefs.GetFloat("MusicVolume"));
