@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class OilController : MonoBehaviour
 {
-    float oilSpeed;
-    float oilStarterSpeed;
+    [SerializeField] float oilSpeed;
+    [SerializeField] float oilStartSpeed;
     public float oilAcceleration = 0.2f;
 
     public float speedMultiplyer = 1.5f;
@@ -18,9 +18,8 @@ public class OilController : MonoBehaviour
     void Start()
     {
         player = FindObjectOfType<PlayerController>();
-        oilStarterSpeed = player.playerDefaultSpeed - 1;
-        oilSpeed = oilStarterSpeed;
-        startDistanceFromPlayer = Vector3.Distance(transform.position, player.transform.position);
+        oilStartSpeed = player.playerDefaultSpeed - 1.5f;
+        oilSpeed = oilStartSpeed;
     }
 
     // Update is called once per frame
@@ -31,6 +30,11 @@ public class OilController : MonoBehaviour
         if (distanceFromPlayer > startDistanceFromPlayer) transform.Translate(Vector3.forward * oilSpeed * speedMultiplyer * Time.deltaTime);
         else transform.Translate(Vector3.forward * oilSpeed * Time.deltaTime);
 
-        oilSpeed += oilAcceleration * Time.deltaTime;
+        //oilSpeed += oilAcceleration * Time.deltaTime;
+    }
+
+    public void OilSpeedUp(int fishFound)
+    {
+        oilSpeed = oilStartSpeed + (oilAcceleration * fishFound);
     }
 }

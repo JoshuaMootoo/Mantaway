@@ -228,7 +228,6 @@ public class UIManager : MonoBehaviour
     public void NextLevel()
     {
         audioManager.Play("ButtonPress");
-        PlayerPrefs.SetInt("CurrentLevel", levelNum + 1);
         StartCoroutine(LoadScene(SceneManager.GetActiveScene().buildIndex + 1));
         Time.timeScale = 1;
     }

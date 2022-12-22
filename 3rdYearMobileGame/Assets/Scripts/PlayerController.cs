@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody rb;
     CharacterController controller;
+    [SerializeField] OilController oilController;
 
     AudioManager audioManager;
     FishManager fishManager;
@@ -258,6 +259,7 @@ public class PlayerController : MonoBehaviour
     {
         float addedFishSpeed = addedFishSpeedModifier * foundFish;
         playerSpeed = playerDefaultSpeed + addedFishSpeed;
+        if (oilController != null) oilController.OilSpeedUp(foundFish);
 
         rightWing.emitting = false;
         leftWing.emitting = false;

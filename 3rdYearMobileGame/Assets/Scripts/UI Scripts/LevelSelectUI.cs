@@ -23,11 +23,13 @@ public class LevelSelectUI : MonoBehaviour
     public TMP_Text fishCollected;
     public TMP_Text bestCompletionTime;
     public TMP_Text parTime;
+    public Image levelImage;
 
     [SerializeField] ScrollRect scrollRect;
     [SerializeField] Button[] levelButtons = new Button[10];
 
     [SerializeField] float[] parTimes = new float[10];
+    [SerializeField] Sprite[] levelSprites = new Sprite[10]; 
 
     public GameObject[] stars = new GameObject[3];
 
@@ -52,8 +54,10 @@ public class LevelSelectUI : MonoBehaviour
         else fishCollected.text = "Fish Collected - ??/??";
         if (PlayerPrefs.HasKey(EndLevelTimeString(levelNum))) bestCompletionTime.text = "Best Completion Time - " + DisplayTimeInMin(PlayerPrefs.GetFloat(EndLevelTimeString(levelNum)));
         else bestCompletionTime.text = "Best Completion Time - --:--";
-
+        levelImage.sprite = levelSprites[levelNum - 1];
         parTime.text = "Par Time - " + DisplayTimeInMin(PlayerPrefs.GetFloat(LevelParTimeString(levelNum)));
+
+
     }
 
     private string DisplayTimeInMin(float _endGameTime)
@@ -163,7 +167,6 @@ public class LevelSelectUI : MonoBehaviour
     public void StartGameButton()
     {
         audioManager.Play("ButtonPress");
-        PlayerPrefs.SetInt("CurrentLevel", levelNum);
         StartCoroutine(LoadScene(levelSceneNum));
     }
 
