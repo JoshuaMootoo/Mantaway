@@ -18,16 +18,20 @@ public class Settings_UI : MonoBehaviour
     {
         audioManager = FindObjectOfType<AudioManager>();
 
-        masterSlider.value = PlayerPrefs.GetFloat("MasterVolume");        Debug.Log(PlayerPrefs.GetFloat("MasterVolume"));
-        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");          Debug.Log(PlayerPrefs.GetFloat("MusicVolume"));
-        soundSlider.value = PlayerPrefs.GetFloat("SoundVolume");          Debug.Log(PlayerPrefs.GetFloat("SoundVolume"));
+        if (PlayerPrefs.HasKey("MasterVolume")) masterSlider.value = PlayerPrefs.GetFloat("MasterVolume");  else masterSlider.value = 1;
+        if (PlayerPrefs.HasKey("MasterVolume")) musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");    else musicSlider.value = 1;
+        if (PlayerPrefs.HasKey("MasterVolume")) soundSlider.value = PlayerPrefs.GetFloat("SoundVolume");    else soundSlider.value = 1;
+
+        Debug.Log(PlayerPrefs.GetFloat("MasterVolume"));
+        Debug.Log(PlayerPrefs.GetFloat("MusicVolume"));
+        Debug.Log(PlayerPrefs.GetFloat("SoundVolume"));
     }
 
     public void SetMasterVolume(float sliderValue)
     {
         audioMixer.SetFloat("MasterVolume", Mathf.Log10(sliderValue) * 20);
         PlayerPrefs.SetFloat("MasterVolume", sliderValue);
-        Debug.Log(sliderValue);
+        Debug.Log(PlayerPrefs.GetFloat("MasterVolume"));
     }
 
     public void SetMusicVolume(float sliderValue)
