@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: LevelComplete
-    clip: {fileID: 8300000, guid: 038f1657893a0c048a86e59221873a84, type: 3}
+    clip: {fileID: 8300000, guid: 62b0e6b2f53d65546a73130d76dc6848, type: 3}
     volume: 0.5
     pitch: 1
     outputAudioMixerGroup: {fileID: -6986168817390629419, guid: 470973d26f4015149a4ae959d374a5c7, type: 2}
@@ -95,9 +95,9 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - name: BoostCharging
-    clip: {fileID: 8300000, guid: 4144f82160a76364992639cd500f61c1, type: 3}
+    clip: {fileID: 8300000, guid: 76c6967a2e0805c4190f6bbd8be308e4, type: 3}
     volume: 0.161
-    pitch: 2
+    pitch: 1.53
     outputAudioMixerGroup: {fileID: -2833884473609145981, guid: 470973d26f4015149a4ae959d374a5c7, type: 2}
     loop: 0
     source: {fileID: 0}
