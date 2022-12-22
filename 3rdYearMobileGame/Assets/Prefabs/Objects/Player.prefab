@@ -351,26 +351,33 @@ MonoBehaviour:
   healingDelayTimerMax: 2
   healingRate: 0.5
   healing: 0
-  oilDamageRate: 1
   foundFish: 0
+  fishLostFromMine: 3
+  oilDamageRate: 1
   playerSpeed: 7
   playerDefaultSpeed: 7
-  playerSlowSpeed: 0.5
+  playerSlowSpeed: 0.2
   playerBoostSpeed: 2
   boostLerpTimeSpeed: 3
-  addedFishSpeedModifier: 0.5
+  addedFishSpeedModifier: 0.2
+  turnRate: 0.5
   rotationRange: 85
   courseCorrectionEnabled: 1
   angleLockEnabled: 1
   steeringInputFlipped: 0
   boostChargeMax: 100
-  boostChargeRate: 200
+  boostChargeRate: 150
   boostTimeMax: 2
   boosting: 0
   charging: 0
-  turnRate: 0.5
-  pastPosition: []
   pastPositionList: []
+  pastPositionList2: []
+  pastPositionList3: []
+  speedList: []
+  speedList2: []
+  speedList3: []
+  ShakeFeedback: {fileID: 0}
+  SquashStretchFeedback: {fileID: 0}
   uIManager: {fileID: 0}
   healthBar: {fileID: 0}
   boostBar: {fileID: 0}

@@ -11989,29 +11989,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1333680252}
     - target: {fileID: 2403347077675403339, guid: 21123170b0d494741b6c5110dfc9b32f, type: 3}
-      propertyPath: boostChargeRate
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 2403347077675403339, guid: 21123170b0d494741b6c5110dfc9b32f, type: 3}
-      propertyPath: playerSlowSpeed
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2403347077675403339, guid: 21123170b0d494741b6c5110dfc9b32f, type: 3}
       propertyPath: angleLockEnabled
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2403347077675403339, guid: 21123170b0d494741b6c5110dfc9b32f, type: 3}
-      propertyPath: boostLerpTimeSpeed
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2403347077675403339, guid: 21123170b0d494741b6c5110dfc9b32f, type: 3}
       propertyPath: SquashStretchFeedback
       value: 
       objectReference: {fileID: 1861965994}
-    - target: {fileID: 2403347077675403339, guid: 21123170b0d494741b6c5110dfc9b32f, type: 3}
-      propertyPath: addedFishSpeedModifier
-      value: 0.2
-      objectReference: {fileID: 0}
     - target: {fileID: 2403347077675403339, guid: 21123170b0d494741b6c5110dfc9b32f, type: 3}
       propertyPath: courseCorrectionEnabled
       value: 0
