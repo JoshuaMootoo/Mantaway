@@ -39,6 +39,8 @@ public class UIManager : MonoBehaviour
     public int collectedfish;
     public int maxFish;
 
+    [SerializeField] bool isLastLevel = false;
+
     private void Start()
     {
         starCounter = 0;
@@ -158,7 +160,8 @@ public class UIManager : MonoBehaviour
             restartButton.GetComponentInChildren<TMP_Text>().text = "Restart Level";
             //  check what stars have been aquired and activate them;
             //  add fish collected to text
-            nextLevelButton.SetActive(true);
+            if (!isLastLevel) nextLevelButton.SetActive(true);
+            else nextLevelButton.SetActive(false);
         }
 
         StarRewardText();
