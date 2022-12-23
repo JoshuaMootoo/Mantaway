@@ -67,26 +67,32 @@ public class LevelSelectUI : MonoBehaviour
         return string.Format("{0:00}:{1:00}", mins, secs);
     }
 
-    public void HasAchievedStar()
+    public void HasAchievedStar(int levelNum)
     {
         Debug.Log(PlayerPrefs.GetInt(HasCompletedLevel(levelNum)));
         Debug.Log(PlayerPrefs.GetFloat(EndLevelTimeString(levelNum)));
         Debug.Log(PlayerPrefs.GetFloat(FishCollectedString(levelNum)));
         Debug.Log(PlayerPrefs.GetFloat(TotalFishString(levelNum)));
 
-        if (PlayerPrefs.GetInt(HasCompletedLevel(levelNum)) == 1) 
+        if (PlayerPrefs.GetInt(HasCompletedLevel(levelNum)) == 1)
         {
             //  Star 1 requires you to complete the level
-            StarReward(0, true); 
+            StarReward(0, true);
             //  Star 2 requires you to beat the par time
-            if (PlayerPrefs.GetFloat(EndLevelTimeString(levelNum)) < PlayerPrefs.GetFloat(LevelParTimeString(levelNum))) 
-                StarReward(1, true); 
+            if (PlayerPrefs.GetFloat(EndLevelTimeString(levelNum)) < PlayerPrefs.GetFloat(LevelParTimeString(levelNum)))
+                StarReward(1, true);
             else StarReward(1, false);
             //  Star 3 requires you to collect all the fish
-            if (PlayerPrefs.GetInt(FishCollectedString(levelNum)) == PlayerPrefs.GetInt(TotalFishString(levelNum))) 
-                StarReward(2, true); 
+            if (PlayerPrefs.GetInt(FishCollectedString(levelNum)) == PlayerPrefs.GetInt(TotalFishString(levelNum)))
+                StarReward(2, true);
             else StarReward(2, false);
-        } else StarReward(0, false);
+        }
+        else
+        {
+            StarReward(0, false);
+            StarReward(1, false);
+            StarReward(2, false);
+        }
     }
 
     public void StarReward(int whatStar, bool hasAquired)
@@ -151,7 +157,7 @@ public class LevelSelectUI : MonoBehaviour
         levelNum = _levelSceneNum - 1;
         anim.SetBool("IsActive", true);
         scrollRect.enabled = false;
-        HasAchievedStar();
+        HasAchievedStar(levelNum);
         levelImage.sprite = levelSprites[levelNum - 1];
         foreach (Button button in levelButtons)
         {
